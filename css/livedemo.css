@@ -7,7 +7,8 @@
 .live-demo {
   display: inline-block;
   vertical-align: top;
-  width: 28%; }
+  width: 28%;
+  float: right; }
   input:checked + .demo-label + .live-demo {
     width: 100%; }
 

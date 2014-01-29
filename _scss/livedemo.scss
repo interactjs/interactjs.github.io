@@ -11,6 +11,7 @@
   display: inline-block;
   vertical-align: top;
   width: 28%;
+  float: right;
 
   input:checked+.demo-label+& {
     width: 100%;

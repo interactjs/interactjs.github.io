@@ -87,7 +87,7 @@ interact('#drag-me').draggable({
         event.target.querySelector('p').textContent =
             'moved a distance of '
             + (Math.sqrt(event.dx * event.dx +
-                        event.dy * event.dy)|0) + 'px';
+                         event.dy * event.dy)|0) + 'px';
     }
 });
 {% endhighlight %}
@@ -136,7 +136,6 @@ interact('#drag-me').draggable({
     color: #666;
     font-size: 2em;
     position: absolute;
-    margin: 0.5em;
 }
 {% endhighlight %}
         </div>
