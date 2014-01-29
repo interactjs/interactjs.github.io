@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #222;
+  font-family: Sans, Arial, sans-serif; }
+
+h1 {
+  color: #f40; }
+
+#wide-overview {
+  background-color: rgba(34, 153, 238, 0.2);
+  color: #fff;
+  text-align: center;
+  vertical-align: bottom;
+  animation-duration: 12s;
+  animation-fill-mode: forwards;
+  animation-name: bg-white-to-black;
+  -webkit-animation-duration: 12s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: bg-white-to-black;
+  /*no point in having animation when IE has no SMIL*/
+  -ms-animation: none;
+  margin-bottom: 0;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 25%;
+  max-height: 20vmin; }
+  #wide-overview #ijs-logo {
+    /*using max and min width to fix a problem in IE*/
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 25%;
+    max-height: 20vmin; }
+
+#tagline {
+  padding: 0.3em 10%;
+  margin: 0;
+  text-align: center;
+  font-size: 1.5em;
+  background-color: #29e;
+  color: #fff; }
+
+#links {
+  margin: auto;
+  text-align: center;
+  margin: 20px auto; }
+  #links li {
+    display: inline-block;
+    vertical-align: bottom;
+    list-style: disc outside; }
+
+.to-github {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+  text-shadow: none;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none; }
+
+a, a:hover, a:visited, a:active, a:focus {
+  text-decoration: none; }
+
+#star-demo {
+  margin: auto;
+  display: block;
+  height: 50vmin;
+  width: 100%; }
+
+@keyframes bg-white-to-black {
+  0% {
+    background-color: #fff; }
+
+  67% {
+    background-color: #fff; }
+
+  100% {
+    background-color: rgba(34, 153, 238, 0.2); } }
+
+@-webkit-keyframes bg-white-to-black {
+  0% {
+    background-color: #fff; }
+
+  67% {
+    background-color: #fff; }
+
+  100% {
+    background-color: rgba(34, 153, 238, 0.2); } }
+
+code {
+  overflow-wrap: break-word; }
+
+#demos {
+  width: 90%;
+  margin: auto; }

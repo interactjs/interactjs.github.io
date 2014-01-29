@@ -1,1 +1,258 @@
-interact.js
+---
+layout: default
+title: Powerful, flexible, snappable drag and drop, resizing and multi-touch gestures
+scripts     : [interact, livedemo]
+styles      : [livedemo]
+---
+
+<div id="wide-overview">
+    <img id="ijs-logo" src="img/ijs-anim.svg" alt="interact.js">
+</div>
+<p id="tagline"> Powerful, flexible, snappable drag and drop, resizing and multi-touch
+gestures for modern browsers (and also IE8+) </p>
+
+<ul id="links">
+    <li>
+    <a class="to-github" href="https://github.com/taye/interact.js">
+         View on Github 
+    </a>
+    <a class="to-github" href="/docs">
+         API Docs
+    </a>
+    </li>
+
+    <li>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Powerful, flexible, snappable drag and drop, resizing and multi-touch gestures for modern browsers" data-via="interactjs" data-size="large">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter');</script>
+    </li>
+</ul>
+
+<div id="demos">
+    <h1 id="dragging"> Dragging </h1>
+    <div id="basic-drag" class="demo-area">
+
+        <input id="demo-2-html" type="radio" name="demo-2" hidden>
+        <label class="html-label" for="demo-2-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div id="drag-me">
+    <p> Click or touch and drag this element around </p>
+</div>
+{% endhighlight %}
+        </div>
+
+        <input id="demo-2-css" type="radio" name="demo-2" hidden>
+        <label class="css-label" for="demo-2-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+#drag-me {
+    width: 25%;
+    height: 100%;
+    margin: 10%;
+
+    background-color: #29e;
+    color: white;
+    
+    border: solid 0.4em #666;
+    border-radius: 0.75em;
+    padding: 3%;
+}
+
+#drag-me::before {
+    content: "#" attr(id);
+    color: #000;
+}
+{% endhighlight %}
+        </div>
+
+        <input id="demo-2-js" type="radio" name="demo-2" hidden checked>
+        <label class="js-label" for="demo-2-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+var x = 0, y = 0;
+
+interact('#drag-me').draggable({
+    onmove: function (event) {
+        x += event.dx;
+        y += event.dy;
+
+        event.target.style.webkitTransform =
+        event.target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+    },
+    onend: function (event) {
+        event.target.querySelector('p').textContent =
+            'moved a distance of '
+            + (Math.sqrt(event.dx * event.dx +
+                        event.dy * event.dy)|0) + 'px';
+    }
+});
+{% endhighlight %}
+        </div>
+
+        <input id="demo-2-demo" type="radio" name="demo-2" hidden>
+        <label class="demo-label" for="demo-2-demo"> Demo only </label>
+    </div>
+
+    <h1 id="pinch-zoom">Multi-touch Rotation</h1>
+
+    <div class="demo-area">
+        <input id="demo-3-html" type="radio" name="demo-3" hidden>
+        <label class="html-label" for="demo-3-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div id="rotate-area">
+    <div id="angle-info"></div>
+    <svg id="arrow" viewBox="0 0 100 100">
+        <polygon
+            points="50,0 75,25 62.5,25 62.5,100 37.5,100 37.5,25 25,25" 
+            fill="#29e" />
+    </svg>
+</div>
+{% endhighlight %}
+        </div>
+
+            <input id="demo-3-css" type="radio" name="demo-3" hidden>
+            <label class="css-label" for="demo-3-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+#rotate-area {
+    /* don't want it to
+       cover code switch buttons */
+    overflow: hidden;
+}
+
+#arrow {
+    width: 100%;
+    height: 100%;
+}
+
+#angle-info {
+    color: #666;
+    font-size: 2em;
+    position: absolute;
+    margin: 0.5em;
+}
+{% endhighlight %}
+        </div>
+
+            <input id="demo-3-js" type="radio" name="demo-3" hidden checked>
+            <label class="js-label" for="demo-3-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+var angle = 0;
+
+interact('#rotate-area').gestureable({
+    onmove: function (event) {
+        var arrow = document.getElementById('arrow');
+
+        angle += event.da;
+
+        arrow.style.webkitTransform =
+        arrow.style.transform =
+            'rotate(' + angle + 'deg)';
+
+        document.getElementById('angle-info').textContent =
+            angle.toFixed(2) + '°';
+    }
+});
+
+{% endhighlight %}
+        </div>
+
+        <input id="demo-3-demo" type="radio" name="demo-3" hidden>
+        <label class="demo-label" for="demo-3-demo"> Demo only </label>
+    </div>
+    <h1 id="pinch-zoom">Gesture Pinch-to-zoom</h1>
+
+    <div class="demo-area">
+
+        <input id="demo-1-html" type="radio" name="demo-1" hidden>
+        <label class="html-label" for="demo-1-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div id="gesture-area">
+    <!-- thanks //commons.wikimedia.org/wiki/User:Booyabazooka -->
+    <img id="scale-element" src="img/rcube.png">
+</div>
+{% endhighlight %}
+        </div>
+
+        <input id="demo-1-css" type="radio" name="demo-1" hidden>
+        <label class="css-label" for="demo-1-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+#scale-element {
+    width: 100%;
+}
+
+#scale-element.reset {
+    transition: -webkit-transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+}
+{% endhighlight %}
+        </div>
+
+        <input id="demo-1-js" type="radio" name="demo-1" hidden checked>
+        <label class="js-label" for="demo-1-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+var scale = 1,
+    scaleElement = document.getElementById('scale-element'),
+    gestureArea = document.getElementById('gesture-area'),
+    resetTimeout;
+
+interact(gestureArea).gestureable({
+    onstart: function (event) {
+        clearTimeout(resetTimeout);
+        scaleElement.classList.remove('reset');
+    },
+    onmove: function (event) {
+        scale = scale * (1 + event.ds);
+        
+        scaleElement.style.webkitTransform =
+        scaleElement.style.transform =
+            'scale(' + scale + ')';
+    },
+    onend: function (event) {
+        resetTimeout = setTimeout(reset, 1000);
+        scaleElement.classList.add('reset');
+    }
+});
+
+function reset () {
+    scale = 1;
+    scaleElement.style.webkitTransform =
+    scaleElement.style.transform =
+        'scale(1)';
+}
+
+// prevent browser's native drag on the image
+gestureArea.addEventListener('dragstart', function (event) {
+    event.preventDefault();
+})
+{% endhighlight %}
+        </div>
+
+        <input id="demo-1-demo" type="radio" name="demo-1" hidden>
+        <label class="demo-label" for="demo-1-demo"> Demo only </label>
+    </div>
+</div>
+
+<script>
+    window.liveDemoSettings.codeElementDepth = 4;
+    window.liveDemoSettings.insertPosition = 'beforeend';
+</script>
+
+<!--<div >-->
+    <!--<object id="star-demo" type="image/svg+xml" data="repo/demo/star.svg"></object>-->
+<!--</div>-->

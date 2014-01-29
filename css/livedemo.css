@@ -1,0 +1,88 @@
+.demo-area {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  margin: 1.8em auto 0.5em auto; }
+
+.live-demo {
+  display: inline-block;
+  vertical-align: top;
+  width: 28%; }
+  input:checked + .demo-label + .live-demo {
+    width: 100%; }
+
+.html-label,
+.css-label,
+.js-label,
+.demo-label {
+  background-color: #272822;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  position: absolute;
+  padding: 0.5em 0;
+  margin-top: -1.8em;
+  left: 0;
+  width: 5em; }
+  input:checked + .html-label, input:checked +
+  .css-label, input:checked +
+  .js-label, input:checked +
+  .demo-label {
+    color: #29e; }
+
+.html-label {
+  left: 6em; }
+
+.css-label {
+  left: 12em; }
+
+.demo-label {
+  left: 18em;
+  width: 6.5em; }
+
+.html-code,
+.css-code,
+.js-code {
+  width: 70%;
+  /*height: 22em;*/
+  display: none;
+  float: left; }
+  input:checked + label + .html-code, input:checked + label +
+  .css-code, input:checked + label +
+  .js-code {
+    display: block; }
+  .html-code pre,
+  .css-code pre,
+  .js-code pre {
+    padding: 1em 0.5em;
+    margin: 0; }
+
+@media screen and (max-width: 640px) {
+  .html-code,
+  .css-code,
+  .js-code {
+    width: 100%; }
+
+  .live-demo {
+    width: 100%; } }
+@media screen and (max-width: 450px) {
+  .html-label {
+    left: 4em; }
+
+  .css-label {
+    left: 8em; }
+
+  .demo-label {
+    left: 12em;
+    width: 6em; }
+
+  .html-label,
+  .css-label,
+  .js-label {
+    width: 3.5em; }
+
+  .html-code,
+  .css-code,
+  .js-code {
+    font-size: 0.9em; } }

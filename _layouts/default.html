@@ -1,0 +1,62 @@
+---
+author      : "Taye Adeyemi"
+ga_create   : ["'U--A-44445883-3'", "'interactjs.io'"]
+google_plus : "107750313581859477605"
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title | xml_escape }} - interact.js</title>
+    <meta name="author" content="{{ page.author }}" />
+    <meta name="keywords" content="{{ page.tags | join:' ' }}" />
+{% if page.description && page.description != "" %}
+    <meta name="description" content="{{ page.description }}" />
+{% elsif page.excerpt && page.excerpt != ""%}
+    <meta name="description" content="{{ page.excerpt }}" />
+{% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="alternate" type="application/rss+xml" href="{{ site.baseurl }}/rss.xml"/>
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/normalize.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+    <link rel="icon" href="{{ site.baseurl }}/img/ijs-64.png"/>
+
+{% for style in page.styles %}
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/{{ style }}.css"> {% endfor %}
+{% for script in page.scripts %}
+    <script src="{{ site.baseurl }}/js/{{ script }}.js"></script>{% endfor %}
+
+</head>
+<body>
+
+<div class="site">
+    <div class="header">
+    </div>
+
+    {{ content }}
+
+    <div class="footer">
+    </div>
+</div>
+
+{% if page.do_not_track != true and page.ga_create and page.ga_create != empty and page.ga_create != "" %}
+<script>
+if (!/yes|1/.test(navigator.doNotTrack)) {
+    (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+    (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+    y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', {{ page.ga_create | join:', ' }});
+    ga('send', 'pageview');
+}
+</script>
+{% endif %}
+</body>
+</html>
