@@ -97,6 +97,78 @@ interact('#drag-me').draggable({
         <label class="demo-label" for="demo-2-demo"> Demo only </label>
     </div>
 
+    <h1> Snapping </h1>
+
+    <div class="demo-area">
+        <input id="demo-4-html" type="radio" name="demo-4" hidden>
+        <label class="html-label" for="demo-4-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div id="grid-snap">
+    Dragging is constrained to the cornsers of a grid
+</div>
+{% endhighlight %}
+        </div>
+
+        <input id="demo-4-css" type="radio" name="demo-4" hidden>
+        <label class="css-label" for="demo-4-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+#grid-snap {
+    width: 40%;
+    background-color: #4e4;
+    color: #fff;
+    font-size: 1.2em;
+    border-radius: 4px;
+    padding: 2%;
+    margin: 5%;
+}
+
+#grid-snap::after {
+    content: attr(data-x) ", " attr(data-y);
+    background-color: #29e;
+    color: #fff;
+    float: right;
+}
+{% endhighlight %}
+        </div>
+
+        <input id="demo-4-js" type="radio" name="demo-4" hidden checked>
+        <label class="js-label" for="demo-4-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+var element = document.getElementById('grid-snap'),
+    x = 0, y = 0;
+
+interact(element)
+    .draggable(true)
+    .snap({
+        mode: 'grid',
+        grid: { x: 30, y: 30 },
+        range: Infinity
+    }) 
+    .on('dragmove', function (event) {
+        x += event.dx;
+        y += event.dy;
+
+        event.target.dataset.x = event.pageX;
+        event.target.dataset.y = event.pageY;
+
+        event.target.style.webkitTransform =
+        event.target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+    });
+{% endhighlight %}
+        </div>
+
+            <input id="demo-4-demo" type="radio" name="demo-4" hidden>
+            <label class="demo-label" for="demo-4-demo"> Demo only </label>
+    </div>
+
+
     <h1 id="pinch-zoom">Multi-touch Rotation</h1>
 
     <div class="demo-area">
