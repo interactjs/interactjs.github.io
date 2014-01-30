@@ -11,38 +11,33 @@ h1 {
   color: #f40;
 }
 
-#wide-overview {
-  background-color: rgba(34, 153, 238, 0.2);
+#logo-area {
+  background-color: #272822;
   color: #fff;
 
+  font-size: 5em;
   text-align: center;
-  vertical-align: bottom;
-
-  animation-duration: 12s;
-  animation-fill-mode: forwards;
-  animation-name: bg-white-to-black;
-
-  -webkit-animation-duration: 12s;
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-name: bg-white-to-black;
-
-  /*no point in having animation when IE has no SMIL*/
-  -ms-animation: none;
-
+  vertical-align: middle;
   margin-bottom: 0;
+
+  /*using max and min width to fix a problem in IE*/
   max-width: 100%;
   min-width: 100%;
 
-  max-height: 25%;
+  height: 1.25em;
+  max-height: 20%;
   max-height: 20vmin;
 
   #ijs-logo {
     /*using max and min width to fix a problem in IE*/
-    max-width: 100%;
-    min-width: 100%;
+    width: 100%;
 
-    max-height: 25%;
+    height: 1.25em;
+    max-height: 20%;
     max-height: 20vmin;
+
+    position: absolute;
+    left: 0;
   }
 }
 
@@ -107,30 +102,6 @@ a, a:hover, a:visited, a:active, a:focus {
   width: 100%;
 }
 
-@keyframes bg-white-to-black {
-  0% {
-    background-color: #fff;
-  }
-  67% {
-    background-color: #fff;
-  }
-  100% {
-    background-color: #272822;
-  }
-}
-
-@-webkit-keyframes bg-white-to-black {
-  0% {
-    background-color: #fff;
-  }
-  67% {
-    background-color: #fff;
-  }
-  100% {
-    background-color: #272822;
-  }
-}
-
 code {
   overflow-wrap: break-word;
 }
@@ -138,4 +109,7 @@ code {
 #demos {
   width: 90%;
   margin: auto;
+  overflow: hidden;
 }
+
+
