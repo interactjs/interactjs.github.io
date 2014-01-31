@@ -2,11 +2,8 @@
   width: 100%;
   position: relative;
   display: inline-block;
-  margin: 1.8em auto 0.5em auto;
-  border: solid 0.25em #272822;
-  border-left-width: 0; }
+  margin: 1.8em auto 0.5em auto; }
   .demo-area::before {
-    content: "";
     width: 0.25em;
     background-color: #272822;
     display: inline-block;
