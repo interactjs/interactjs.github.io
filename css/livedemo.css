@@ -2,13 +2,23 @@
   width: 100%;
   position: relative;
   display: inline-block;
-  margin: 1.8em auto 0.5em auto; }
+  margin: 1.8em auto 0.5em auto;
+  border: solid 0.25em #272822;
+  border-left-width: 0; }
+  .demo-area::before {
+    content: "";
+    width: 0.25em;
+    background-color: #272822;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0; }
 
 .live-demo {
   display: inline-block;
   vertical-align: top;
-  width: 28%;
-  float: right; }
+  width: 30%; }
   input:checked + .demo-label + .live-demo {
     width: 100%; }
 

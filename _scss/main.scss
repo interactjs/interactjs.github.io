@@ -109,7 +109,12 @@ code {
 #demos {
   width: 90%;
   margin: auto;
-  overflow: hidden;
 }
 
-
+.live-demo {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+}
