@@ -38,11 +38,11 @@ h1 {
   background-color: #29e;
   color: #fff; }
 
-#links {
+.links {
   margin: auto;
   text-align: center;
   margin: 20px auto; }
-  #links li {
+  .links li {
     display: inline-block;
     vertical-align: bottom;
     list-style: disc outside; }
