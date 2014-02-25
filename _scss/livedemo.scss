@@ -81,6 +81,9 @@
   pre {
     padding: 1em 0.5em;
     margin: 0;
+
+    white-space: pre;
+    overflow: auto;
   }
 }
 
