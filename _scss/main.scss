@@ -53,7 +53,7 @@ h1 {
 
 .links {
   text-align: center;
-  margin: 20px auto;
+  margin: 0.25em auto;
   padding: 0;
 
   li {
@@ -69,6 +69,9 @@ h1 {
   $shadow: 0.25em;
   $hover-shadow: $shadow * 2;
 
+  font-family: monospace;
+  font-size: 1.2em;
+  letter-spacing: -0.05em;
   text-align: center;
   color: #ffffff;
   background-color: #92e;
@@ -93,7 +96,35 @@ h1 {
 #get-some {
   text-align: center;
   color: #FFF;
-  background-color: #92E;
+
+  margin: 0.25em auto;
+  padding: 0.5em 0;
+}
+
+#get-min, #get-dev {
+  font-size: 1em;
+  background-color: #92e;
+  width: 16em;
+  margin: 0.25em;
+  padding: 0.5em;
+
+  display: inline-block;
+
+  a {
+    background-color: #f40;
+
+    margin: 0.5em;
+  }
+}
+
+.link-btn[data-count]::after {
+  content: attr(data-count);
+
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0.2em;
+  margin: -0.2em;
+  margin-left: 0.5em;
+  line-height: 1em;
 }
 
 a, a:hover, a:visited, a:active, a:focus {
