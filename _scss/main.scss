@@ -11,6 +11,10 @@ h1 {
   color: #f40;
 }
 
+.site {
+  padding-bottom: 1em;
+}
+
 #logo-area {
   background-color: #272822;
   color: #fff;
@@ -53,13 +57,13 @@ h1 {
 
 .links {
   text-align: center;
-  margin: 0.25em auto;
+  margin: auto;
   padding: 0;
 
   li {
     display: inline-block;
     vertical-align: bottom;
-    margin: 0 0.5em;
+    margin: 0.25em 0.5em;
 
     list-style: disc outside;
   }
@@ -97,7 +101,6 @@ h1 {
   text-align: center;
   color: #FFF;
 
-  margin: 0.25em auto;
   padding: 0.5em 0;
 }
 
