@@ -39,36 +39,34 @@ h1 {
   color: #fff; }
 
 .links {
-  margin: auto;
   text-align: center;
-  margin: 20px auto; }
+  margin: 20px auto;
+  padding: 0; }
   .links li {
     display: inline-block;
     vertical-align: bottom;
+    margin: 0 0.5em;
     list-style: disc outside; }
 
-.to-github {
-  color: #ffffff;
-  background-color: #3276b1;
-  border-color: #285e8e;
-  text-shadow: none;
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.428571429;
+.link-btn {
   text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
+  color: #ffffff;
+  background-color: #92e;
+  border-color: #285e8e;
+  padding: 0.5em 1em;
+  display: inline-block;
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none; }
+  box-shadow: -0.25em 0.25em rgba(0, 0, 0, 0.4);
+  transition: all 0.2s; }
+  .link-btn:hover {
+    box-shadow: -0.5em 0.5em rgba(0, 0, 0, 0.4);
+    -webkit-transform: translate(0.2em, -0.2em);
+    transform: translate(0.2em, -0.2em); }
+
+#get-some {
+  text-align: center;
+  color: #FFF;
+  background-color: #92E; }
 
 a, a:hover, a:visited, a:active, a:focus {
   text-decoration: none; }
