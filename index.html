@@ -109,6 +109,117 @@ interact('#drag-me').draggable({
         <input id="demo-2-demo" type="radio" name="demo-2" hidden>
         <label class="demo-label" for="demo-2-demo"> Demo only </label>
     </div>
+    <h1 id="drag-and-drop"> Drag and drop </h1>
+    <div id="drag-drop-demo" class="demo-area">
+
+        <input id="demo-5-html" type="radio" name="demo-5" hidden>
+        <label class="html-label" for="demo-5-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div id="drag-drop">
+    <p> #drag-drop </p>
+</div>
+
+<div id="dropzone" class="dropzone"> #dropzone </div>
+</div>
+{% endhighlight %}
+        </div>
+
+        <input id="demo-5-css" type="radio" name="demo-5" hidden>
+        <label class="css-label" for="demo-5-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+#dropzone {
+    background-color: #aaa;
+    border: dashed 4px #666;
+    border-radius: 4px;
+    margin: 10px auto 0;
+    width: 80%;
+    height: 150px;
+    transition: background-color 0.3s;
+}
+
+#dropzone.drop-target {
+    background-color: #29e;
+}
+
+#drag-drop {
+    display: inline-block;
+    height: 100px;
+    min-width: 40px;
+
+    background-color: yellow;
+    border: solid 2px white;
+
+    transition: background-color 0.3s;
+}
+
+#drag-drop.can-drop {
+    background-color: #4e4;
+}
+{% endhighlight %}
+        </div>
+
+        <input id="demo-5-js" type="radio" name="demo-5" hidden checked>
+        <label class="js-label" for="demo-5-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+interact('.dropzone')
+    .dropzone(true)
+    .on('dragenter', function (event) {
+        var draggableElement = event.relatedTarget,
+            dropzoneElement = event.target;
+
+        // if the draggable is the one we want
+        if (draggableElement.id === 'drag-drop') {
+            // feedback the possibility of a drop
+            dropzoneElement.classList.add('drop-target');
+            draggableElement.classList.add('can-drop');
+
+            draggableElement.textContent = 'Dragged in';
+        }
+    })
+    .on('dragleave', function (event) {
+        if (event.relatedTarget.id === 'drag-drop') {
+            // remove the drop feedback style
+            event.target.classList.remove('drop-target');
+            event.relatedTarget.classList.remove('can-drop');
+
+            event.relatedTarget.textContent = 'Dragged out';
+        }
+    })
+    .on('drop', function (event) {
+        if (event.relatedTarget.id === 'drag-drop') {
+            var draggableElement = event.relatedTarget;
+
+            if (draggableElement.id === 'drag-drop') {
+                draggableElement.textContent = 'Dropped';
+            }
+        }
+    });
+
+var x = 0, y = 0;
+
+interact('#drag-drop')
+    .draggable(true)
+    .ondragmove = function (event) {
+        var target = event.target;
+
+        x += event.dx;
+        y += event.dy;
+
+        target.style.webkitTransform = target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+    };
+{% endhighlight %}
+        </div>
+
+        <input id="demo-5-demo" type="radio" name="demo-5" hidden>
+        <label class="demo-label" for="demo-5-demo"> Demo only </label>
+    </div>
 
     <h1> Snapping </h1>
 
