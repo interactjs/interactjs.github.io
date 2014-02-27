@@ -15,6 +15,10 @@
         SVGElementInstance = window.SVGElementInstance || blank,
         HTMLElement        = window.HTMLElement        || window.Element,
 
+        PointerEvent = window.PointerEvent || window.MSPointerEvent,
+        GestureEvent = window.GestureEvent || window.MSGestureEvent,
+        Gesture      = window.Gesture      || window.MSGesture,
+
         // Previous interact move event pointer position
         prevX       = 0,
         prevY       = 0,
@@ -52,6 +56,7 @@
         selectorDZs     = [],   // all dropzone selector interactables
         matches         = [],   // all selectors that are matched by target element
         delegatedEvents = {},   // { type: { selector: [[listener, useCapture]} }
+        selectorGesture = null, // MSGesture object for selector PointerEvents
 
         target          = null, // current interactable being interacted with
         dropTarget      = null, // the dropzone a drag target might be dropped into
@@ -299,15 +304,15 @@
 
         // Events wrapper
         events = (function () {
-            /* jshint -W001 */ // ignore warning about setting IE8 Event#hasOwnProperty
             var Event = window.Event,
                 useAttachEvent = 'attachEvent' in window && !('addEventListener' in window),
                 addEvent = !useAttachEvent?  'addEventListener': 'attachEvent',
                 removeEvent = !useAttachEvent?  'removeEventListener': 'detachEvent',
                 on = useAttachEvent? 'on': '',
 
-                elements = [],
-                targets  = [];
+                elements          = [],
+                targets           = [],
+                attachedListeners = [];
 
             if (!('indexOf' in Array.prototype)) {
                 Array.prototype.indexOf = function(elt /*, from*/)   {
@@ -346,11 +351,13 @@
                 };
             }
             if (!('hasOwnProperty' in Event.prototype)) {
+                /* jshint -W001 */ // ignore warning about setting IE8 Event#hasOwnProperty
                 Event.prototype.hasOwnProperty = Object.prototype.hasOwnProperty;
             }
 
             function add (element, type, listener, useCapture) {
-                var target = targets[elements.indexOf(element)];
+                var elementIndex = elements.indexOf(element),
+                    target = targets[elementIndex];
 
                 if (!target) {
                     target = {
@@ -358,11 +365,17 @@
                         typeCount: 0
                     };
 
-                    elements.push(element);
+                    elementIndex = elements.push(element) - 1;
                     targets.push(target);
+
+                    attachedListeners.push((useAttachEvent ? {
+                            supplied: [],
+                            wrapped:  [],
+                            useCount: []
+                        } : null));
                 }
 
-                if (!(type in target.events)) {
+                if (!target.events[type]) {
                     target.events[type] = [];
                     target.typeCount++;
                 }
@@ -371,7 +384,10 @@
                     var ret;
 
                     if (useAttachEvent) {
-                        ret = element[addEvent](on + type, function (event) {
+                        var listeners = attachedListeners[elementIndex],
+                            listenerIndex = listeners.supplied.indexOf(listener);
+
+                        var wrapped = listeners.wrapped[listenerIndex] || function (event) {
                             if (!event.immediatePropagationStopped) {
                                 event.target = event.srcElement;
                                 event.currentTarget = element;
@@ -383,7 +399,18 @@
 
                                 listener(event);
                             }
-                        }, listener, useCapture || false);
+                        };
+
+                        ret = element[addEvent](on + type, wrapped, Boolean(useCapture));
+
+                        if (listenerIndex === -1) {
+                            listeners.supplied.push(listener);
+                            listeners.wrapped.push(wrapped);
+                            listeners.useCount.push(1);
+                        }
+                        else {
+                            listeners.useCount[listenerIndex]++;
+                        }
                     }
                     else {
                         ret = element[addEvent](type, listener, useCapture || false);
@@ -396,10 +423,20 @@
 
             function remove (element, type, listener, useCapture) {
                 var i,
-                target = targets[elements.indexOf(element)];
+                    elementIndex = elements.indexOf(element),
+                    target = targets[elementIndex],
+                    listeners,
+                    listenerIndex,
+                    wrapped = listener;
 
                 if (!target || !target.events) {
                     return;
+                }
+
+                if (useAttachEvent) {
+                    listeners = attachedListeners[elementIndex];
+                    listenerIndex = listeners.supplied.indexOf(listener);
+                    wrapped = listeners.wrapped[listenerIndex];
                 }
 
                 if (type === 'all') {
@@ -416,21 +453,28 @@
 
                     if (listener === 'all') {
                         for (i = 0; i < len; i++) {
-                            element[removeEvent](on + type, target.events[type][i], useCapture || false);
+                            remove(element, type, target.events[type][i], Boolean(useCapture));
                         }
-                        target.events[type] = null;
-                        target.typeCount--;
                     } else {
                         for (i = 0; i < len; i++) {
                             if (target.events[type][i] === listener) {
-
-                                element[removeEvent](on + type, target.events[type][i], useCapture || false);
+                                element[removeEvent](on + type, wrapped, useCapture || false);
                                 target.events[type].splice(i, 1);
+
+                                if (useAttachEvent && listeners) {
+                                    listeners.useCount[listenerIndex]--;
+                                    if (listeners.useCount[listenerIndex] === 0) {
+                                        listeners.supplied.splice(listenerIndex, 1);
+                                        listeners.wrapped.splice(listenerIndex, 1);
+                                        listeners.useCount.splice(listenerIndex, 1);
+                                    }
+                                }
 
                                 break;
                             }
                         }
                     }
+
                     if (target.events[type] && target.events[type].length === 0) {
                         target.events[type] = null;
                         target.typeCount--;
@@ -438,8 +482,9 @@
                 }
 
                 if (!target.typeCount) {
-                    targets.splice(targets.indexOf(target), 1);
-                    elements.splice(elements.indexOf(element), 1);
+                    targets.splice(elementIndex);
+                    elements.splice(elementIndex);
+                    attachedListeners.splice(elementIndex);
                 }
             }
 
@@ -495,16 +540,28 @@
     }
 
     function getPageXY (event) {
+        var page;
+
         // Opera Mobile handles the viewport and scrolling oddly
         if (isOperaMobile) {
-            var page = getXY('screen', event);
+            page = getXY('screen', event);
 
             page.x += window.scrollX;
             page.y += window.scrollY;
+        }
+        else if (/gesture|inertia/i.test(event.type)) {
+            page = getXY('client', event);
+
+            page.x += document.documentElement.scrollLeft;
+            page.y += document.documentElement.scrollTop;
 
             return page;
         }
-        return getXY('page', event);
+        else {
+            page = getXY('page', event);
+        }
+
+        return page;
     }
 
     function getClientXY (event) {
@@ -1056,7 +1113,7 @@
             return;
         }
 
-        if (matches.length && event.type === 'mousedown') {
+        if (matches.length && /mousedown|pointerdown/i.test(event.type)) {
             action = validateSelector(event, matches);
         }
         else {
@@ -1099,9 +1156,7 @@
         if ((event.touches && event.touches.length < 2 && !target)
             || !pointerIsDown) {
 
-            var getFrom = events.useAttachEvent? event.currentTarget: this;
-
-            target = interactables.get(getFrom);
+            target = interactables.get(event.currentTarget);
         }
 
         var options = target && target.options;
@@ -1112,6 +1167,20 @@
                 page,
                 client,
                 origin = getOriginXY(target);
+
+            if (PointerEvent && event instanceof PointerEvent) {
+                if (target.selector) {
+                    selectorGesture.addPointer(event.pointerId);
+                }
+                else {
+                    // Dom modification seems to reset the gesture target
+                    if (!target._gesture.target) {
+                        target._gesture.target = target._element;
+                    }
+
+                    target._gesture.addPointer(event.pointerId);
+                }
+            }
 
             if (event.touches) {
                 average = touchAverage(event);
@@ -1187,6 +1256,7 @@
                         distY,
                         distance,
                         i, len;
+
 
                     snapStatus.realX = page.x;
                     snapStatus.realY = page.y;
@@ -1461,10 +1531,12 @@
         }
 
         var draggableElement = target._element,
-            dropzoneElement  = dropTarget? dropTarget._element: null;
+            prevDropzoneElement  = prevDropTarget && prevDropTarget._element;
 
         dragEvent  = new InteractEvent(event, 'drag', 'move');
         dropTarget = getDrop(event, target);
+
+        var dropzoneElement = dropTarget? dropTarget._element: null;
 
         // Make sure that the target selector draggable's element is
         // restored after dropChecks
@@ -1473,7 +1545,7 @@
         if (dropTarget !== prevDropTarget) {
             // if there was a prevDropTarget, create a dragleave event
             if (prevDropTarget) {
-                dragLeaveEvent      = new InteractEvent(event, 'drag', 'leave', dropzoneElement, draggableElement);
+                dragLeaveEvent      = new InteractEvent(event, 'drag', 'leave', prevDropzoneElement, draggableElement);
 
                 dragEvent.dragLeave = prevDropTarget._element;
                 leaveDropTarget     = prevDropTarget;
@@ -1601,12 +1673,16 @@
         }
 
         var elementInteractable = interactables.get(eventTarget),
-            action = elementInteractable
+            elementAction = elementInteractable
                      && validateAction(
-                         elementInteractable.getAction(event, elementInteractable),
+                         elementInteractable.getAction(event),
                          elementInteractable);
 
-        if (!elementInteractable || !validateAction(elementInteractable.getAction(event), elementInteractable)) {
+        if (elementAction) {
+            target = elementInteractable;
+            matches = [];
+        }
+        else {
             if (validateSelector(event, curMatches)) {
                 matches = curMatches;
 
@@ -1727,7 +1803,7 @@
             endEvent = new InteractEvent(event, 'gesture', 'end');
             target.fire(endEvent);
         }
-        else if ((event.type === 'mouseup' || event.type === 'touchend') && target && pointerIsDown && !pointerWasMoved) {
+        else if (/mouseup|touchend|pointerup/i.test(event.type) && target && pointerIsDown && !pointerWasMoved) {
             var tap = {};
 
             for (var prop in event) {
@@ -1818,7 +1894,7 @@
     };
 
     function clearTargets () {
-        if (!target.selector) {
+        if (target && !target.selector) {
             target = null;
         }
 
@@ -1885,10 +1961,19 @@
         }
         else {
             if(element instanceof Element) {
-                events.add(this, 'mousemove' , pointerHover);
-                events.add(this, 'mousedown' , pointerDown );
-                events.add(this, 'touchmove' , pointerHover);
-                events.add(this, 'touchstart', pointerDown );
+                if (PointerEvent) {
+                    events.add(this, 'pointerdown', pointerDown );
+                    events.add(this, 'pointermove', pointerHover);
+
+                    this._gesture = new Gesture();
+                    this._gesture.target = element;
+                }
+                else {
+                    events.add(this, 'mousedown' , pointerDown );
+                    events.add(this, 'mousemove' , pointerHover);
+                    events.add(this, 'touchstart', pointerDown );
+                    events.add(this, 'touchmove' , pointerHover);
+                }
             }
 
             elements.push(this);
@@ -1901,15 +1986,28 @@
 
     Interactable.prototype = {
         setOnEvents: function (action, phases) {
-            var start = phases.onstart || phases.onStart,
-                move  = phases.onmove  || phases.onMove,
-                end   = phases.onend   || phases.onEnd;
+            if (action === 'drop') {
+                var drop      = phases.ondrop      || phases.onDrop      || phases.drop,
+                    dragenter = phases.ondragenter || phases.onDropEnter || phases.dragenter,
+                    dragleave = phases.ondragleave || phases.onDropLeave || phases.dragleave;
 
-            action = 'on' + action;
+                if (typeof drop      === 'function') { this.ondrop      = drop     ; }
+                if (typeof dragenter === 'function') { this.ondragenter = dragenter; }
+                if (typeof dragleave === 'function') { this.ondragleave = dragleave; }
+            }
+            else {
+                var start     = phases.onstart     || phases.onStart     || phases.start,
+                    move      = phases.onmove      || phases.onMove      || phases.move,
+                    end       = phases.onend       || phases.onEnd       || phases.end,
 
-            if (typeof start === 'function') { this[action + 'start'] = start; }
-            if (typeof move  === 'function') { this[action + 'move' ] = move ; }
-            if (typeof end   === 'function') { this[action + 'end'  ] = end  ; }
+                action = 'on' + action;
+
+                if (typeof start === 'function') { this[action + 'start'] = start; }
+                if (typeof move  === 'function') { this[action + 'move' ] = move ; }
+                if (typeof end   === 'function') { this[action + 'end'  ] = end  ; }
+            }
+
+            return this;
         },
 
         /*\
@@ -1965,10 +2063,9 @@
         \*/
         dropzone: function (options) {
             if (options instanceof Object) {
-                var ondrop = options.ondrop || options.onDrop;
-                if (typeof ondrop === 'function') { this.ondrop = ondrop; }
-
                 this.options.dropzone = true;
+                this.setOnEvents('drop', options);
+
                 (this.selector? selectorDZs: dropzones).push(this);
 
                 if (!dynamicDrop && !this.selector) {
@@ -2719,10 +2816,7 @@
          * Interactable.on
          [ method ]
          *
-         * Binds a listener for an InteractEvent or DOM event. If this is a
-         * selector Interactable, the event's currentTarget will always be
-         * `document`. `delegateTarget` holds the element that matches the
-         * selector.
+         * Binds a listener for an InteractEvent or DOM event.
          *
          - eventType  (string)   The type of event to listen for
          - listener   (function) The function to be called on that event
@@ -2873,10 +2967,15 @@
                 if (this.options.styleCursor) {
                     this._element.style.cursor = '';
                 }
+
+                if (this._gesture) {
+                    this._gesture.target = null;
+                }
+
                 elements.splice(elements.indexOf(this.element()));
             }
 
-            this.dropzone   (false);
+            this.dropzone(false);
 
             interactables.splice(interactables.indexOf(this), 1);
 
@@ -3317,6 +3416,12 @@
             if (target.options.styleCursor) {
                 document.documentElement.style.cursor = '';
             }
+
+            if (target._gesture) {
+                target._gesture.stop();
+                selectorGesture.stop();
+            }
+
             clearTargets();
 
             for (var i = 0; i < selectorDZs.length; i++) {
@@ -3408,17 +3513,32 @@
         return this;
     };
 
+    if (PointerEvent) {
+        events.add(docTarget, 'pointerdown'    , selectorDown);
+        events.add(docTarget, 'pointercancel'  , pointerUp   );
+        events.add(docTarget, 'MSGestureChange', pointerMove );
+        events.add(docTarget, 'MSGestureEnd'   , pointerUp   );
+        events.add(docTarget, 'MSInertiaStart' , pointerUp   );
+        events.add(docTarget, 'pointerover'    , pointerOver );
+        events.add(docTarget, 'pointerout'     , pointerOut  );
 
-    events.add(docTarget   , 'mousedown'    , selectorDown);
-    events.add(docTarget   , 'touchstart'   , selectorDown);
-    events.add(docTarget   , 'mousemove'    , pointerMove );
-    events.add(docTarget   , 'touchmove'    , pointerMove );
-    events.add(docTarget   , 'mouseover'    , pointerOver );
-    events.add(docTarget   , 'mouseout'     , pointerOut  );
-    events.add(docTarget   , 'mouseup'      , pointerUp   );
-    events.add(docTarget   , 'touchend'     , pointerUp   );
-    events.add(docTarget   , 'touchcancel'  , pointerUp   );
-    events.add(windowTarget, 'blur'         , pointerUp   );
+        selectorGesture = new Gesture();
+        selectorGesture.target = document.documentElement;
+    }
+    else {
+        events.add(docTarget, 'mousedown', selectorDown);
+        events.add(docTarget, 'mousemove', pointerMove );
+        events.add(docTarget, 'mouseup'  , pointerUp   );
+        events.add(docTarget, 'mouseover', pointerOver );
+        events.add(docTarget, 'mouseout' , pointerOut  );
+
+        events.add(docTarget, 'touchstart' , selectorDown);
+        events.add(docTarget, 'touchmove'  , pointerMove );
+        events.add(docTarget, 'touchend'   , pointerUp   );
+        events.add(docTarget, 'touchcancel', pointerUp   );
+    }
+
+    events.add(windowTarget, 'blur', pointerUp);
 
     try {
         if (window.frameElement) {
@@ -3427,6 +3547,7 @@
             events.add(parentDocTarget   , 'mouseup'      , pointerUp);
             events.add(parentDocTarget   , 'touchend'     , pointerUp);
             events.add(parentDocTarget   , 'touchcancel'  , pointerUp);
+            events.add(parentDocTarget   , 'pointerup'    , pointerUp);
             events.add(parentWindowTarget, 'blur'         , pointerUp);
         }
     }
