@@ -117,12 +117,11 @@ interact('#drag-me').draggable({
         <div class="html-code">
 {% highlight html %}
 <!-- enable javascript to view a demo -->
-<div id="drag-drop">
-    <p> #drag-drop </p>
-</div>
+<div id="no-drop" class="drag-drop"> #no-drop </div>
+
+<div id="yes-drop" class="drag-drop"> #yes-drop </div>
 
 <div id="dropzone" class="dropzone"> #dropzone </div>
-</div>
 {% endhighlight %}
         </div>
 
@@ -145,7 +144,7 @@ interact('#drag-me').draggable({
     background-color: #29e;
 }
 
-#drag-drop {
+.drag-drop {
     display: inline-block;
     height: 100px;
     min-width: 40px;
@@ -156,7 +155,7 @@ interact('#drag-me').draggable({
     transition: background-color 0.3s;
 }
 
-#drag-drop.can-drop {
+.can-drop {
     background-color: #4e4;
 }
 {% endhighlight %}
@@ -169,51 +168,40 @@ interact('#drag-me').draggable({
 /* enable javascript to view a demo */
 interact('.dropzone')
     .dropzone(true)
+    .accept('#yes-drop')
     .on('dragenter', function (event) {
         var draggableElement = event.relatedTarget,
             dropzoneElement = event.target;
 
-        // if the draggable is the one we want
-        if (draggableElement.id === 'drag-drop') {
-            // feedback the possibility of a drop
-            dropzoneElement.classList.add('drop-target');
-            draggableElement.classList.add('can-drop');
+        // feedback the possibility of a drop
+        dropzoneElement.classList.add('drop-target');
+        draggableElement.classList.add('can-drop');
 
-            draggableElement.textContent = 'Dragged in';
-        }
+        draggableElement.textContent = 'Dragged in';
     })
     .on('dragleave', function (event) {
-        if (event.relatedTarget.id === 'drag-drop') {
-            // remove the drop feedback style
-            event.target.classList.remove('drop-target');
-            event.relatedTarget.classList.remove('can-drop');
+        // remove the drop feedback style
+        event.target.classList.remove('drop-target');
+        event.relatedTarget.classList.remove('can-drop');
 
-            event.relatedTarget.textContent = 'Dragged out';
-        }
+        event.relatedTarget.textContent = 'Dragged out';
     })
     .on('drop', function (event) {
-        if (event.relatedTarget.id === 'drag-drop') {
-            var draggableElement = event.relatedTarget;
-
-            if (draggableElement.id === 'drag-drop') {
-                draggableElement.textContent = 'Dropped';
-            }
-        }
+        event.relatedTarget.textContent = 'Dropped';
     });
 
-var x = 0, y = 0;
+interact('.drag-drop')
+    .draggable({
+        onmove: function (event) {
+            var target = event.target;
 
-interact('#drag-drop')
-    .draggable(true)
-    .ondragmove = function (event) {
-        var target = event.target;
+            target.x = (target.x|0) + event.dx;
+            target.y = (target.y|0) + event.dy;
 
-        x += event.dx;
-        y += event.dy;
-
-        target.style.webkitTransform = target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)';
-    };
+            target.style.webkitTransform = target.style.transform =
+                'translate(' + target.x + 'px, ' + target.y + 'px)';
+        }
+    });
 {% endhighlight %}
         </div>
 
