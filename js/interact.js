@@ -1,5 +1,5 @@
 /**
- * interact.js v1.0.7
+ * interact.js v1.0.8
  *
  * Copyright (c) 2012, 2013, 2014 Taye Adeyemi <dev@taye.me>
  * Open source under the MIT License.
@@ -60,9 +60,9 @@
 
         target          = null, // current interactable being interacted with
         dropTarget      = null, // the dropzone a drag target might be dropped into
-        dropElement     = null,
+        dropElement     = null, // the element at the time of checking
         prevDropTarget  = null, // the dropzone that was recently dragged away from
-        prevDropElement = null,
+        prevDropElement = null, // the element at the time of checking
 
         defaultOptions = {
             draggable   : false,
