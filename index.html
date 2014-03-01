@@ -135,6 +135,7 @@ interact('#drag-me').draggable({
     border: dashed 4px #666;
     border-radius: 4px;
     margin: 10px auto 0;
+    padding: 5%;
     width: 80%;
     height: 150px;
     transition: background-color 0.3s;
@@ -146,8 +147,8 @@ interact('#drag-me').draggable({
 
 .drag-drop {
     display: inline-block;
-    height: 100px;
     min-width: 40px;
+    padding: 2em 0.5em;
 
     background-color: yellow;
     border: solid 2px white;
@@ -167,8 +168,11 @@ interact('#drag-me').draggable({
 {% highlight javascript %}
 /* enable javascript to view a demo */
 interact('.dropzone')
+    // enable draggables to be dropped into this
     .dropzone(true)
+    // only accept elements matching this CSS selector
     .accept('#yes-drop')
+    // listen for drop related events
     .on('dragenter', function (event) {
         var draggableElement = event.relatedTarget,
             dropzoneElement = event.target;
@@ -176,14 +180,12 @@ interact('.dropzone')
         // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
-
         draggableElement.textContent = 'Dragged in';
     })
     .on('dragleave', function (event) {
         // remove the drop feedback style
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
-
         event.relatedTarget.textContent = 'Dragged out';
     })
     .on('drop', function (event) {
