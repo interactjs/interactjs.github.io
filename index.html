@@ -121,7 +121,10 @@ interact('#drag-me').draggable({
 
 <div id="yes-drop" class="drag-drop"> #yes-drop </div>
 
-<div id="dropzone" class="dropzone"> #dropzone </div>
+<div id="outer-dropzone" class="dropzone">
+    #outer-dropzone
+    <div id="inner-dropzone" class="dropzone">#inner-dropzone</div>
+ </div>
 {% endhighlight %}
         </div>
 
@@ -130,18 +133,25 @@ interact('#drag-me').draggable({
         <div class="css-code">
 {% highlight css %}
 /* enable javascript to view a demo */
-#dropzone {
-    background-color: #aaa;
+#outer-dropzone {
+    height: 140px;
+}
+
+#inner-dropzone {
+    height: 80px;
+}
+
+.dropzone {
+    background-color: #ccc;
     border: dashed 4px #666;
     border-radius: 4px;
     margin: 10px auto 0;
-    padding: 5%;
+    padding: 10px;
     width: 80%;
-    height: 150px;
     transition: background-color 0.3s;
 }
 
-#dropzone.drop-target {
+.drop-target {
     background-color: #29e;
 }
 
@@ -150,7 +160,7 @@ interact('#drag-me').draggable({
     min-width: 40px;
     padding: 2em 0.5em;
 
-    background-color: yellow;
+    background-color: #99e;
     border: solid 2px white;
 
     transition: background-color 0.3s;
