@@ -337,7 +337,7 @@ interact(element)
 /* enable javascript to view a demo */
 var angle = 0;
 
-interact('#rotate-area').gestureable({
+interact('#rotate-area').gesturable({
     onmove: function (event) {
         var arrow = document.getElementById('arrow');
 
@@ -400,7 +400,7 @@ var scale = 1,
     gestureArea = document.getElementById('gesture-area'),
     resetTimeout;
 
-interact(gestureArea).gestureable({
+interact(gestureArea).gesturable({
     onstart: function (event) {
         clearTimeout(resetTimeout);
         scaleElement.classList.remove('reset');
