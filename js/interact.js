@@ -1,5 +1,5 @@
 /**
- * interact.js v1.0.9
+ * interact.js v1.0.10
  *
  * Copyright (c) 2012, 2013, 2014 Taye Adeyemi <dev@taye.me>
  * Open source under the MIT License.
@@ -19,21 +19,39 @@
         GestureEvent = window.GestureEvent || window.MSGestureEvent,
         Gesture      = window.Gesture      || window.MSGesture,
 
-        // Previous interact move event pointer position
-        prevX       = 0,
-        prevY       = 0,
-        prevClientX = 0,
-        prevClientY = 0,
+        hypot = Math.hypot || function (x, y) { return Math.sqrt(x * x + y * y); },
 
-        // Previous interact start event pointer position
-        x0       = 0,
-        y0       = 0,
-        clientX0 = 0,
-        clientY0 = 0,
+        // Previous native pointer move event coordinates
+        prevCoords = {
+            pageX: 0,
+            pageY: 0,
+            clientX: 0,
+            clientY: 0,
+            timeStamp: 0
+        },
+        // current native pointer move event coordinates
+        curCoords = {
+            pageX: 0,
+            pageY: 0,
+            clientX: 0,
+            clientY: 0,
+            timeStamp: 0
+        },
+
+        // Starting InteractEvent pointer coordinates
+        startCoords = {
+            pageX: 0,
+            pageY: 0,
+            clientX: 0,
+            clientY: 0,
+            timeStamp: 0
+        },
 
         downTime  = 0,         // the timeStamp of the starting event
-        downEvent = null,      // mousedown/touchstart event
+        downEvent = null,      // gesturestart/mousedown/touchstart event
         prevEvent = null,      // previous action event
+
+        tmpXY = {},     // reduce object creation in getXY()
 
         gesture = {
             start: { x: 0, y: 0 },
@@ -77,6 +95,7 @@
             // aww snap
             snap: {
                 mode        : 'grid',
+                endOnly     : false,
                 actions     : ['drag'],
                 range       : Infinity,
                 grid        : { x: 100, y: 100 },
@@ -87,20 +106,25 @@
                 arrayTypes  : /^anchors$|^paths$|^actions$/,
                 objectTypes : /^grid$|^gridOffset$/,
                 stringTypes : /^mode$/,
-                numberTypes : /^range$/
+                numberTypes : /^range$/,
+                boolTypes   :  /^endOnly$/
             },
             snapEnabled : false,
 
-            restrictions: {},
+            restrict: {
+                drag: null,
+                resize: null,
+                gesture: null,
+                endOnly: false
+            },
+            restrictEnabled: true,
 
             autoScroll: {
-                container   : window,  // the item that is scrolled
+                container   : window,  // the item that is scrolled (Window or HTMLElement)
                 margin      : 60,
-                interval    : 20,      // pause in ms between each scroll pulse
-                distance    : 10,      // the distance in x and y that the page is scrolled
+                speed       : 300,      // the scroll speed in pixels per second
 
-                elementTypes: /^container$/,
-                numberTypes : /^range$|^interval$|^distance$/
+                numberTypes : /^margin$|^speed$/
             },
             autoScrollEnabled: false,
 
@@ -120,26 +144,44 @@
             paths  : []
         },
 
+        restrictStatus = {
+            dx: 0,
+            dy: 0,
+            restricted: false
+        },
+
         // Things related to autoScroll
         autoScroll = {
-            margin   : 60,      // page margin in which pointer triggers autoScroll
-            interval : 20,      // pause in ms between each scroll pulse
-            i        : null,    // the handle returned by window.setInterval
-            distance : 10,      // the distance in x and y that the page is scrolled
-
-            x: 0,               // Direction each pulse is to scroll in
+            target: null,
+            i: null,    // the handle returned by window.setInterval
+            x: 0,       // Direction each pulse is to scroll in
             y: 0,
 
             // scroll the window by the values in scroll.x/y
             scroll: function () {
-                var container = target.options.autoScroll.container;
+                var options = autoScroll.target.options.autoScroll,
+                    container = options.container,
+                    now = new Date().getTime(),
+                    // change in time in seconds
+                    dt = (now - autoScroll.prevTime) / 1000,
+                    // displacement
+                    s = options.speed * dt;
 
-                if (container === window) {
-                    window.scrollBy(autoScroll.x, autoScroll.y);
+                if (s >= 1) {
+                    if (container instanceof window.Window) {
+                        container.scrollBy(autoScroll.x * s, autoScroll.y * s);
+                    }
+                    else if (container) {
+                        container.scrollLeft += autoScroll.x * s;
+                        container.scrollTop  += autoScroll.y * s;
+                    }
+
+                    autoScroll.prevTime = now;
                 }
-                else if (container) {
-                    container.scrollLeft += autoScroll.x;
-                    container.scrollTop  += autoScroll.y;
+
+                if (autoScroll.isScrolling) {
+                    cancelFrame(autoScroll.i);
+                    autoScroll.i = reqFrame(autoScroll.scroll);
                 }
             },
 
@@ -151,14 +193,14 @@
                         left,
                         options = target.options.autoScroll;
 
-                    if (options.container === window) {
+                    if (options.container instanceof window.Window) {
                         left   = event.clientX < autoScroll.margin;
                         top    = event.clientY < autoScroll.margin;
-                        right  = event.clientX > window.innerWidth  - autoScroll.margin;
-                        bottom = event.clientY > window.innerHeight - autoScroll.margin;
+                        right  = event.clientX > options.container.innerWidth  - autoScroll.margin;
+                        bottom = event.clientY > options.container.innerHeight - autoScroll.margin;
                     }
                     else {
-                        var rect = interact(options.container).getRect();
+                        var rect = getElementRect(options.container);
 
                         left   = event.clientX < rect.left   + autoScroll.margin;
                         top    = event.clientY < rect.top    + autoScroll.margin;
@@ -166,31 +208,34 @@
                         bottom = event.clientY > rect.bottom - autoScroll.margin;
                     }
 
-                    autoScroll.x = autoScroll.distance * (right ? 1: left? -1: 0);
-                    autoScroll.y = autoScroll.distance * (bottom? 1:  top? -1: 0);
+                    autoScroll.x = (right ? 1: left? -1: 0);
+                    autoScroll.y = (bottom? 1:  top? -1: 0);
 
                     if (!autoScroll.isScrolling) {
                         // set the autoScroll properties to those of the target
-                        autoScroll.margin   = options.margin;
-                        autoScroll.distance = options.distance;
-                        autoScroll.interval = options.interval;
+                        autoScroll.margin = options.margin;
+                        autoScroll.speed  = options.speed;
 
-                        autoScroll.start();
+                        autoScroll.start(target);
                     }
                 }
             },
 
             isScrolling: false,
+            prevTime: 0,
 
-            start: function () {
+            start: function (target) {
                 autoScroll.isScrolling = true;
-                window.clearInterval(autoScroll.i);
-                autoScroll.i = window.setInterval(autoScroll.scroll, autoScroll.interval);
+                cancelFrame(autoScroll.i);
+
+                autoScroll.target = target;
+                autoScroll.prevTime = new Date().getTime();
+                autoScroll.i = reqFrame(autoScroll.scroll);
             },
 
             stop: function () {
-                window.clearInterval(autoScroll.i);
                 autoScroll.isScrolling = false;
+                cancelFrame(autoScroll.i);
             }
         },
 
@@ -286,6 +331,10 @@
 
         // will be polyfill function if browser is IE8
         IE8MatchesSelector,
+
+        // native requestAnimationFrame or polyfill
+        reqFrame = window.requestAnimationFrame,
+        cancelFrame = window.cancelAnimationFrame,
 
         // used for adding event listeners to window and document
         windowTarget = {
@@ -506,22 +555,32 @@
 
     function blank () {}
 
-    function setPrevXY (event) {
-        prevX = event.pageX;
-        prevY = event.pageY;
+    function isElement (o) {
+        return !!o && (
+            typeof Element === "object" ? o instanceof Element : //DOM2
+            o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName==="string"
+        );
+    }
 
-        prevClientX = event.clientX;
-        prevClientY = event.clientY;
+    function setEventXY (targetObj, source) {
+        getPageXY(source, tmpXY);
+        targetObj.pageX = tmpXY.x;
+        targetObj.pageY = tmpXY.y;
 
-        prevEvent = event;
+        getClientXY(source, tmpXY);
+        targetObj.clientX = tmpXY.x;
+        targetObj.clientY = tmpXY.y;
+
+        targetObj.timeStamp = new Date().getTime();
     }
 
     // Get specified X/Y coords for mouse or event.touches[0]
-    function getXY (type, event) {
+    function getXY (type, event, xy) {
         var touch,
             x,
             y;
 
+        xy = xy || {};
         type = type || 'page';
 
         if (event.touches) {
@@ -536,46 +595,77 @@
             y = event[type + 'Y'];
         }
 
-        return {
-            x: x,
-            y: y
-        };
+        xy.x = x;
+        xy.y = y;
+
+        return xy;
     }
 
-    function getPageXY (event) {
-        var page;
+    function getPageXY (event, page) {
+        page = page || {};
 
+        if (event instanceof InteractEvent) {
+            page.x = event.pageX;
+            page.y = event.pageY;
+        }
         // Opera Mobile handles the viewport and scrolling oddly
-        if (isOperaMobile) {
-            page = getXY('screen', event);
+        else if (isOperaMobile) {
+            getXY('screen', event, page);
 
             page.x += window.scrollX;
             page.y += window.scrollY;
         }
+        // MSGesture events don't have pageX/Y
         else if (/gesture|inertia/i.test(event.type)) {
-            page = getXY('client', event);
+            getXY('client', event, page);
 
             page.x += document.documentElement.scrollLeft;
             page.y += document.documentElement.scrollTop;
-
-            return page;
         }
         else {
-            page = getXY('page', event);
+            getXY('page', event, page);
         }
 
         return page;
     }
 
-    function getClientXY (event) {
-        // Opera Mobile handles the viewport and scrolling oddly
-        return getXY(isOperaMobile? 'screen': 'client', event);
+    function getClientXY (event, client) {
+        client = client || {};
+
+        if (event instanceof InteractEvent) {
+            client.x = event.clientX;
+            client.y = event.clientY;
+        }
+        else {
+            // Opera Mobile handles the viewport and scrolling oddly
+            getXY(isOperaMobile? 'screen': 'client', event, client);
+        }
+
+        return client;
     }
 
     function getScrollXY () {
         return {
             x: window.scrollX || document.documentElement.scrollLeft,
             y: window.scrollY || document.documentElement.scrollTop
+        };
+    }
+
+    function getElementRect (element) {
+        var scroll = /ipad|iphone|ipod/i.test(navigator.userAgent)
+                ? { x: 0, y: 0 }
+                : getScrollXY(),
+            clientRect = (element instanceof SVGElement)?
+                element.getBoundingClientRect():
+                element.getClientRects()[0];
+
+        return {
+            left  : clientRect.left   + scroll.x,
+            right : clientRect.right  + scroll.x,
+            top   : clientRect.top    + scroll.y,
+            bottom: clientRect.bottom + scroll.y,
+            width : clientRect.width || clientRect.right - clientRect.left,
+            height: clientRect.heigh || clientRect.bottom - clientRect.top
         };
     }
 
@@ -648,7 +738,7 @@
             dy -= event.touches[1][sourceY];
         }
 
-        return Math.sqrt(dx * dx + dy * dy);
+        return hypot(dx, dy);
     }
 
     function touchAngle (event, prevAngle) {
@@ -697,7 +787,7 @@
                 ? interactable.options.origin
                 : defaultOptions.origin;
 
-        if (origin instanceof Element)  {
+        if (isElement(origin))  {
             origin = interact(origin).getRect();
 
             origin.x = origin.left;
@@ -811,7 +901,7 @@
                 var current = dropzones[i];
 
                 // if the dropzone has an accept option, test against it
-                if (current.options.accept instanceof Element) {
+                if (isElement(current.options.accept)) {
                     if (current.options.accept !== element) {
                         continue;
                     }
@@ -842,7 +932,7 @@
                         selector.rect = selector.getRect();
 
                         // if the dropzone has an accept option, test against it
-                        if (selector.options.accept instanceof Element) {
+                        if (isElement(selector.options.accept)) {
                             if (selector.options.accept !== element) {
                                 continue;
                             }
@@ -917,12 +1007,9 @@
             client.x -= origin.x;
             client.y -= origin.y;
 
-            if (target.options.snapEnabled && target.options.snap.actions.indexOf(action) !== -1) {
-                var snap = options.snap;
+            if (options.snapEnabled && options.snap.actions.indexOf(action) !== -1) {
 
                 this.snap = {
-                    mode   : snap.mode,
-                    anchors: snapStatus.anchors,
                     range  : snapStatus.range,
                     locked : snapStatus.locked,
                     x      : snapStatus.x,
@@ -934,74 +1021,39 @@
                 };
 
                 if (snapStatus.locked) {
-                    if (snap.mode === 'path') {
-                        if (snapStatus.xInRange) {
-                            page.x += snapStatus.dx;
-                            client.x += snapStatus.dx;
-                        }
-                        if (snapStatus.yInRange) {
-                            page.y += snapStatus.dy;
-                            client.y += snapStatus.dy;
-                        }
-                    }
-                    else {
-                        page.x += snapStatus.dx;
-                        page.y += snapStatus.dy;
-                        client.x += snapStatus.dx;
-                        client.y += snapStatus.dy;
-                    }
+                    page.x += snapStatus.dx;
+                    page.y += snapStatus.dy;
+                    client.x += snapStatus.dx;
+                    client.y += snapStatus.dy;
                 }
             }
         }
 
-        if (target.options.restrictions[action]) {
-            var restriction = target.options.restrictions[action],
-                rect,
-                originalPageX = page.x,
-                originalPageY = page.y;
+        if (target.options.restrict[action] && restrictStatus.restricted) {
+            page.x += restrictStatus.dx;
+            page.y += restrictStatus.dy;
+            client.x += restrictStatus.dx;
+            client.y += restrictStatus.dy;
 
-            if (restriction instanceof Element) {
-                rect = interact(restriction).getRect();
-            }
-            else {
-                if (typeof restriction === 'function') {
-                    restriction = restriction(page.x, page.y, target._element);
-                }
-
-                rect = restriction;
-
-                // object is assumed to have
-                // x, y, width, height or
-                // left, top, right, bottom
-                if ('x' in restriction && 'y' in restriction) {
-                    rect = {
-                        left  : restriction.x,
-                        top   : restriction.y,
-                        right : restriction.x + restriction.width,
-                        bottom: restriction.y + restriction.height
-                    };
-                }
-            }
-
-            page.x = Math.max(Math.min(rect.right , page.x), rect.left);
-            page.y = Math.max(Math.min(rect.bottom, page.y), rect.top );
-
-            var restrictDx = page.x - originalPageX,
-                restrictDy = page.y - originalPageY;
-
-            client.x += restrictDx;
-            client.y += restrictDy;
+            this.restrict = {
+                dx: restrictStatus.dx,
+                dy: restrictStatus.dy
+            };
         }
 
-
-        this.x0        = x0;
-        this.y0        = y0;
-        this.clientX0  = clientX0;
-        this.clientY0  = clientY0;
         this.pageX     = page.x;
         this.pageY     = page.y;
         this.clientX   = client.x;
         this.clientY   = client.y;
+
+        if (phase === 'start' && !(event instanceof InteractEvent)) {
+            setEventXY(startCoords, this);
+        }
+
+        this.x0        = startCoords.pageX;
+        this.y0        = startCoords.pageY;
+        this.clientX0  = startCoords.clientX;
+        this.clientY0  = startCoords.clientY;
         this.ctrlKey   = event.ctrlKey;
         this.altKey    = event.altKey;
         this.shiftKey  = event.shiftKey;
@@ -1018,22 +1070,22 @@
         // end event dx, dy is difference between start and end points
         if (phase === 'end' || action === 'drop') {
             if (deltaSource === 'client') {
-                this.dx = client.x - x0;
-                this.dy = client.y - y0;
+                this.dx = client.x - startCoords.clientX;
+                this.dy = client.y - startCoords.clientY;
             }
             else {
-                this.dx = page.x - x0;
-                this.dy = page.y - y0;
+                this.dx = page.x - startCoords.pageX;
+                this.dy = page.y - startCoords.pageY;
             }
         }
         else {
             if (deltaSource === 'client') {
-                this.dx = client.x - prevClientX;
-                this.dy = client.y - prevClientY;
+                this.dx = client.x - prevEvent.clientX;
+                this.dy = client.y - prevEvent.clientY;
             }
             else {
-                this.dx = page.x - prevX;
-                this.dy = page.y - prevY;
+                this.dx = page.x - prevEvent.pageX;
+                this.dy = page.y - prevEvent.pageY;
             }
         }
 
@@ -1090,25 +1142,71 @@
             this.dt        = 0;
             this.duration  = 0;
             this.speed     = 0;
+            this.velocityX = 0;
+            this.velocityY = 0;
         }
         else {
             this.timeStamp = new Date().getTime();
             this.dt        = this.timeStamp - prevEvent.timeStamp;
             this.duration  = this.timeStamp - downTime;
 
-            // change in time in seconds
-            // use event sequence duration for end events
-            // => average speed of the event sequence
-            var dt = (phase === 'end'? this.duration: this.dt) / 1000;
+            var dx, dy, dt;
 
-            // speed in pixels per second
-            this.speed = Math.sqrt(this.dx * this.dx + this.dy * this.dy) / dt;
+            // Use natural event coordinates (without snapping/restricions)
+            // subtract modifications from previous event if event given is
+            // not a native event
+            if (phase === 'end' || event instanceof InteractEvent) {
+                // change in time in seconds
+                // use event sequence duration for end events
+                // => average speed of the event sequence
+                // (minimum dt of 1ms)
+                dt = Math.max((phase === 'end'? this.duration: this.dt) / 1000, 0.001);
+                dx = this[sourceX] - prevEvent[sourceX];
+                dy = this[sourceY] - prevEvent[sourceY];
+
+                if (this.snap && this.snap.locked) {
+                    dx -= this.snap.dx;
+                    dy -= this.snap.dy;
+                }
+
+                if (this.restrict) {
+                    dx -= this.restrict.dx;
+                    dy -= this.restrict.dy;
+                }
+
+                if (prevEvent.snap && prevEvent.snap.locked) {
+                    dx -= (prevEvent[sourceX] - prevEvent.snap.dx);
+                    dy -= (prevEvent[sourceY] - prevEvent.snap.dy);
+                }
+
+                if (prevEvent.restrict) {
+                    dx += prevEvent.restrict.dx;
+                    dy += prevEvent.restrict.dy;
+                }
+
+                // speed and velocity in pixels per second
+                this.speed = hypot(dx, dy) / dt;
+                this.velocityX = dx / dt;
+                this.velocityY = dy / dt;
+            }
+            // if normal move event, use previous user event coords
+            else {
+                dx = curCoords[sourceX] - prevCoords[sourceX];
+                dy = curCoords[sourceY] - prevCoords[sourceY];
+                // force minimum dt of 1ms
+                dt = Math.max((curCoords.timeStamp - prevCoords.timeStamp) / 1000, 0.001);
+
+                // speed and velocity in pixels per second
+                this.speed = hypot(dx, dy) / dt;
+                this.velocityX = dx / dt;
+                this.velocityY = dy / dt;
+            }
         }
     }
 
     InteractEvent.prototype = {
         preventDefault: blank,
-        stopImmediatePropagation: function (event) {
+        stopImmediatePropagation: function () {
             imPropStopped = true;
         },
         stopPropagation: blank
@@ -1198,8 +1296,7 @@
             var action = validateAction(forceAction || target.getAction(event)),
                 average,
                 page,
-                client,
-                origin = getOriginXY(target);
+                client;
 
             if (PointerEvent && event instanceof PointerEvent) {
                 if (target.selector) {
@@ -1255,11 +1352,6 @@
 
             prepared = action;
 
-            x0 = page.x - origin.x;
-            y0 = page.y - origin.y;
-            clientX0 = client.x - origin.x;
-            clientY0 = client.y - origin.y;
-
             snapStatus.x = null;
             snapStatus.y = null;
 
@@ -1269,266 +1361,236 @@
         }
     }
 
-    function pointerMove (event) {
-        if (pointerIsDown) {
-            if (x0 === prevX && y0 === prevY) {
-                pointerWasMoved = true;
+    function setSnapping (event, status) {
+        var snap = target.options.snap,
+            anchors = snap.anchors,
+            page = getPageXY(event),
+            origin = getOriginXY(target),
+            closest,
+            range,
+            inRange,
+            snapChanged,
+            dx,
+            dy,
+            distance,
+            i, len;
+
+        status = status || snapStatus;
+
+        status.realX = page.x;
+        status.realY = page.y;
+
+        page.x -= origin.x;
+        page.y -= origin.y;
+
+        // change to infinite range when range is negative
+        if (snap.range < 0) { snap.range = Infinity; }
+
+        // create an anchor representative for each path's returned point
+        if (snap.mode === 'path') {
+            anchors = [];
+
+            for (i = 0, len = snap.paths.length; i < len; i++) {
+                var path = snap.paths[i];
+
+                if (typeof path === 'function') {
+                    path = path(page.x, page.y);
+                }
+
+                anchors.push({
+                    x: typeof path.x === 'number' ? path.x : page.x,
+                    y: typeof path.y === 'number' ? path.y : page.y,
+
+                    range: typeof path.range === 'number'? path.range: snap.range
+                });
+            }
+        }
+
+        if ((snap.mode === 'anchor' || snap.mode === 'path') && anchors.length) {
+            closest = {
+                anchor: null,
+                distance: 0,
+                range: 0,
+                dx: 0,
+                dy: 0
+            };
+
+            for (i = 0, len = anchors.length; i < len; i++) {
+                var anchor = anchors[i];
+
+                range = typeof anchor.range === 'number'? anchor.range: snap.range;
+
+                dx = anchor.x - page.x;
+                dy = anchor.y - page.y;
+                distance = hypot(dx, dy);
+
+                inRange = distance < range;
+
+                // Infinite anchors count as being out of range
+                // compared to non infinite ones that are in range
+                if (range === Infinity && closest.inRange && closest.range !== Infinity) {
+                    inRange = false;
+                }
+
+                if (!closest.anchor || (inRange?
+                    // is the closest anchor in range?
+                    (closest.inRange && range !== Infinity)?
+                        // the pointer is relatively deeper in this anchor
+                        distance / range < closest.distance / closest.range:
+                        //the pointer is closer to this anchor
+                        distance < closest.distance:
+                    // The other is not in range and the pointer is closer to this anchor
+                    (!closest.inRange && distance < closest.distance))) {
+
+                    if (range === Infinity) {
+                        inRange = true;
+                    }
+
+                    closest.anchor = anchor;
+                    closest.distance = distance;
+                    closest.range = range;
+                    closest.inRange = inRange;
+                    closest.dx = dx;
+                    closest.dy = dy;
+
+                    status.range = range;
+                }
             }
 
+            inRange = closest.inRange;
+            snapChanged = (closest.anchor.x !== status.x || closest.anchor.y !== status.y);
+
+            status.x = closest.anchor.x;
+            status.y = closest.anchor.y;
+            status.dx = closest.dx;
+            status.dy = closest.dy;
+        }
+        else if (snap.mode === 'grid') {
+            var gridx = Math.round((page.x - snap.gridOffset.x) / snap.grid.x),
+                gridy = Math.round((page.y - snap.gridOffset.y) / snap.grid.y),
+
+                newX = gridx * snap.grid.x + snap.gridOffset.x,
+                newY = gridy * snap.grid.y + snap.gridOffset.y;
+
+            dx = newX - page.x;
+            dy = newY - page.y;
+
+            distance = hypot(dx, dy);
+
+            inRange = distance < snap.range;
+            snapChanged = (newX !== status.x || newY !== status.y);
+
+            status.x = newX;
+            status.y = newY;
+            status.dx = dx;
+            status.dy = dy;
+
+            status.range = snap.range;
+        }
+
+        status.changed = (snapChanged || (inRange && !status.locked));
+        status.locked = inRange;
+
+        return status;
+    }
+
+    function setRestriction (event) {
+        var action = interact.currentAction() || prepared,
+            restriction = target && target.options.restrict[action];
+
+        restrictStatus.dx = 0;
+        restrictStatus.dy = 0;
+        restrictStatus.restricted = false;
+
+        if (!action || !restriction) {
+            return;
+        }
+
+        var rect,
+            page = getPageXY(event);
+
+        var originalPageX = page.x,
+            originalPageY = page.y;
+
+        if (isElement(restriction)) {
+            rect = interact(restriction).getRect();
+        }
+        else {
+            if (typeof restriction === 'function') {
+                restriction = restriction(page.x, page.y, target._element);
+            }
+
+            rect = restriction;
+
+            // object is assumed to have
+            // x, y, width, height or
+            // left, top, right, bottom
+            if ('x' in restriction && 'y' in restriction) {
+                rect = {
+                    left  : restriction.x,
+                    top   : restriction.y,
+                    right : restriction.x + restriction.width,
+                    bottom: restriction.y + restriction.height
+                };
+            }
+        }
+
+        restrictStatus.dx = Math.max(Math.min(rect.right , page.x), rect.left) - originalPageX;
+        restrictStatus.dy = Math.max(Math.min(rect.bottom, page.y), rect.top ) - originalPageY;
+        restrictStatus.restricted = true;
+    }
+
+    function pointerMove (event, preEnd) {
+        if (!(event instanceof InteractEvent)) {
+            setEventXY(curCoords, event);
+        }
+
+        if (pointerIsDown) {
+            pointerWasMoved = true;
+
             if (prepared && target) {
+                var shouldRestrict = target.options.restrictEnabled && (!target.options.restrict.endOnly || preEnd),
+                    starting = !(dragging || resizing || gesturing),
+                    snapEvent = starting? downEvent: event;
 
-                if (target.options.snapEnabled && target.options.snap.actions.indexOf(prepared) !== -1) {
-                    var snap = target.options.snap,
-                        page = getPageXY(event),
-                        origin = getOriginXY(target),
-                        closest,
-                        range,
-                        inRange,
-                        snapChanged,
-                        distX,
-                        distY,
-                        distance,
-                        i, len;
+                if (starting) {
+                    prevEvent = downEvent;
+                }
 
+                if (!shouldRestrict) {
+                    restrictStatus.restricted = false;
+                }
 
-                    snapStatus.realX = page.x;
-                    snapStatus.realY = page.y;
+                // check for snap
+                if (target.options.snapEnabled
+                    && target.options.snap.actions.indexOf(prepared) !== -1
+                    && (!target.options.snap.endOnly || preEnd)) {
 
-                    page.x -= origin.x;
-                    page.y -= origin.y;
+                    setSnapping(snapEvent);
 
-                    // change to infinite range when range is negative
-                    if (snap.range < 0) { snap.range = Infinity; }
+                    // move if snapping doesn't prevent it
+                    if (snapStatus.changed || !snapStatus.locked) {
 
-                    if (snap.mode === 'anchor' && snap.anchors.length) {
-                        closest = {
-                            anchor: null,
-                            distance: 0,
-                            range: 0,
-                            distX: 0,
-                            distY: 0
-                        };
-
-                        for (i = 0, len = snap.anchors.length; i < len; i++) {
-                            var anchor = snap.anchors[i];
-
-                            range = typeof anchor.range === 'number'? anchor.range: snap.range;
-
-                            distX = anchor.x - page.x;
-                            distY = anchor.y - page.y;
-                            distance = Math.sqrt(distX * distX + distY * distY);
-
-                            inRange = distance < range;
-
-                            // Infinite anchors count as being out of range
-                            // compared to non infinite ones that are in range
-                            if (range === Infinity && closest.inRange && closest.range !== Infinity) {
-                                inRange = false;
-                            }
-
-                            if (!closest.anchor || (inRange?
-                                // is the closest anchor in range?
-                                (closest.inRange && range !== Infinity)?
-                                    // the pointer is relatively deeper in this anchor
-                                    distance / range < closest.distance / closest.range:
-                                    //the pointer is closer to this anchor
-                                    distance < closest.distance:
-                                // The other is not in range and the pointer is closer to this anchor
-                                (!closest.inRange && distance < closest.distance))) {
-
-                                if (range === Infinity) {
-                                    inRange = true;
-                                }
-
-                                closest.anchor = anchor;
-                                closest.distance = distance;
-                                closest.range = range;
-                                closest.inRange = inRange;
-                                closest.distX = distX;
-                                closest.distY = distY;
-
-                                snapStatus.range = range;
-                            }
+                        if (shouldRestrict) {
+                            setRestriction(event);
                         }
 
-                        inRange = closest.inRange;
-                        snapChanged = (closest.anchor.x !== snapStatus.x || closest.anchor.y !== snapStatus.y);
-
-                        snapStatus.x = closest.anchor.x;
-                        snapStatus.y = closest.anchor.y;
-                        snapStatus.dx = closest.distX;
-                        snapStatus.dy = closest.distY;
-                        target.options.snap.anchors.closest = snapStatus.anchors.closest = closest.anchor;
-                    }
-                    else if (snap.mode === 'grid') {
-                        var gridx = Math.round((page.x - snap.gridOffset.x) / snap.grid.x),
-                            gridy = Math.round((page.y - snap.gridOffset.y) / snap.grid.y),
-
-                            newX = gridx * snap.grid.x + snap.gridOffset.x,
-                            newY = gridy * snap.grid.y + snap.gridOffset.y;
-
-                        distX = newX - page.x;
-                        distY = newY - page.y;
-
-                        distance = Math.sqrt(distX * distX + distY * distY);
-
-                        inRange = distance < snap.range;
-                        snapChanged = (newX !== snapStatus.x || newY !== snapStatus.y);
-
-                        snapStatus.x = newX;
-                        snapStatus.y = newY;
-                        snapStatus.dx = distX;
-                        snapStatus.dy = distY;
-
-                        snapStatus.range = snap.range;
-                    }
-                    if (snap.mode === 'path' && snap.paths.length) {
-                        closest = {
-                            path: {},
-                            distX: 0,
-                            distY: 0,
-                            range: 0
-                        };
-
-                        for (i = 0, len = snap.paths.length; i < len; i++) {
-                            var path = snap.paths[i],
-                                snapToX = false,
-                                snapToY = false,
-                                pathXY = path,
-                                pathX,
-                                pathY;
-
-                            if (typeof path === 'function') {
-                                pathXY = path(page.x, page.y);
-                            }
-
-                            if (typeof pathXY.x === 'number') {
-                                pathX = pathXY.x;
-                                snapToX = true;
-                            }
-                            else {
-                                pathX = page.x;
-                            }
-
-                            if (typeof pathXY.y === 'number') {
-                                pathY = pathXY.y;
-                                snapToY = true;
-                            }
-                            else {
-                                pathY = page.y;
-                            }
-
-                            range = typeof pathXY.range === 'number'? pathXY.range: snap.range;
-
-                            distX = pathX - page.x;
-                            distY = pathY - page.y;
-
-                            var xInRange = Math.abs(distX) < range && snapToX,
-                                yInRange = Math.abs(distY) < range && snapToY;
-
-                            // Infinite paths count as being out of range
-                            // compared to non infinite ones that are in range
-                            if (range === Infinity && closest.xInRange && closest.range !== Infinity) {
-                                xInRange = false;
-                            }
-
-                            if (!('x' in closest.path) || (xInRange
-                                // is the closest path in range?
-                                ? (closest.xInRange && range !== Infinity)
-                                    // the pointer is relatively deeper in this path
-                                    ? distance / range < closest.distX / closest.range
-                                    //the pointer is closer to this path
-                                    : Math.abs(distX) < Math.abs(closest.distX)
-                                // The other is not in range and the pointer is closer to this path
-                                : (!closest.xInRange && Math.abs(distX) < Math.abs(closest.distX)))) {
-
-                                if (range === Infinity) {
-                                    xInRange = true;
-                                }
-
-                                closest.path.x   = pathX;
-                                closest.distX    = distX;
-                                closest.xInRange = xInRange;
-                                closest.range    = range;
-
-                                snapStatus.range = range;
-                            }
-
-                            // Infinite paths count as being out of range
-                            // compared to non infinite ones that are in range
-                            if (range === Infinity && closest.yInRange && closest.range !== Infinity) {
-                                yInRange = false;
-                            }
-                            if (!('y' in closest.path) || (yInRange
-                                // is the closest path in range?
-                                ? (closest.yInRange && range !== Infinity)
-                                    // the pointer is relatively deeper in this path
-                                    ? distance / range < closest.distY / closest.range
-                                    //the pointer is closer to this path
-                                    : Math.abs(distY) < Math.abs(closest.distY)
-                                // The other is not in range and the pointer is closer to this path
-                                : (!closest.yInRange && Math.abs(distY) < Math.abs(closest.distY)))) {
-
-                                if (range === Infinity) {
-                                    yInRange = true;
-                                }
-
-                                closest.path.y   = pathY;
-                                closest.distY    = distY;
-                                closest.yInRange = yInRange;
-                                closest.range    = range;
-
-                                snapStatus.range = range;
-                            }
-                        }
-
-                        inRange = closest.xInRange || closest.yInRange;
-
-                        if (closest.xInRange && closest.yInRange && (!snapStatus.xInRange || !snapStatus.yInRange)) {
-                            snapChanged = true;
-                        }
-                        else {
-                            snapChanged = (!closest.xInRange || !closest.yInRange || closest.path.x !== snapStatus.x || closest.path.y !== snapStatus.y);
-                        }
-
-                        snapStatus.x = closest.path.x;
-                        snapStatus.y = closest.path.y;
-                        snapStatus.dx = closest.distX;
-                        snapStatus.dy = closest.distY;
-
-                        snapStatus.xInRange = closest.xInRange;
-                        snapStatus.yInRange = closest.yInRange;
-
-                        target.options.snap.paths.closest = snapStatus.paths.closest = closest.path;
-                    }
-
-                    if ((snapChanged || !snapStatus.locked) && inRange)  {
-                        snapStatus.locked = true;
-
-                        // if snap is locked at the start of an action
-                        if (!(dragging || resizing || gesturing)) {
-                            // set the starting point to be the snap coorinates
-                            var p = getPageXY(event),
-                                c = getClientXY(event);
-
-                            x0 = p.x - origin.x + snapStatus.dx;
-                            y0 = p.y - origin.y + snapStatus.dy;
-
-                            clientX0 = c.x - origin.x + snapStatus.dx;
-                            clientY0 = c.y - origin.y + snapStatus.dy;
-                        }
-
-                        actions[prepared].moveListener(event);
-                    }
-                    else if (snapChanged || !inRange) {
-                        snapStatus.locked = false;
                         actions[prepared].moveListener(event);
                     }
                 }
+                // if no snap, always move
                 else {
+                    if (shouldRestrict) {
+                        setRestriction(event);
+                    }
+
                     actions[prepared].moveListener(event);
                 }
             }
+        }
+
+        if (!(event instanceof InteractEvent)) {
+            setEventXY(prevCoords, event);
         }
 
         if (dragging || resizing) {
@@ -1546,8 +1608,6 @@
             leaveDropTarget;
 
         if (!dragging) {
-            setPrevXY(downEvent);
-
             dragEvent = new InteractEvent(downEvent, 'drag', 'start');
             dragging = true;
 
@@ -1560,11 +1620,18 @@
                 }
             }
 
-            setPrevXY(dragEvent);
+            prevEvent = dragEvent;
+
+            // set snapping for the next move event
+            if (target.options.snapEnabled && !target.options.snap.endOnly) {
+                setSnapping(event);
+            }
         }
 
+        dragEvent  = new InteractEvent(event, 'drag', 'move');
+
         var draggableElement = target._element,
-            drop = getDrop(event, draggableElement);
+            drop = getDrop(dragEvent, draggableElement);
 
         if (drop) {
             dropTarget = drop.dropzone;
@@ -1577,8 +1644,6 @@
         // Make sure that the target selector draggable's element is
         // restored after dropChecks
         target._element = draggableElement;
-
-        dragEvent  = new InteractEvent(event, 'drag', 'move');
 
         if (dropElement !== prevDropElement) {
             // if there was a prevDropTarget, create a dragleave event
@@ -1608,7 +1673,7 @@
             dropTarget.fire(dragEnterEvent);
         }
 
-        setPrevXY(dragEvent);
+        prevEvent = dragEvent;
     }
 
     function resizeMove (event) {
@@ -1617,21 +1682,24 @@
         var resizeEvent;
 
         if (!resizing) {
-            setPrevXY(downEvent);
-
             resizeEvent = new InteractEvent(downEvent, 'resize', 'start');
             target.fire(resizeEvent);
 
             target.fire(resizeEvent);
             resizing = true;
 
-            setPrevXY(resizeEvent);
+            prevEvent = resizeEvent;
+
+            // set snapping for the next move event
+            if (target.options.snapEnabled && !target.options.snap.endOnly) {
+                setSnapping(event);
+            }
         }
 
         resizeEvent = new InteractEvent(event, 'resize', 'move');
         target.fire(resizeEvent);
 
-        setPrevXY(resizeEvent);
+        prevEvent = resizeEvent;
     }
 
     function gestureMove (event) {
@@ -1644,8 +1712,6 @@
         var gestureEvent;
 
         if (!gesturing) {
-            setPrevXY(downEvent);
-
             gestureEvent = new InteractEvent(downEvent, 'gesture', 'start');
             gestureEvent.ds = 0;
 
@@ -1657,7 +1723,12 @@
 
             target.fire(gestureEvent);
 
-            setPrevXY(gestureEvent);
+            prevEvent = gestureEvent;
+
+            // set snapping for the next move event
+            if (target.options.snapEnabled && !target.options.snap.endOnly) {
+                setSnapping(event);
+            }
         }
 
         gestureEvent = new InteractEvent(event, 'gesture', 'move');
@@ -1665,7 +1736,7 @@
 
         target.fire(gestureEvent);
 
-        setPrevXY(gestureEvent);
+        prevEvent = gestureEvent;
 
         gesture.prevAngle = gestureEvent.angle;
         gesture.prevDistance = gestureEvent.distance;
@@ -1800,12 +1871,18 @@
             return;
         }
 
+        // if the target has the snap endOnly setting
+        if ((dragging || resizing || gesturing) && target.options.snap.endOnly) {
+            // fire a move event at the snapped coordinates
+            pointerMove(event, true);
+        }
+
         if (dragging) {
             endEvent = new InteractEvent(event, 'drag', 'end');
 
             var dropEvent,
                 draggableElement = target._element,
-                drop = getDrop(event, draggableElement);
+                drop = getDrop(endEvent, draggableElement);
 
             if (drop) {
                 dropTarget = drop.dropzone;
@@ -2008,7 +2085,7 @@
             this.selector = element;
         }
         else {
-            if(element instanceof Element) {
+            if(isElement(element)) {
                 if (PointerEvent) {
                     events.add(this, 'pointerdown', pointerDown );
                     events.add(this, 'pointermove', pointerHover);
@@ -2046,7 +2123,7 @@
             else {
                 var start     = phases.onstart     || phases.onStart     || phases.start,
                     move      = phases.onmove      || phases.onMove      || phases.move,
-                    end       = phases.onend       || phases.onEnd       || phases.end,
+                    end       = phases.onend       || phases.onEnd       || phases.end;
 
                 action = 'on' + action;
 
@@ -2216,7 +2293,7 @@
          = (string | Element | null | Interactable) The current accept option if given `undefined` or this Interactable
         \*/
         accept: function (newValue) {
-            if (newValue instanceof Element) {
+            if (isElement(newValue)) {
                 this.options.accept = newValue;
 
                 return this;
@@ -2381,10 +2458,14 @@
                    };
                 }
 
-                autoScroll.margin    = this.validateSetting('autoScroll', 'margin'   , options.margin);
-                autoScroll.distance  = this.validateSetting('autoScroll', 'distance' , options.distance);
-                autoScroll.interval  = this.validateSetting('autoScroll', 'interval' , options.interval);
-                autoScroll.container = this.validateSetting('autoScroll', 'container', options.container);
+                autoScroll.margin = this.validateSetting('autoScroll', 'margin', options.margin);
+                autoScroll.speed  = this.validateSetting('autoScroll', 'speed' , options.speed);
+
+                autoScroll.container =
+                    (isElement(options.container) || options.container instanceof window.Window
+                     ? options.container
+                     : defaults.container);
+
 
                 this.options.autoScrollEnabled = true;
                 this.options.autoScroll = autoScroll;
@@ -2462,16 +2543,11 @@
                 var snap = this.options.snap;
 
                 if (snap === defaults) {
-                   snap = this.options.snap = {
-                       mode      : defaults.mode,
-                       range     : defaults.range,
-                       grid      : defaults.grid,
-                       gridOffset: defaults.gridOffset,
-                       anchors   : defaults.anchors
-                   };
+                   snap = {};
                 }
 
                 snap.mode       = this.validateSetting('snap', 'mode'      , options.mode);
+                snap.endOnly    = this.validateSetting('snap', 'endOnly'   , options.endOnly);
                 snap.actions    = this.validateSetting('snap', 'actions'   , options.actions);
                 snap.range      = this.validateSetting('snap', 'range'     , options.range);
                 snap.paths      = this.validateSetting('snap', 'paths'     , options.paths);
@@ -2588,23 +2664,11 @@
          o }
         \*/
         getRect: function rectCheck () {
-            if (this.selector && !(this._element instanceof Element)) {
+            if (this.selector && !(isElement(this._element))) {
                 this._element = document.querySelector(this.selector);
             }
 
-            var scroll = getScrollXY(),
-                clientRect = (this._element instanceof SVGElement)?
-                    this._element.getBoundingClientRect():
-                    this._element.getClientRects()[0];
-
-            return {
-                left  : clientRect.left   + scroll.x,
-                right : clientRect.right  + scroll.x,
-                top   : clientRect.top    + scroll.y,
-                bottom: clientRect.bottom + scroll.y,
-                width : clientRect.width || clientRect.right - clientRect.left,
-                height: clientRect.heigh || clientRect.bottom - clientRect.top
-            };
+            return getElementRect(this._element);
         },
 
         /*\
@@ -2735,15 +2799,33 @@
         \*/
         restrict: function (newValue) {
             if (newValue === undefined) {
-                return this.options.restrictions;
+                return this.options.restrict;
             }
 
             if (newValue instanceof Object) {
-                this.options.restrictions = newValue;
+                var newRestrictions = {};
+
+                if (newValue.drag instanceof Object) {
+                    newRestrictions.drag = newValue.drag;
+                }
+                if (newValue.resize instanceof Object) {
+                    newRestrictions.resize = newValue.resize;
+                }
+                if (newValue.gesture instanceof Object) {
+                    newRestrictions.gesture = newValue.gesture;
+                }
+
+                if (typeof newValue.endOnly === 'boolean') {
+                    newRestrictions.endOnly = newValue.endOnly;
+                }
+
+                this.options.restrictEnabled = true;
+                this.options.restrict = newRestrictions;
             }
 
             else if (newValue === null) {
-               delete this.options.restrictions;
+               delete this.options.restrict;
+               delete this.options.restrictEnabled;
             }
 
             return this;
@@ -2804,10 +2886,19 @@
                     }
                 }
 
-                if ('elementTypes' in defaults && defaults.elementTypes.test(option)) {
-                    if (value instanceof Element) { return value; }
+                if ('boolTypes' in defaults && defaults.boolTypes.test(option)) {
+                    if (typeof value === 'boolean') { return value; }
                     else {
-                        return (option in current && current[option] instanceof Element
+                        return (option in current && typeof current[option] === 'boolean'
+                            ? current[option]
+                            : defaults[option]);
+                    }
+                }
+
+                if ('elementTypes' in defaults && defaults.elementTypes.test(option)) {
+                    if (isElement(value)) { return value; }
+                    else {
+                        return (option in current && isElement(current[option])
                             ? current[option]
                             : defaults[option]);
                     }
@@ -3276,10 +3367,8 @@
             gesturing             : gesturing,
             prepared              : prepared,
 
-            prevX                 : prevX,
-            prevY                 : prevY,
-            x0                    : x0,
-            y0                    : y0,
+            prevCoords            : prevCoords,
+            downCoords            : startCoords,
 
             downTime              : downTime,
             downEvent             : downEvent,
@@ -3303,16 +3392,7 @@
 
             events                : events,
             globalEvents          : globalEvents,
-            delegatedEvents       : delegatedEvents,
-
-            log: function () {
-                console.log('target         :  ' + target);
-                console.log('prevX, prevY   :  ' + prevX, prevY);
-                console.log('x0, y0         :  ' + x0, y0);
-                console.log('supportsTouch  :  ' + supportsTouch);
-                console.log('pointerIsDown  :  ' + pointerIsDown);
-                console.log('currentAction  :  ' + interact.currentAction());
-            }
+            delegatedEvents       : delegatedEvents
         };
     };
 
@@ -3321,6 +3401,8 @@
     interact.getTouchBBox     = touchBBox;
     interact.getTouchDistance = touchDistance;
     interact.getTouchAngle    = touchAngle;
+
+    interact.getElementRect   = getElementRect;
 
     /*\
      * interact.margin
@@ -3379,13 +3461,13 @@
         if (options instanceof Object) {
             defaultOptions.autoScrollEnabled = true;
 
-            if (typeof (options.margin)   === 'number') { defaults.margin    = options.margin   ; }
-            if (typeof (options.distance) === 'number') { defaults.distance  = options.distance ; }
-            if (typeof (options.interval) === 'number') { defaults.interval  = options.interval ; }
+            if (typeof (options.margin) === 'number') { defaults.margin = options.margin;}
+            if (typeof (options.speed)  === 'number') { defaults.speed  = options.speed ;}
 
-            defaults.container = options.container instanceof Element?
-                options.container:
-                defaults.container;
+            defaults.container =
+                (isElement(options.container) || options.container instanceof window.Window
+                 ? options.container
+                 : defaults.container);
 
             return interact;
         }
@@ -3441,8 +3523,9 @@
         if (options instanceof Object) {
             defaultOptions.snapEnabled = true;
 
-            if (typeof options.mode  === 'string') { snap.mode  = options.mode;  }
-            if (typeof options.range === 'number') { snap.range = options.range; }
+            if (typeof options.mode    === 'string' ) { snap.mode    = options.mode;    }
+            if (typeof options.endOnly === 'boolean') { snap.endOnly = options.endOnly; }
+            if (typeof options.range   === 'number' ) { snap.range   = options.range;   }
             if (options.actions    instanceof Array ) { snap.actions    = options.actions;    }
             if (options.anchors    instanceof Array ) { snap.anchors    = options.anchors;    }
             if (options.grid       instanceof Object) { snap.grid       = options.grid;       }
@@ -3593,17 +3676,32 @@
      - newValue (object) #optional an object with keys drag, resize, and/or gesture and rects or Elements as values
      = (object) The current restrictions object or interact
     \*/
-    interact.restrict = function (newValue, noArray) {
+    interact.restrict = function (newValue) {
+        var defaults = defaultOptions.restrict;
+
         if (newValue === undefined) {
-            return defaultOptions.restrictions;
+            return defaultOptions.restrict;
         }
 
         if (newValue instanceof Object) {
-            defaultOptions.restrictions = newValue;
+            if (newValue.drag instanceof Object) {
+                defaults.drag = newValue.drag;
+            }
+            if (newValue.resize instanceof Object) {
+                defaults.resize = newValue.resize;
+            }
+            if (newValue.gesture instanceof Object) {
+                defaults.gesture = newValue.gesture;
+            }
+
+            if (typeof newValue.endOnly === 'boolean') {
+                defaults.endOnly = newValue.endOnly;
+            }
         }
 
         else if (newValue === null) {
-           defaultOptions.restrictions = {};
+           defaults.drag = defaults.resize = defaults.gesture = null;
+           defaults.endOnly = false;
         }
 
         return this;
@@ -3617,6 +3715,16 @@
         events.add(docTarget, 'MSInertiaStart' , pointerUp   );
         events.add(docTarget, 'pointerover'    , pointerOver );
         events.add(docTarget, 'pointerout'     , pointerOut  );
+
+        // set prev move coords even when native gesture is happening
+        // and doesn't call "pointerMove"
+        events.add(docTarget, 'pointermove', function (event) {
+            var time = new Date().getTime();
+
+            if (time > prevCoords.timeStamp) {
+                setEventXY(prevCoords, event);
+            }
+        });
 
         selectorGesture = new Gesture();
         selectorGesture.target = document.documentElement;
@@ -3664,7 +3772,7 @@
             // http://tanalin.com/en/blog/2012/12/matches-selector-ie8/
             // modified for better performance
             elems = elems || this.parentNode.querySelectorAll(selector);
-            count = elems.length;
+            var count = elems.length;
 
             for (var i = 0; i < count; i++) {
                 if (elems[i] === this) {
@@ -3676,7 +3784,36 @@
         };
     }
 
+    // requestAnimationFrame polyfill
+    (function() {
+        var lastTime = 0,
+            vendors = ['ms', 'moz', 'webkit', 'o'];
+
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            reqFrame = window[vendors[x]+'RequestAnimationFrame'];
+            cancelFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!reqFrame) {
+            reqFrame = function(callback) {
+                var currTime = new Date().getTime(),
+                    timeToCall = Math.max(0, 16 - (currTime - lastTime)),
+                    id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                  timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+
+        if (!cancelFrame) {
+            cancelFrame = function(id) {
+                clearTimeout(id);
+            };
+        }
+    }());
+
     // http://documentcloud.github.io/underscore/docs/underscore.html#section-11
+    /* global exports: true, module */
     if (typeof exports !== 'undefined') {
         if (typeof module !== 'undefined' && module.exports) {
             exports = module.exports = interact;
