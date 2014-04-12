@@ -87,22 +87,28 @@ gestures for modern browsers (and also IE8+) </p>
 /* enable javascript to view a demo */
 var x = 0, y = 0;
 
-interact('#drag-me').draggable({
-    onmove: function (event) {
-        x += event.dx;
-        y += event.dy;
+interact('#drag-me')
+    .draggable({
+        onmove: function (event) {
+            x += event.dx;
+            y += event.dy;
 
-        event.target.style.webkitTransform =
-        event.target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)';
-    },
-    onend: function (event) {
-        event.target.querySelector('p').textContent =
-            'moved a distance of '
-            + (Math.sqrt(event.dx * event.dx +
-                         event.dy * event.dy)|0) + 'px';
-    }
-});
+            event.target.style.webkitTransform =
+            event.target.style.transform =
+                'translate(' + x + 'px, ' + y + 'px)';
+        },
+        onend: function (event) {
+            event.target.querySelector('p').textContent =
+                'moved a distance of '
+                + (Math.sqrt(event.dx * event.dx +
+                             event.dy * event.dy)|0) + 'px';
+        }
+    })
+    .inertia(true)
+    .restrict({
+        drag: "parent",
+        endOnly: true
+    });
 {% endhighlight %}
         </div>
 
@@ -145,7 +151,7 @@ interact('#drag-me').draggable({
     background-color: #ccc;
     border: dashed 4px #666;
     border-radius: 4px;
-    margin: 10px auto 0;
+    margin: 10px auto 30px;
     padding: 10px;
     width: 80%;
     transition: background-color 0.3s;
@@ -213,7 +219,9 @@ interact('.drag-drop')
             target.style.webkitTransform = target.style.transform =
                 'translate(' + target.x + 'px, ' + target.y + 'px)';
         }
-    });
+    })
+    .inertia(true)
+    .restrict({ drag: 'parent' });
 {% endhighlight %}
         </div>
 
@@ -284,6 +292,11 @@ interact(element)
         event.target.style.webkitTransform =
         event.target.style.transform =
             'translate(' + x + 'px, ' + y + 'px)';
+    })
+    .inertia(true)
+    .restrict({
+        drag: element.parentNode,
+        endOnly: true
     });
 {% endhighlight %}
         </div>
@@ -317,6 +330,10 @@ interact(element)
         <div class="css-code">
 {% highlight css %}
 /* enable javascript to view a demo */
+#rotate-area {
+    overflow: hidden;
+}
+
 #arrow {
     width: 100%;
     height: 100%;

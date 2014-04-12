@@ -25,6 +25,7 @@
   display: inline-block;
   vertical-align: top;
   width: 30%;
+  background-color: #e8e9e8;
 
   input:checked+.demo-label+& {
     width: 100%;

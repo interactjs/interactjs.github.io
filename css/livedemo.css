@@ -15,7 +15,8 @@
 .live-demo {
   display: inline-block;
   vertical-align: top;
-  width: 30%; }
+  width: 30%;
+  background-color: #e8e9e8; }
   input:checked + .demo-label + .live-demo {
     width: 100%; }
 
