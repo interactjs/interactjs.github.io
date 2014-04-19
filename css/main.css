@@ -104,12 +104,6 @@ h1 {
 a, a:hover, a:visited, a:active, a:focus {
   text-decoration: none; }
 
-#star-demo {
-  margin: auto;
-  display: block;
-  height: 50vmin;
-  width: 100%; }
-
 code {
   overflow-wrap: break-word; }
 
