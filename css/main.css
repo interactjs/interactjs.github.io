@@ -68,6 +68,14 @@ h1 {
     box-shadow: -0.5em 0.5em rgba(0, 0, 0, 0.4);
     -webkit-transform: translate(0.2em, -0.2em);
     transform: translate(0.2em, -0.2em); }
+    .link-btn:hover::before {
+      content: '';
+      position: absolute;
+      left: -0.2em;
+      right: 0;
+      top: 0;
+      bottom: -0.2em;
+      background-color: transparent; }
 
 #get-some {
   text-align: center;
