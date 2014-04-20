@@ -282,8 +282,8 @@ interact(element)
         x += event.dx;
         y += event.dy;
 
-        event.target.setAttribute('data-x', event.pageX);
-        event.target.setAttribute('data-y', event.pageY);
+        event.target.setAttribute('data-x', event.pageX|0);
+        event.target.setAttribute('data-y', event.pageY|0);
 
         event.target.style.webkitTransform =
         event.target.style.transform =
