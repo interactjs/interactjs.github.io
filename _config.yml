@@ -2,7 +2,7 @@ name: interact.js
 description : interact.js - Powerful, flexible, snappable drag and drop, resizing and multi-touch gestures for modern browsers
 baseurl     : ""
 url         : http://interactjs.io
-pygments    : true
+highlighter : pygments
 timezone    : Europe/Dublin
 
 markdown    : redcarpet
