@@ -305,6 +305,78 @@ interact(element)
             <label class="demo-label" for="demo-4-demo"> Demo only </label>
     </div>
 
+    <h1 id="resizing">Resizing</h1>
+
+    <div class="demo-area">
+        <input id="demo-8-html" type="radio" name="demo-8" hidden>
+        <label class="html-label" for="demo-8-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div class="resize-container">
+    <div class="resize"
+         style="width: 200px; height: 200px">
+         Resize from the bottom and left edges
+    </div>
+</div>
+{% endhighlight %}
+        </div>
+
+            <input id="demo-8-css" type="radio" name="demo-8" hidden>
+            <label class="css-label" for="demo-8-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+.resize {
+  background-color: #29e;
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 20px;
+  margin: 20px;
+
+  /* The width is set in the element's HTML
+   * so that it can be read by the resizing
+   * function
+   */
+}
+
+.resize-container {
+  width: 240px;
+  height: 240px;
+}
+{% endhighlight %}
+        </div>
+
+            <input id="demo-8-js" type="radio" name="demo-8" hidden checked>
+            <label class="js-label" for="demo-8-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+interact('.resize')
+  .resizeable(true)
+  .on('resizemove', function (event) {
+    var target = event.target;
+
+    // add the change in coords to the previous width of the target element
+    var
+      newWidth  = parseFloat(target.style.width ) + event.dx,
+      newHeight = parseFloat(target.style.height) + event.dy;
+
+    // update the element's style
+    target.style.width  = newWidth + 'px';
+    target.style.height = newHeight + 'px';
+
+    target.textContent = newWidth + '×' + newHeight;
+  });
+{% endhighlight %}
+        </div>
+
+        <input id="demo-8-demo" type="radio" name="demo-8" hidden>
+        <label class="demo-label" for="demo-8-demo"> Demo only </label>
+    </div>
 
     <h1>Multi-touch Rotation</h1>
 
@@ -375,6 +447,7 @@ interact('#rotate-area').gesturable({
         <input id="demo-3-demo" type="radio" name="demo-3" hidden>
         <label class="demo-label" for="demo-3-demo"> Demo only </label>
     </div>
+
     <h1 id="pinch-zoom">Gesture Pinch-to-zoom</h1>
 
     <div class="demo-area">
