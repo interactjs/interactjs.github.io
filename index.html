@@ -107,7 +107,8 @@ interact('#drag-me')
     .inertia(true)
     .restrict({
         drag: "parent",
-        endOnly: true
+        endOnly: true,
+        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
     });
 {% endhighlight %}
         </div>
@@ -221,7 +222,10 @@ interact('.drag-drop')
         }
     })
     .inertia(true)
-    .restrict({ drag: 'parent' });
+    .restrict({
+        drag: 'parent',
+        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    });
 {% endhighlight %}
         </div>
 
@@ -280,7 +284,8 @@ interact(element)
     .snap({
         mode: 'grid',
         grid: { x: 30, y: 30 },
-        range: Infinity
+        range: Infinity,
+        elementOrigin: { x: 0, y: 0 }
     }) 
     .on('dragmove', function (event) {
         x += event.dx;
@@ -296,6 +301,7 @@ interact(element)
     .inertia(true)
     .restrict({
         drag: element.parentNode,
+        elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
         endOnly: true
     });
 {% endhighlight %}
@@ -356,7 +362,7 @@ interact(element)
 {% highlight javascript %}
 /* enable javascript to view a demo */
 interact('.resize')
-  .resizeable(true)
+  .resizable(true)
   .on('resizemove', function (event) {
     var target = event.target;
 
