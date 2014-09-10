@@ -49,7 +49,7 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
         <div class="html-code">
 {% highlight html %}
 <!-- enable javascript to view a demo -->
-<div id="drag-me">
+<div id="drag-me" class="draggable">
     <p> Click or touch and drag this element around </p>
 </div>
 {% endhighlight %}
@@ -85,23 +85,27 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
         <div class="js-code">
 {% highlight javascript %}
 /* enable javascript to view a demo */
-var x = 0, y = 0;
-
-interact('#drag-me')
+interact('.draggable')
     .draggable({
         onmove: function (event) {
-            x += event.dx;
-            y += event.dy;
+            var target = event.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-            event.target.style.webkitTransform =
-            event.target.style.transform =
+            target.style.webkitTransform =
+            target.style.transform =
                 'translate(' + x + 'px, ' + y + 'px)';
+
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
         },
         onend: function (event) {
-            event.target.querySelector('p').textContent =
+            var textEl = event.target.querySelector('p');
+            
+            textEl && (textEl.textContent =
                 'moved a distance of '
                 + (Math.sqrt(event.dx * event.dx +
-                             event.dy * event.dy)|0) + 'px';
+                             event.dy * event.dy)|0) + 'px');
         }
     })
     .inertia(true)
@@ -124,9 +128,9 @@ interact('#drag-me')
         <div class="html-code">
 {% highlight html %}
 <!-- enable javascript to view a demo -->
-<div id="no-drop" class="drag-drop"> #no-drop </div>
+<div id="no-drop" class="draggable drag-drop"> #no-drop </div>
 
-<div id="yes-drop" class="drag-drop"> #yes-drop </div>
+<div id="yes-drop" class="draggable drag-drop"> #yes-drop </div>
 
 <div id="outer-dropzone" class="dropzone">
     #outer-dropzone
@@ -150,12 +154,16 @@ interact('#drag-me')
 
 .dropzone {
     background-color: #ccc;
-    border: dashed 4px #666;
+    border: dashed 4px transparent;
     border-radius: 4px;
     margin: 10px auto 30px;
     padding: 10px;
     width: 80%;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.drop-active {
+    border-color: #666;
 }
 
 .drop-target {
@@ -173,9 +181,7 @@ interact('#drag-me')
     transition: background-color 0.3s;
 }
 
-.can-drop {
-    background-color: #4e4;
-}
+.drag-drop.can-drop { background-color: #4e4; }
 {% endhighlight %}
         </div>
 
@@ -205,26 +211,17 @@ interact('.dropzone')
         event.relatedTarget.classList.remove('can-drop');
         event.relatedTarget.textContent = 'Dragged out';
     })
+    .on('dropactivate', function (event) {
+        // add active dropzone feedback
+        event.target.classList.add('drop-active');
+    })
+    .on('dropdeactivate', function (event) {
+        // remove active dropzone feedback
+        event.target.classList.remove('drop-active');
+        event.target.classList.remove('drop-target');
+    })
     .on('drop', function (event) {
         event.relatedTarget.textContent = 'Dropped';
-    });
-
-interact('.drag-drop')
-    .draggable({
-        onmove: function (event) {
-            var target = event.target;
-
-            target.x = (target.x|0) + event.dx;
-            target.y = (target.y|0) + event.dy;
-
-            target.style.webkitTransform = target.style.transform =
-                'translate(' + target.x + 'px, ' + target.y + 'px)';
-        }
-    })
-    .inertia(true)
-    .restrict({
-        drag: 'parent',
-        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
     });
 {% endhighlight %}
         </div>
@@ -290,9 +287,6 @@ interact(element)
     .on('dragmove', function (event) {
         x += event.dx;
         y += event.dy;
-
-        event.target.setAttribute('data-x', event.pageX|0);
-        event.target.setAttribute('data-y', event.pageY|0);
 
         event.target.style.webkitTransform =
         event.target.style.transform =
