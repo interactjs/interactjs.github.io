@@ -589,4 +589,17 @@ script</a> to bind and handle drag event listeners
 <script>
     window.liveDemoSettings.codeElementDepth = 4;
     window.liveDemoSettings.insertPosition = 'beforeend';
+
+    interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
+        .on('tap', function (event) {
+            var label = event.currentTarget,
+                demoArea = label.parentNode,
+                codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code');
+
+            [].forEach.call(codeBlocks, function (block) {
+                block.style.display = 'none';
+            });
+
+            label.nextElementSibling.style.display = '';
+        });
 </script>
