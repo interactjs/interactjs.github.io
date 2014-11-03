@@ -77,6 +77,10 @@ h1 {
       bottom: -0.2em;
       background-color: transparent; }
 
+.link-btn-icon {
+  height: 2em;
+  vertical-align: middle; }
+
 #get-some {
   text-align: center;
   color: #FFF;
