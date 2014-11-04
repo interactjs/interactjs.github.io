@@ -105,6 +105,22 @@ h1 {
   margin-left: 0.5em;
   line-height: 1em; }
 
+.scroll-top {
+  position: fixed;
+  right: 1%;
+  bottom: 1em;
+  display: block;
+  width: 12%;
+  max-width: 3em;
+  cursor: pointer; }
+  .scroll-top:focus {
+    outline: none; }
+
+.scroll-top-icon {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 50%; }
+
 a, a:hover, a:visited, a:active, a:focus {
   text-decoration: none; }
 
