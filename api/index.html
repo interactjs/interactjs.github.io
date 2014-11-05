@@ -4339,17 +4339,20 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
     ga('create', 'UA-44445883-3', 'interactjs.io');
     ga('send', 'pageview');
 
-    window.addEventListener('hashchange', function (event) {
+    function trackApiTarget () {
         var anchor = document.querySelector('.dr-method[href="'+window.location.hash+'"]');
 
         if (!anchor) { return; }
 
         ga('send', {
             hitType: 'pageview',
-            page: window.location.hash,
-            title: anchor.textContent
+            page: '/api/' + window.location.hash,
+            title: 'API: ' + anchor.textContent
         });
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', trackApiTarget);
+    window.addEventListener('hashchange', trackApiTarget);
 }
 </script>
 
