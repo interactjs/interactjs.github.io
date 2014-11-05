@@ -4338,6 +4338,18 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-44445883-3', 'interactjs.io');
     ga('send', 'pageview');
+
+    window.addEventListener('hashchange', function (event) {
+        var anchor = document.querySelector('.dr-method[href="'+window.location.hash+'"]');
+
+        if (!anchor) { return; }
+
+        ga('send', {
+            hitType: 'pageview',
+            page: window.location.hash,
+            title: anchor.textContent
+        });
+    });
 }
 </script>
 
