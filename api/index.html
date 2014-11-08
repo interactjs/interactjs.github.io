@@ -4337,12 +4337,17 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
     y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-44445883-3', 'interactjs.io');
-    ga('send', 'pageview');
+
+    function validateMethod (hash) {
+        var anchor = document.querySelector('.dr-method[href="'+hash+'"]');
+
+        return anchor? anchor.textContent: '';
+    }
 
     function trackApiTarget () {
-        var anchor = document.querySelector('.dr-method[href="'+window.location.hash+'"]');
+        var title = validateMethod(window.location.hash);
 
-        if (!anchor) { return; }
+        if (!title) { return; }
 
         ga('send', {
             hitType: 'pageview',
@@ -4351,7 +4356,7 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', trackApiTarget);
+    window.addEventListener('DOMContentLoaded', trackApiTarget);
     window.addEventListener('hashchange', trackApiTarget);
 }
 </script>
