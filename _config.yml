@@ -8,3 +8,6 @@ timezone    : Europe/Dublin
 markdown    : redcarpet
 redcarpet:
       extensions: [tables, laxed_spacing, fenced_code_blocks, strikethrough, autolink, superscript, no_intra_emphasis, with_toc_data]
+
+
+current_version: 1.1.1
