@@ -584,6 +584,72 @@ script</a> to bind and handle drag event listeners
         <input id="demo-6-demo" type="radio" name="demo-6" hidden>
         <label class="demo-label" for="demo-6-demo"> Demo only </label>
     </div>
+
+    <h1 id="tap-doubletap">Tap and doubletap</h1>
+
+    <div class="demo-area">
+        <input id="demo-7-html" type="radio" name="demo-7" hidden checked>
+        <label class="html-label" for="demo-7-html"> HTML </label>
+        <div class="html-code">
+{% highlight html %}
+<!-- enable javascript to view a demo -->
+<div class="tap-target"> <p>Tap To change color</p> <p>Doubletap to change size</p> </div>
+
+{% endhighlight %}
+        </div>
+
+            <input id="demo-7-css" type="radio" name="demo-7" hidden>
+            <label class="css-label" for="demo-7-css"> CSS </label>
+        <div class="css-code">
+{% highlight css %}
+/* enable javascript to view a demo */
+.tap-target {
+  width: 50%;
+  height: 100%;
+  padding: 10%;
+  margin: 10% auto;
+
+  border-radius: 100%;
+
+  font-size: 1.125em;
+  text-align: center;
+  color: #fff;
+  background-color: #29e;
+
+  cursor: pointer;
+
+  transition: all 0.3s;
+}
+
+.tap-target.switch-bg {
+  background-color: #f40;
+}
+
+.tap-target.large {
+  transform: scale(1.25);
+}
+
+{% endhighlight %}
+        </div>
+
+        <input id="demo-7-js" type="radio" name="demo-7" hidden checked>
+        <label class="js-label" for="demo-7-js"> JS </label>
+        <div class="js-code">
+{% highlight javascript %}
+/* enable javascript to view a demo */
+interact('.tap-target')
+    .on('tap', function (event) {
+        event.currentTarget.classList.toggle('switch-bg');
+    })
+    .on('doubletap', function (event) {
+        event.currentTarget.classList.toggle('large');
+    });
+{% endhighlight %}
+        </div>
+
+        <input id="demo-7-demo" type="radio" name="demo-7" hidden>
+        <label class="demo-label" for="demo-7-demo"> Demo only </label>
+    </div>
 </div>
 
 <a class="scroll-top" href="#top" title="Back to top">
