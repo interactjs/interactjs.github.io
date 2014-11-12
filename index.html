@@ -671,18 +671,23 @@ interact('.tap-target')
     if (window.innerWidth <= 568) {
         [].forEach.call(document.querySelectorAll('.demo-area .demo-label'), function (label) {
             showTab({ currentTarget: label });
+
+            label.previousElementSibling.checked = true;
         });
     }
 
     function showTab (event) {
         var label = event.currentTarget,
             demoArea = label.parentNode,
-            codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code');
+            codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code'),
+            liveDemo = label.nextElementSibling;
 
         [].forEach.call(codeBlocks, function (block) {
             block.style.display = 'none';
         });
 
-        label.nextElementSibling.style.display = '';
+        if (liveDemo) {
+            liveDemo.style.display = '';
+        }
     }
 </script>
