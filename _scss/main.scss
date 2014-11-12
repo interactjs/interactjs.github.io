@@ -183,7 +183,7 @@ code {
 .footer {
   margin-top: 0.5em;
   border-top: solid 0.375em #f40;
-  padding: 0.25em;
+  padding: 0.25em 12.5%;
 
   font-size: 0.875em;
   text-align: center;
@@ -198,6 +198,32 @@ code {
   a, a:visited {
     color: #29e;
   }
+}
+
+.footer-table {
+  margin: auto;
+}
+
+.footer-round-btn {
+  $shadow: 0.25em;
+  $hover-shadow: $shadow * 2;
+
+  border-radius: 100%;
+  width: 3em;
+  height: 3em;
+  padding: 0;
+  background-color: #fff;
+
+  box-shadow: -$shadow $shadow 0 0.1em rgba(0,0,0, 0.4);
+
+  &:hover, &:focus, &:active {
+    box-shadow: -$hover-shadow $hover-shadow 0 0.1em rgba(0,0,0, 0.4);
+  }
+}
+
+.footer-gratipay {
+  width: 100%;
+  height: 100%;
 }
 
 #demos {
