@@ -634,6 +634,7 @@ script</a> to bind and handle drag event listeners
 }
 
 .tap-target.large {
+  -webkit-transform: scale(1.25);
   transform: scale(1.25);
 }
 
@@ -648,9 +649,11 @@ script</a> to bind and handle drag event listeners
 interact('.tap-target')
     .on('tap', function (event) {
         event.currentTarget.classList.toggle('switch-bg');
+        event.preventDefault();
     })
     .on('doubletap', function (event) {
         event.currentTarget.classList.toggle('large');
+        event.preventDefault();
     });
 {% endhighlight %}
         </div>
