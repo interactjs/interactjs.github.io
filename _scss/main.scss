@@ -84,7 +84,7 @@ h1 {
 
   box-shadow: -$shadow $shadow rgba(0,0,0, 0.4);
 
-  &:hover {
+  &:hover, &:focus, &:active {
     box-shadow: -$hover-shadow $hover-shadow rgba(0,0,0, 0.4);
     -webkit-transform: translate(0.2em, -0.2em);
     transform: translate(0.2em, -0.2em);

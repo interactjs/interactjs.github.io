@@ -61,11 +61,11 @@ h1 {
   cursor: pointer;
   box-shadow: -0.25em 0.25em rgba(0, 0, 0, 0.4);
   transition: all 0.2s; }
-  .link-btn:hover {
+  .link-btn:hover, .link-btn:focus, .link-btn:active {
     box-shadow: -0.5em 0.5em rgba(0, 0, 0, 0.4);
     -webkit-transform: translate(0.2em, -0.2em);
     transform: translate(0.2em, -0.2em); }
-    .link-btn:hover::before {
+    .link-btn:hover::before, .link-btn:focus::before, .link-btn:active::before {
       content: '';
       position: absolute;
       left: -0.2em;
