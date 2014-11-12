@@ -166,10 +166,13 @@ code {
   margin: auto; }
 
 .live-demo {
-  -ms-touch-action: none;
-  touch-action: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none; }
+  .live-demo * {
+    -ms-touch-action: none;
+    touch-action: none; }
+
+/*# sourceMappingURL=main.css.map */
