@@ -63,6 +63,17 @@ google_plus : "107750313581859477605"
 
 {% if page.do_not_track != true and page.ga_create and page.ga_create != empty and page.ga_create != "" %}
 <script>
+window.addEventListener('hashchange', function () {
+    if (location.hash === '#top') {
+        if ("replaceState" in history) {
+              history.replaceState("", document.title, location.pathname + location.search);
+        }
+        else {
+          location.hash = '';
+        }
+    }
+});
+
 if (!/yes|1/.test(navigator.doNotTrack)) {
     (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
     (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
