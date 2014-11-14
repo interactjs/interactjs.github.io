@@ -4282,10 +4282,17 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
     ga('send', {
       hitType: 'pageview',
       page: '/api/' + window.location.hash,
-      title: 'API: ' + anchor.textContent
+      title: 'API: ' + title
     });
   }
-  window.addEventListener('DOMContentLoaded', trackApiTarget);
+  window.addEventListener('DOMContentLoaded', function () {
+      if (validateMethod(window.location.hash)) {
+          trackApiTarget();
+      }
+      else {
+          ga('send', 'pageview');
+      }
+  });
   window.addEventListener('hashchange', trackApiTarget);
 }
 </script>
