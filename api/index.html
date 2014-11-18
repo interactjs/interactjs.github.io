@@ -7,12 +7,29 @@ description: >
 ---
 
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{ page.title }}</title>
         <meta name="viewport" content="device-width">
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site:id" content="2238211567" />
+        <meta name="twitter:creator:id" content="1173430910" />
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="{{ page.title }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
+        <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/img/ijs-256.png" />
+{% if page.excerpt && page.excerpt != ""%}
+        <meta property="og:description" name="description" content="{{ page.excerpt }}" />
+{% elsif page.description && page.description != "" %}
+        <meta property="og:description" name="description" content="{{ page.description }}" />
+{% endif %}
+
         <link rel="stylesheet" href="fonts/stylesheet.css">
         <link rel="stylesheet" href="css/topcoat-desktop-light.css">
         <link rel="stylesheet" href="css/main.css">

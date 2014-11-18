@@ -5,17 +5,29 @@ google_plus : "107750313581859477605"
 ---
 
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <title>interact.js - {{ page.title | xml_escape }}</title>
     <meta name="author" content="{{ page.author }}" />
     <meta name="keywords" content="{{ page.tags | join:' ' }}" />
+
+    <!-- twitter card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site:id" content="2238211567" />
+    <meta name="twitter:creator:id" content="1173430910" />
+
+    <!-- open graph things -->
+    <meta property="og:title" content="interact.js" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
+    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/img/ijs-256.png" />
 {% if page.description && page.description != "" %}
-    <meta name="description" content="{{ page.description }}" />
+    <meta property="og:description" name="description" content="{{ page.description }}" />
 {% elsif page.excerpt && page.excerpt != ""%}
-    <meta name="description" content="{{ page.excerpt }}" />
+    <meta property="og:description" name="description" content="{{ page.excerpt }}" />
 {% endif %}
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- syntax highlighting CSS -->
