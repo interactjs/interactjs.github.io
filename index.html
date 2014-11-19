@@ -87,6 +87,9 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
     border: solid 0.4em #666;
     border-radius: 0.75em;
     padding: 3%;
+
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
 }
 
 #drag-me::before {
@@ -207,6 +210,9 @@ interact('.draggable')
 
     background-color: #99e;
     border: solid 2px white;
+
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
 
     transition: background-color 0.3s;
 }
