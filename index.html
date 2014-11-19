@@ -495,8 +495,7 @@ interact('#rotate-area').gesturable({
 {% highlight html %}
 <!-- enable javascript to view a demo -->
 <div id="gesture-area">
-    <!-- thanks //commons.wikimedia.org/wiki/User:Booyabazooka -->
-    <img id="scale-element" src="img/rcube.png" alt="Color cube thing">
+    <img id="scale-element" src="img/ijs-anim.svg" alt="Color cube thing">
 </div>
 {% endhighlight %}
         </div>
@@ -523,8 +522,8 @@ interact('#rotate-area').gesturable({
 {% highlight javascript %}
 /* enable javascript to view a demo */
 var scale = 1,
-    scaleElement = document.getElementById('scale-element'),
     gestureArea = document.getElementById('gesture-area'),
+    scaleElement = document.getElementById('scale-element'),
     resetTimeout;
 
 interact(gestureArea).gesturable({
