@@ -20,7 +20,7 @@
             newScript.src = '//rawgit.com/taye/interact.js/' + debugVersion + '/interact.js';
         }
 
-        document.head.appendChild(newScript);
+        document.write(newScript.outerHTML);
 
         console.log('Demos run with ' + debugVersion + ' version of interact.js');
         console.log(newScript.src);
