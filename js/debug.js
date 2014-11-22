@@ -6,6 +6,7 @@
 
     if (debugVersion) {
         window._interact = window.interact;
+        window.interact = null;
 
         var newScript = document.createElement('script');
 
