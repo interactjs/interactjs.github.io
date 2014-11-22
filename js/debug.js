@@ -20,5 +20,8 @@
         }
 
         document.head.appendChild(newScript);
+
+        console.log('Demos run with ' + debugVersion + ' version of interact.js');
+        console.log(newScript.src);
     }
 }());
