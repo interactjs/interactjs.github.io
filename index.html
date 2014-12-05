@@ -610,7 +610,7 @@ script</a> to bind and handle drag event listeners
         <label class="demo-label" for="demo-6-demo"> Demo only </label>
     </div>
 
-    <h1 id="tap-doubletap">Tap and doubletap</h1>
+    <h1 id="tap-doubletap">Tap, doubletap and hold</h1>
 
     <div class="demo-area">
         <input id="demo-7-html" type="radio" name="demo-7" hidden checked>
@@ -618,7 +618,7 @@ script</a> to bind and handle drag event listeners
         <div class="html-code">
 {% highlight html %}
 <!-- enable javascript to view a demo -->
-<div class="tap-target"> <p>Tap to change color</p> <p>Doubletap to change size</p> </div>
+<div class="tap-target"> <p>Tap to change color</p> <p>Doubletap to change size</p> <p>Hold to rotate</p> </div>
 
 {% endhighlight %}
         </div>
@@ -655,6 +655,11 @@ script</a> to bind and handle drag event listeners
   transform: scale(1.25);
 }
 
+.rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
 {% endhighlight %}
         </div>
 
@@ -670,7 +675,12 @@ interact('.tap-target')
     })
     .on('doubletap', function (event) {
         event.currentTarget.classList.toggle('large');
+        event.currentTarget.classList.remove('rotate');
         event.preventDefault();
+    })
+    .on('hold', function (event) {
+        event.currentTarget.classList.toggle('rotate');
+        event.currentTarget.classList.remove('large');
     });
 {% endhighlight %}
         </div>
