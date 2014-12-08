@@ -59,7 +59,7 @@ pre {
 #main-header {
   color: #373435;
   background: #fff;
-  height: 98px;
+  /*height: 98px;*/
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 10px 20px;
