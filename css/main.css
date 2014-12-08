@@ -175,4 +175,35 @@ code {
     -ms-touch-action: none;
     touch-action: none; }
 
+#carbonads {
+  position: relative;
+  height: 104px;
+  max-width: 360px;
+  margin: 1em auto;
+  border: solid 2px #493756;
+  background-color: #493756;
+  font-size: 0.9em;
+  box-sizing: border-box; }
+
+.carbon-wrap {
+  display: table-row;
+  height: 100px; }
+
+.carbon-img {
+  float: left;
+  display: table-column; }
+
+.carbon-text {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0px 10px 16px;
+  color: white !important; }
+
+.carbon-poweredby {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  padding: 4px;
+  color: #fff; }
+
 /*# sourceMappingURL=main.css.map */
