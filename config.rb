@@ -19,6 +19,8 @@ activate :syntax
 activate :relative_assets
 set :relative_links, true
 
+activate :livereload
+
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
