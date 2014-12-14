@@ -137,7 +137,7 @@ under the License.
       ga('create', 'UA-44445883-3', 'interactjs.io');
 
       window.addEventListener('DOMContentLoaded', function () {
-        var heading = document.getElementById(hash),
+        var heading = document.getElementById(window.location.hash),
             title = heading && heading.textContent;
 
         if (title) {
