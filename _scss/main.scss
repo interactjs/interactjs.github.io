@@ -109,6 +109,10 @@ h1 {
   vertical-align: middle;
 }
 
+.links-br {
+  display: inline;
+}
+
 #download {
   text-align: center;
   color: #FFF;
@@ -284,4 +288,28 @@ code {
   padding: 4px;
 
   color: #fff;
+}
+
+@media screen and (max-width: 430px) {
+  .links {
+    display: block;
+    width: 100%;
+
+    li {
+      display: block;
+      min-width: 75%;
+      margin: 0.5em;
+    }
+
+    .link-btn {
+      min-width: 65%;
+      text-align: initial;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .links-br {
+      display: none;
+    }
+  }
 }
