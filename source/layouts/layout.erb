@@ -15,15 +15,35 @@ under the License.
 %>
 <% language_tabs = current_page.data.language_tabs %>
 <!doctype html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title><%= current_page.data.title || "API Documentation" %></title>
+    <meta name="author" content="Taye Adeyemi" />
+    <title><%= current_page.data.title || "interact.js API Documentation" %></title>
+
+    <link rel="icon" type="image/png" href="//interactjs.io/img/ijs-64.png" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site:id" content="2238211567" />
+    <meta name="twitter:creator:id" content="1173430910" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<%= current_page.data.title || "interact.js API Documentation" %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://interactjs.io/img/ijs-256.png" />
+    <meta property="og:description" name="description"
+      content="interact.js is a standalone javascript module for handling
+               single-pointer and multi-touch drags and gestures with powerful
+               options such as inertia and snapping" />
 
     <%= stylesheet_link_tag :screen, media: :screen %>
     <%= stylesheet_link_tag :print, media: :print %>
+
+    <%= stylesheet_link_tag :adv, media: :all %>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <% if current_page.data.search %>
       <%= javascript_include_tag  "all" %>
@@ -48,7 +68,8 @@ under the License.
       </span>
     </a>
     <div class="tocify-wrapper">
-      <%= image_tag "logo.png" %>
+      <img src="http://interactjs.io/img/ijs-anim.svg"
+           alt="interact.js">
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
@@ -83,6 +104,9 @@ under the License.
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
           <%= partial "includes/#{include}" %>
         <% end %>
+
+        <div class="ad-padding"></div>
+
       </div>
       <div class="dark-box">
         <% if language_tabs %>
@@ -96,7 +120,39 @@ under the License.
             <% end %>
           </div>
         <% end %>
+
+        <div class="ad-wrap">
+          <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
+        </div>
+
       </div>
     </div>
+
+    <script>
+    if (!/yes|1/.test(navigator.doNotTrack)) {
+      (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+      (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+      y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-44445883-3', 'interactjs.io');
+
+      window.addEventListener('DOMContentLoaded', function () {
+        var heading = document.getElementById(hash),
+            title = heading && heading.textContent;
+
+        if (title) {
+          ga('send', {
+            hitType: 'pageview',
+            page: '/docs/' + window.location.hash,
+            title: 'Docs: ' + title
+          });
+        }
+        else {
+          ga('send', 'pageview');
+        }
+      });
+    }
+    </script>
+
   </body>
 </html>
