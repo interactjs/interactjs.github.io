@@ -48,3 +48,22 @@ resizable options
 
  - **axis** - the axis to resize in. `'x'`, `'y'` or `'xy'` (default).
  - **squareResize** - increase x and y by the same amount.
+
+dropzone options
+----------------
+
+```javascript
+interact(target).dropzone({
+  acept: '.drag0, .drag1',
+  overlap: 0.25
+});
+```
+
+ - **accept** - a CSS selector or an Element which must match the dragged
+   element in order for drop events to be fired.
+ - **overlap** - set how drops are checked for. The allowed values are:
+   - `'pointer'`, the pointer must be over the dropzone (default)
+   - `'center'`, the draggable element's center must be over the dropzone
+   - a number from 0-1 which is the (intersection area) / (draggable area).
+     e.g. `0.5` for drop to happen when half of the area of the draggable is
+over the dropzone
