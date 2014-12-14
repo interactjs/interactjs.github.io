@@ -41,6 +41,7 @@ h1 {
 .links {
   text-align: center;
   margin: auto;
+  margin-top: 0.25em;
   padding: 0; }
   .links li {
     display: inline-block;
