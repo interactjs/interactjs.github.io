@@ -12,12 +12,14 @@
   font-size: 0.8em;
 }
 
+/*
 @media screen and (max-width: 720pX) {
   #carbonads {
     float: none;
     margin: 1em auto;
   }
 }
+*/
 
 .carbon-wrap {
   display: table-row;
@@ -58,7 +60,7 @@
   margin: 0;
   font-size: 0.9em;
   border: none;
-  background-color: inherit;
+  background-color: #292929;
 
   //max-width: 340px;
   max-width: 38%;
@@ -82,4 +84,23 @@
   z-index: 31;
   background-color: #292929;
   border-top: solid 2px #1C1C1C;
+}
+
+@media screen and (max-width: 700pX) {
+  #carbonads {
+    position: relative;
+    max-width: 356px;
+    top: 2em;
+    bottom: auto;
+    right: auto;
+    float: none;
+    margin: auto;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(to bottom, #ffffff, #f9f9f9);
+    border: solid 2px #ddd;
+  }
+
+  .carbon-text, .carbon-poweredby {
+    color: inherit !important;
+  }
 }

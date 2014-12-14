@@ -122,7 +122,9 @@ under the License.
         <% end %>
 
         <div class="ad-wrap">
-          <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
+          <div id="ad-contain">
+            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
+          </div>
         </div>
 
       </div>
@@ -152,6 +154,26 @@ under the License.
         }
       });
     }
+
+    function reposad () {
+      var ad = document.getElementById('ad-contain');
+
+      if (!ad) { return; }
+
+      var wrap = document.querySelector('.ad-wrap');
+
+      if (window.innerWidth <= 700 && wrap.lastElementChild === ad) {
+        $('.content h1:nth-of-type(2)').before(ad);
+      }
+      else if (window.innerWidth > 700 && wrap.lastElementChild !== ad) {
+        wrap.appendChild(ad);
+      }
+    }
+
+    $(window).on('resize', reposad);
+
+    reposad();
+
     </script>
 
   </body>
