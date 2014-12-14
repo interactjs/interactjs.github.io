@@ -10,6 +10,14 @@ toc_footers:
   - <a href='http://github.com/tripit/slate'>(Docs Powered by Slate)</a>
 
 includes:
+  - installation
+  - interactables
+  - action_options
+  - snap
+  - restrict
+  - inertia
+  - autoscroll
+  - events
 
 search: true
 ---
