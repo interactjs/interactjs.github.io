@@ -12,10 +12,14 @@ interact(target)
 ```
 
 Drag and resize coordinates can be snapped to specific points defined by
-objects and functions in the snap `targets` array. The elements of this array
-can be any combination of *points* and *functions which return points* to snap to.
-If there are multiple snap targets, then the nearest snap target that is in
-range is used.
+objects and functions in the snap `targets` array.
+
+targets
+-------
+
+The elements of this array can be any combination of *points* and *functions
+which return points* to snap to.  If there are multiple snap targets, then the
+nearest snap target that is in range is used.
 
 Point targets
 -------------
@@ -35,7 +39,11 @@ interact(element).resizable({
 });
 ```
 
-A snap target can be an object with x, y and range properties.
+A snap target can be an object with x, y and range properties. If a target
+specifies a coordinate in only one axis then snapping will be on a line.
+
+If a target is defined as `{ y: 100, range Infinity }` then the snapped
+movement will be horizontal at `(100, pageX)`.
 
 Function targets
 ----------------
@@ -54,9 +62,9 @@ interact(element).draggable({
 })
 ```
 
-If a snap target is a function, then it is passed the pageX and pageY
-coordinates or the event. If the function returns an object it is used like a
-point target.
+If a snap target is a function, then it called and given the pageX and pageY
+coordinates of the event. If the function returns an object, that function is
+used like a point target.
 
 Snap grids
 ----------
@@ -74,7 +82,7 @@ Use the `interact.createSnapGrid` method to create a target that snaps to a
 grid. The method takes an object describing a grid and returns a function
 that snaps to the corners of that grid.
 
-Relative Points
+relativePoints
 ---------------
 
 ```javascript
@@ -90,13 +98,18 @@ interact(element).drggable({
 });
 ```
 
+If you want to specify points on the element which snapping should be relative
+to, then use an array of `relativePoints`. Each item in the array should be an
+object with `x` and `y` properties which are scalars specifying the position on
+the element to which snapping should be relative. If no `relativePoints` array
+is specified or the array is empty then snapping is relative to the pointer
+coordinates (default).
+
 There are effectively `targets.length * max( relativePoints.length, 1 )`
 snap targets while snap calculations are done. Snap functions are called
-multiple times with the coordinates of each `relativePoint`. If no
-`relativePoints` array is specified or the array is empty then snapping is
-relative to the pointer coordinates (default).
+multiple times with the coordinates of each `relativePoint`.
 
-Range
+range
 -----
 
 ```javascript
