@@ -29,8 +29,7 @@ The `InteractEvent` types are:
 
  - Draggable: `dragstart`, `dragmove`, `draginertiastart`, `dragend`
  - Resizable: `resizestart`, `resizemove`, `resizeinertiastart`, `resizeend`
- - Gesturable: `gesturestart`, `gesturemove`, `gestureinertiastart`,
-   `gestureend`
+ - Gesturable: `gesturestart`, `gesturemove`, `gestureend`
 
 To respond to `InteractEvent`s, you must add listeners for the event types either
 directly on an interactable or globally for all events of those types on the
