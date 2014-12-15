@@ -41,15 +41,17 @@ Function targets
 ----------------
 
 ```javascript
-// give this function the x and y page coords
-// and snap to the object returned
-function (x, y) {
-  return {
-    x: x,
-    y: (75 + 50 * Math.sin(x * 0.04)),
-    range: 40
-  };  
-}
+interact(element).draggable({
+  snap: { targets: [
+    // give this function the x and y page coords
+    // and snap to the object returned
+    function (x, y) {
+      return { x: x,
+               y: (75 + 50 * Math.sin(x * 0.04)),
+               range: 40 };  
+    }
+  ]}
+})
 ```
 
 If a snap target is a function, then it is passed the pageX and pageY
@@ -69,9 +71,8 @@ var gridTarget = interact.createSnapGrid({
 ```
 
 Use the `interact.createSnapGrid` method to create a target that snaps to a
-grid. The function takes an object describing a grid and returns a function
-that snaps to the corners of the grid. This returned function can be used as a
-snap target.
+grid. The method takes an object describing a grid and returns a function
+that snaps to the corners of that grid.
 
 Range
 -----
