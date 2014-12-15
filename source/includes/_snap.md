@@ -74,6 +74,28 @@ Use the `interact.createSnapGrid` method to create a target that snaps to a
 grid. The method takes an object describing a grid and returns a function
 that snaps to the corners of that grid.
 
+Relative Points
+---------------
+
+```javascript
+interact(element).drggable({
+  snap: {
+    targets: [ { x: 300, y: 300 } ],
+    relativePoints: [
+      { x: 0  , y: 0   },   // snap relative to the element's top-left,
+      { x: 0.5, y: 0.5 },   // to the center
+      { x: 1  , y: 1   }    // and to the bottom-right
+    ]
+  }
+});
+```
+
+There are effectively `targets.length * max( relativePoints.length, 1 )`
+snap targets while snap calculations are done. Snap functions are called
+multiple times with the coordinates of each `relativePoint`. If no
+`relativePoints` array is specified or the array is empty then snapping is
+relative to the pointer coordinates (default).
+
 Range
 -----
 
