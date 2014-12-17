@@ -16,7 +16,7 @@ set :markdown, :fenced_code_blocks => true, :smartypants => true, :disable_inden
 activate :syntax
 
 # This is needed for Github pages, since they're hosted on a subdomain
-activate :relative_assets
+#activate :relative_assets
 set :relative_links, true
 
 activate :livereload
