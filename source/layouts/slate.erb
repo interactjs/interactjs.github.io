@@ -23,7 +23,7 @@ under the License.
     <meta name="author" content="Taye Adeyemi" />
     <title><%= current_page.data.title || "interact.js API Documentation" %></title>
 
-    <link rel="icon" type="image/png" href="images/ijs-gray-blue-64.png" />
+    <%= favicon_tag '/images/ijs-gray-blue-64.png' %>
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -68,8 +68,10 @@ under the License.
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="images/ijs-anim.svg"
-           alt="interact.js">
+      <%= image_tag 'ijs-anim.svg',
+        :class => 'logo',
+        :alt => 'interact.js' %>
+
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
