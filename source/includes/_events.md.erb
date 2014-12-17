@@ -136,7 +136,7 @@ roughly as the real `PointerEvent` interface does, specifically:
  - `event.pointerType` provides the pointer type
  - There are no simulated mouse events after touch events
 
-<aside class="warning">
+<aside class="notice">
   The properties of the events may vary accross browsers and devices depending on
   which event interface is supported. For Example, a `down` event from a
   `touchstart` will not provide tilt or pressure as specified in the
@@ -163,4 +163,11 @@ interact('a[href]').on('tap', function (event) {
 devices so it works great for fast buttons and anchor links. Also, unlike
 regular click events, a tap isn’t fired if the pointer is moved before being
 released.
+
+<aside class="warning">
+  At the moment, `pointerEvent`s are fired before corresponding
+  `InteractEvent`s – `move` is fired before `dragmove`, `up` before `dragend`.
+  This may change. If you feel that it should change or have reasons for it to
+  stay the same, [let us know](https://github.com/taye/interact.js/issues/new)!
+</aside>
 
