@@ -13,7 +13,7 @@ toc_footers:
 
 includes:
 
-partials:
+sections:
   - installation
   - interactables
   - action_options
@@ -37,6 +37,6 @@ To get a quick overview of how interact.js is intended to be used, read this
 
 [ijs-moz-hacks]: https://hacks.mozilla.org/2014/11/interact-js-for-drag-and-drop-resizing-and-multi-touch-gestures/
 
-<% current_page.data.partials && current_page.data.partials.each do |part| %>
-    <%= partial "includes/_#{part}" %>
+<% current_page.data.sections && current_page.data.sections.each do |section| %>
+    <%= partial "sections/#{section}" %>
 <% end %>
