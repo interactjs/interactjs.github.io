@@ -1,16 +1,21 @@
 ---
 author      : "Taye Adeyemi"
-ga_create   : ["'UA-44445883-3'", "'interactjs.io'"]
+ga_id       : "UA-44445883-3"
+ga_domain   : "interactjs.io"
 google_plus : "107750313581859477605"
+
 ---
 
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
-    <title>interact.js - {{ page.title | xml_escape }}</title>
-    <meta name="author" content="{{ page.author }}" />
-    <meta name="keywords" content="{{ page.tags | join:' ' }}" />
+    <title>interact.js - <%= escape_html current_page.data.title %></title>
+    <meta name="author" content="<%= current_page.data.author %>" />
+
+<% if current_page.data.tags && current_page.data.tags != "" %>
+    <meta name="keywords" content="<%= current_page.data.tags.join ' ' %>" />
+<% end %>
 
     <!-- twitter card -->
     <meta name="twitter:card" content="summary" />
@@ -20,32 +25,36 @@ google_plus : "107750313581859477605"
     <!-- open graph things -->
     <meta property="og:title" content="interact.js" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
-    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/img/ijs-256.png" />
-{% if page.description && page.description != "" %}
-    <meta property="og:description" name="description" content="{{ page.description }}" />
-{% elsif page.excerpt && page.excerpt != ""%}
-    <meta property="og:description" name="description" content="{{ page.excerpt }}" />
-{% endif %}
+    <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
+    <meta property="og:image" content="<%= data.site.url %><%= data.site.baseurl %>/img/ijs-256.png" />
+<% if current_page.data.description && current_page.data.description != "" %>
+    <meta property="og:description" name="description" content="<%= current_page.data.description %>" />
+<% elsif current_page.data.excerpt && current_page.data.excerpt != ""%>
+    <meta property="og:description" name="description" content="<%= current_page.data.excerpt %>" />
+<% end %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- syntax highlighting CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
+    <%= stylesheet_link_tag :syntax, media: :screen %>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/normalize.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
-    <link rel="icon" href="{{ site.baseurl }}/img/ijs-64.png"/>
+    <%= stylesheet_link_tag :normalize, media: :screen %>
+    <%= stylesheet_link_tag :main, media: :screen %>
 
-{% for style in page.styles %}
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/{{ style }}.css"> {% endfor %}
+    <%= favicon_tag '/images/ijs-gray-blue-64.png' %>
 
-    <script src="js/underscore-min.js"></script>
-    <script src="//code.interactjs.io/interact-{{ site.current_version }}.min.js"></script>
+    <% current_page.data.styles.each do |style| %>
+        <%= stylesheet_link_tag style %>
+    <% end %>
 
-{% for script in page.scripts %}
-    <script src="{{ site.baseurl }}/js/{{ script }}.js"></script>{% endfor %}
+    <%= javascript_include_tag 'underscore-min' %>
+    <script src="//code.interactjs.io/interact-<%= data.site.current_version %>.min.js"></script>
+
+    <% current_page.data.styles.each do |script| %>
+        <%= javascript_include_tag script %>
+    <% end %>
+
 </head>
 <body>
 
@@ -53,7 +62,7 @@ google_plus : "107750313581859477605"
     <div class="header">
     </div>
 
-    {{ content }}
+        <%= yield %>
 
     <footer class="footer">
         <table class="footer-table"><tbody><tr>
@@ -63,18 +72,22 @@ google_plus : "107750313581859477605"
             </td>
             <td>
                 <a class="link-btn footer-round-btn" href="https://gratipay.com/taye" title="Make a donation on Gratipay">
-                    <img class="footer-gratipay" src="{{ site.baseurl }}/img/gratipay-blue.svg" alt="Gratipay">
+                    <%= image_tag 'gratipay-blue.svg',
+                      :class => 'footer-gratipay',
+                      :alt => 'Gratipay' %>
                 </a>
             </td>
         </tr></tbody></table>
 
         <a class="scroll-top" href="#top" title="Back to top">
-            <img class="scroll-top-icon" src="{{ site.baseurl }}/img/up.svg" alt="Back to top">
+            <%= image_tag 'up.svg',
+              :class => 'scroll-top-icon',
+              :alt => 'Back to top' %>
         </a>
     </footer>
 </div>
 
-{% if page.do_not_track != true and page.ga_create and page.ga_create != empty and page.ga_create != "" %}
+<% if current_page.data.do_not_track != true and current_page.data.ga_create and current_page.data.ga_create != empty and current_page.data.ga_create != "" %>
 <script>
 window.addEventListener('hashchange', function () {
     if (location.hash === '#top') {
@@ -92,10 +105,10 @@ if (!/yes|1/.test(navigator.doNotTrack)) {
     (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
     y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', {{ page.ga_create | join:', ' }});
+    ga('create', '<%= current_page.data.ga_id %>', '<%= current_page.data.ga_domain %>');
     ga('send', 'pageview');
 }
 </script>
-{% endif %}
+<% end %>
 </body>
 </html>

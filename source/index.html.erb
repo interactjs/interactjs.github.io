@@ -5,31 +5,46 @@ description: >
                interact.js is a standalone javascript module for handling
                single-pointer and multi-touch drags and gestures with powerful
                options such as inertia and snapping to grids or custom coordintes
-scripts     : [livedemo, debug]
-styles      : [livedemo]
+
+scripts:
+    - underscore-min
+    - interact.min
+    - debug
+    - livedemo
+
+styles:
+    - livedemo
 ---
 
 <div id="logo-area">
-    <img id="ijs-logo" src="img/ijs-anim.svg" alt="interact.js">
+    <%= image_tag 'ijs-anim.svg',
+        :id => 'ijs-logo',
+        :alt => 'interact.js' %>
 </div>
 <p id="tagline"> JavaScript drag and drop, resizing and multi-touch
 gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+) </p>
 
 <div id="download">
-    <p class="version-title"> Version {{ site.current_version }} </p>
+    <p class="version-title"> Version <%= data.site.current_version %> </p>
     <div id="get-min">
         Download the <em>minified</em> version
         <br> 17.9KB gzipped
-        <br> <a class="link-btn" href="//code.interactjs.io/interact-{{ site.current_version }}.min.js">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/download.svg" alt="Download">
+        <br> <a class="link-btn" href="//code.interactjs.io/interact-<%= data.site.current_version %>.min.js">
+            <%= image_tag 'download.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Download' %>
+
             interact.min.js
         </a>
     </div>
     <div id="get-dev">
         Download the <em>development</em> version
         <br> 38.5KB gzipped
-        <br> <a class="link-btn" href="//code.interactjs.io/interact-{{ site.current_version }}.js">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/download.svg" alt="Download">
+        <br> <a class="link-btn" href="//code.interactjs.io/interact-<%= data.site.current_version %>.js">
+            <%= image_tag 'download.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Download' %>
+
             interact.js
         </a>
     </div>
@@ -38,32 +53,47 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 <ul class="links">
     <li>
         <a class="link-btn" href="https://github.com/taye/interact.js">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/github.svg" alt="Octocat">
+            <%= image_tag 'github.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Octocat' %>
+
             View on Github
         </a>
     </li>
     <li>
         <a class="link-btn" href="https://twitter.com/interactjs">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/bird.svg" alt="Bird">
+            <%= image_tag 'bird.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Bird' %>
+
             @interactjs
         </a>
     </li>
     <div class="links-br"><br></div>
     <li>
         <a class="link-btn" href="/api">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/doc.svg" alt="Docs">
+            <%= image_tag 'doc.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Docs' %>
+
             API Reference
         </a>
     </li>
     <li>
         <a class="link-btn" href="https://github.com/taye/interact.js/issues?q=is%3Aissue">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/issue.svg" alt="Alert">
+            <%= image_tag 'issue.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Alert' %>
+
             Report an Issue
         </a>
     </li>
     <li>
         <a class="link-btn" href="https://gratipay.com/taye">
-            <img class="link-btn-icon" src="{{ site.baseurl }}/img/gratipay.svg" alt="Gratipay">
+            <%= image_tag 'gratipay.svg',
+                :class => 'link-btn-icon',
+                :alt => 'Gratipay' %>
+
             Donate
         </a>
     </li>
@@ -78,18 +108,18 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
         <input id="demo-2-html" type="radio" name="demo-2" hidden>
         <label class="html-label" for="demo-2-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="drag-me" class="draggable">
     <p> Click or touch and drag this element around </p>
 </div>
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-2-css" type="radio" name="demo-2" hidden>
         <label class="css-label" for="demo-2-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #drag-me {
     width: 25%;
@@ -111,13 +141,13 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
     content: "#" attr(id);
     color: #000;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-2-js" type="radio" name="demo-2" hidden checked>
         <label class="js-label" for="demo-2-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 // target elements with the "draggable" class
 interact('.draggable')
@@ -162,7 +192,7 @@ interact('.draggable')
 
     // allow more than one interaction at a time
     interact.maxInteractions(Infinity);
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-2-demo" type="radio" name="demo-2" hidden>
@@ -174,7 +204,7 @@ interact('.draggable')
         <input id="demo-5-html" type="radio" name="demo-5" hidden>
         <label class="html-label" for="demo-5-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="no-drop" class="draggable drag-drop"> #no-drop </div>
 
@@ -184,13 +214,13 @@ interact('.draggable')
     #outer-dropzone
     <div id="inner-dropzone" class="dropzone">#inner-dropzone</div>
  </div>
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-5-css" type="radio" name="demo-5" hidden>
         <label class="css-label" for="demo-5-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #outer-dropzone {
     height: 140px;
@@ -233,13 +263,13 @@ interact('.draggable')
 }
 
 .drag-drop.can-drop { background-color: #4e4; }
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-5-js" type="radio" name="demo-5" hidden checked>
         <label class="js-label" for="demo-5-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 /* The dragging code for '.draggable' from the demo above
  * applies to this demo as well so it doesn't have to be repeated. */
@@ -281,7 +311,7 @@ interact('.dropzone').dropzone({
         event.target.classList.remove('drop-target');
     }
 });
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-5-demo" type="radio" name="demo-5" hidden>
@@ -294,18 +324,18 @@ interact('.dropzone').dropzone({
         <input id="demo-4-html" type="radio" name="demo-4" hidden>
         <label class="html-label" for="demo-4-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="grid-snap">
     Dragging is constrained to the corners of a grid
 </div>
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-4-css" type="radio" name="demo-4" hidden>
         <label class="css-label" for="demo-4-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #grid-snap {
     width: 40%;
@@ -323,13 +353,13 @@ interact('.dropzone').dropzone({
     color: #fff;
     float: right;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-4-js" type="radio" name="demo-4" hidden checked>
         <label class="js-label" for="demo-4-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 var element = document.getElementById('grid-snap'),
     x = 0, y = 0;
@@ -356,7 +386,7 @@ interact(element)
         elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
         endOnly: true
     });
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-4-demo" type="radio" name="demo-4" hidden>
@@ -369,7 +399,7 @@ interact(element)
         <input id="demo-8-html" type="radio" name="demo-8" hidden>
         <label class="html-label" for="demo-8-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div class="resize-container">
     <div class="resize"
@@ -377,13 +407,13 @@ interact(element)
          Resize from the bottom and right edges
     </div>
 </div>
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-8-css" type="radio" name="demo-8" hidden>
             <label class="css-label" for="demo-8-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 .resize {
   background-color: #29e;
@@ -405,13 +435,13 @@ interact(element)
   width: 240px;
   height: 240px;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-8-js" type="radio" name="demo-8" hidden checked>
             <label class="js-label" for="demo-8-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 interact('.resize')
   .resizable(true)
@@ -429,7 +459,7 @@ interact('.resize')
 
     target.textContent = newWidth + '×' + newHeight;
   });
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-8-demo" type="radio" name="demo-8" hidden>
@@ -442,7 +472,7 @@ interact('.resize')
         <input id="demo-3-html" type="radio" name="demo-3" hidden>
         <label class="html-label" for="demo-3-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="rotate-area">
     <div id="angle-info">0&deg;</div>
@@ -452,13 +482,13 @@ interact('.resize')
             fill="#29e" />
     </svg>
 </div>
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-3-css" type="radio" name="demo-3" hidden>
             <label class="css-label" for="demo-3-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #rotate-area {
     overflow: hidden;
@@ -474,13 +504,13 @@ interact('.resize')
     font-size: 2em;
     position: absolute;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-3-js" type="radio" name="demo-3" hidden checked>
             <label class="js-label" for="demo-3-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 var angle = 0;
 
@@ -499,7 +529,7 @@ interact('#rotate-area').gesturable({
     }
 });
 
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-3-demo" type="radio" name="demo-3" hidden>
@@ -513,18 +543,19 @@ interact('#rotate-area').gesturable({
         <input id="demo-1-html" type="radio" name="demo-1" hidden>
         <label class="html-label" for="demo-1-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="gesture-area">
-    <img id="scale-element" src="img/ijs-anim.svg" alt="Color cube thing">
+    <%= image_tag 'ijs-anim.svg',
+        :id => 'scale-element' %>
 </div>
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-1-css" type="radio" name="demo-1" hidden>
         <label class="css-label" for="demo-1-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #scale-element {
     width: 100%;
@@ -534,13 +565,13 @@ interact('#rotate-area').gesturable({
     transition: -webkit-transform 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-1-js" type="radio" name="demo-1" hidden checked>
         <label class="js-label" for="demo-1-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 var scale = 1,
     gestureArea = document.getElementById('gesture-area'),
@@ -576,7 +607,7 @@ function reset () {
 gestureArea.addEventListener('dragstart', function (event) {
     event.preventDefault();
 })
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-1-demo" type="radio" name="demo-1" hidden>
@@ -589,7 +620,7 @@ gestureArea.addEventListener('dragstart', function (event) {
         <input id="demo-6-html" type="radio" name="demo-6" hidden checked>
         <label class="html-label" for="demo-6-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <object id="star-demo" type="image/svg+xml" data="repo/demo/star.svg"></object>
 
@@ -600,19 +631,19 @@ file as well as <a
 script</a> to bind and handle drag event listeners
 </p>
 
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-6-css" type="radio" name="demo-6" hidden>
             <label class="css-label" for="demo-6-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 #star-demo {
     display: block;
     margin: auto;
 }
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-6-demo" type="radio" name="demo-6" hidden>
@@ -625,17 +656,17 @@ script</a> to bind and handle drag event listeners
         <input id="demo-7-html" type="radio" name="demo-7" hidden checked>
         <label class="html-label" for="demo-7-html"> HTML </label>
         <div class="html-code">
-{% highlight html %}
+<% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div class="tap-target"> <p>Tap to change color</p> <p>Doubletap to change size</p> <p>Hold to rotate</p> </div>
 
-{% endhighlight %}
+<% end %>
         </div>
 
             <input id="demo-7-css" type="radio" name="demo-7" hidden>
             <label class="css-label" for="demo-7-css"> CSS </label>
         <div class="css-code">
-{% highlight css %}
+<% code 'css' do %>
 /* enable javascript to view a demo */
 .tap-target {
   width: 50%;
@@ -669,13 +700,13 @@ script</a> to bind and handle drag event listeners
   transform: rotate(180deg);
 }
 
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-7-js" type="radio" name="demo-7" hidden checked>
         <label class="js-label" for="demo-7-js"> JS </label>
         <div class="js-code">
-{% highlight javascript %}
+<% code 'javascript' do %>
 /* enable javascript to view a demo */
 interact('.tap-target')
     .on('tap', function (event) {
@@ -691,7 +722,7 @@ interact('.tap-target')
         event.currentTarget.classList.toggle('rotate');
         event.currentTarget.classList.remove('large');
     });
-{% endhighlight %}
+<% end %>
         </div>
 
         <input id="demo-7-demo" type="radio" name="demo-7" hidden>
@@ -700,8 +731,12 @@ interact('.tap-target')
 </div>
 
 <script>
-    window.liveDemoSettings.codeElementDepth = 4;
+    window.liveDemoSettings.codeElementDepth = 3;
     window.liveDemoSettings.insertPosition = 'beforeend';
+
+    window.liveDemoSettings.HTMLSelector += ', .highlight.html code';
+    window.liveDemoSettings.CSSSelector  += ', .highlight.css code';
+    window.liveDemoSettings.JSSelector   += ', .highlight.javascript code';
 
     interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
         .on('tap', showTab);
