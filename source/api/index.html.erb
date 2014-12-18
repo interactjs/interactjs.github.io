@@ -11,7 +11,7 @@ description: >
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{ page.title }}</title>
+        <title><%= current_page.data.title %></title>
         <meta name="viewport" content="device-width">
 
         <!-- Twitter Cards -->
@@ -20,25 +20,28 @@ description: >
         <meta name="twitter:creator:id" content="1173430910" />
 
         <!-- Open Graph -->
-        <meta property="og:title" content="{{ page.title }}" />
+        <meta property="og:title" content="<%= current_page.data.title %>" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}" />
-        <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/img/ijs-256.png" />
-{% if page.excerpt && page.excerpt != ""%}
-        <meta property="og:description" name="description" content="{{ page.excerpt }}" />
-{% elsif page.description && page.description != "" %}
-        <meta property="og:description" name="description" content="{{ page.description }}" />
-{% endif %}
+        <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
+        <meta property="og:image" content="<%= data.site.url %><%= image_path 'ijs-256.png' %>" />
 
-        <link rel="stylesheet" href="fonts/stylesheet.css">
-        <link rel="stylesheet" href="css/topcoat-desktop-light.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
-        <link rel="stylesheet" href="css/dr.css">
-        <link rel="stylesheet" href="css/prism.css">
-        <link rel="icon" href="../img/ijs-32.png"/>
+<% if current_page.data.excerpt && current_page.data.excerpt != ""%>
+        <meta property="og:description" name="description" content="<%= current_page.data.excerpt %>" />
+<% elsif current_page.data.description && current_page.data.description != "" %>
+        <meta property="og:description" name="description" content="<%= current_page.data.description %>" />
+<% end %>
+
+        <link rel="stylesheet" href="/api/fonts/stylesheet.css">
+        <link rel="stylesheet" href="/api/css/topcoat-desktop-light.css">
+        <link rel="stylesheet" href="/api/css/main.css">
+        <link rel="stylesheet" href="/api/css/dr.css">
+        <link rel="stylesheet" href="/api/css/prism.css">
+
+        <%= stylesheet_link_tag :main, media: :screen %>
+
+        <%= favicon_tag 'images/ijs-32.png' %>
         <!--[if lt IE 9]>
-            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![end]-->
     </head>
       <body class="light">
           <div id="wrapper">
@@ -270,7 +273,9 @@ description: >
                   <header id="main-header">
                       <div class="max-width">
                           <hgroup>
-                              <h1><a href="/"><img src="../img/ijs-anim.svg" height="80px" alt="interact.js"></a></h1>
+                              <h1><a href="/">
+                              <%= image_tag 'ijs-anim.svg', :alt => 'interact.js', :height => 80 %>
+                              </a></h1>
                               <p>API Reference</p>
                           </hgroup>
                       </div>
@@ -4307,7 +4312,7 @@ gesturable <code>&#39;max&#39;</code> and <code>&#39;maxPerElement&#39;</code> o
         <footer></footer>
       </div>
     </div>
-    <script src="js/prism.js"></script>
+    <%= javascript_include_tag '/api/js/prism.js' %>
     
 <script>!function(e){if(e){for(var t=function(e,t){var n=t.toUpperCase().split(""),r=n.shift(),a=RegExp("^["+r.toLowerCase()+r+"][a-z]*"+n.join("[a-z]*")+"[a-z]*$")
 return!!(e+"").match(a)},n=function(e,n){e+="",n+=""

@@ -1,0 +1,114 @@
+---
+author      : "Taye Adeyemi"
+ga_id       : "UA-44445883-3"
+ga_domain   : "interactjs.io"
+google_plus : "107750313581859477605"
+
+---
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>interact.js - <%= escape_html current_page.data.title %></title>
+    <meta name="author" content="<%= current_page.data.author %>" />
+
+<% if current_page.data.tags && current_page.data.tags != "" %>
+    <meta name="keywords" content="<%= current_page.data.tags.join ' ' %>" />
+<% end %>
+
+    <!-- twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site:id" content="2238211567" />
+    <meta name="twitter:creator:id" content="1173430910" />
+
+    <!-- open graph things -->
+    <meta property="og:title" content="interact.js" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
+    <meta property="og:image" content="<%= data.site.url %><%= image_path 'home-card-large.png' %>" />
+<% if current_page.data.description && current_page.data.description != "" %>
+    <meta property="og:description" name="description" content="<%= current_page.data.description %>" />
+<% elsif current_page.data.excerpt && current_page.data.excerpt != ""%>
+    <meta property="og:description" name="description" content="<%= current_page.data.excerpt %>" />
+<% end %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- syntax highlighting CSS -->
+    <%= stylesheet_link_tag :syntax, media: :screen %>
+
+    <!-- Custom CSS -->
+    <%= stylesheet_link_tag :normalize, media: :screen %>
+    <%= stylesheet_link_tag :main, media: :screen %>
+
+    <%= favicon_tag '/images/ijs-64.png' %>
+
+    <% current_page.data.styles.each do |style| %>
+        <%= stylesheet_link_tag style %>
+    <% end %>
+
+    <%= javascript_include_tag 'underscore-min' %>
+    <script src="//code.interactjs.io/interact-<%= data.site.current_version %>.min.js"></script>
+
+    <% current_page.data.styles.each do |script| %>
+        <%= javascript_include_tag script %>
+    <% end %>
+
+</head>
+<body>
+
+<div class="site">
+    <div class="header">
+    </div>
+
+        <%= yield %>
+
+    <footer class="footer">
+        <table class="footer-table"><tbody><tr>
+            <td>
+                <p>Website design by <a href="http://taye.me">Taye Adeyemi</a> ©2014.</p>
+                <p>Code released under the <a href="https://github.com/taye/interact.js/LICENSE"> MIT License.</a></p>
+            </td>
+            <td>
+                <a class="link-btn footer-round-btn" href="https://gratipay.com/taye" title="Make a donation on Gratipay">
+                    <%= image_tag 'gratipay-blue.svg',
+                      :class => 'footer-gratipay',
+                      :alt => 'Gratipay' %>
+                </a>
+            </td>
+        </tr></tbody></table>
+
+        <a class="scroll-top" href="#top" title="Back to top">
+            <%= image_tag 'up.svg',
+              :class => 'scroll-top-icon',
+              :alt => 'Back to top' %>
+        </a>
+    </footer>
+</div>
+
+<% if current_page.data.do_not_track != true and current_page.data.ga_create and current_page.data.ga_create != empty and current_page.data.ga_create != "" %>
+<script>
+window.addEventListener('hashchange', function () {
+    if (location.hash === '#top') {
+        if ("replaceState" in history) {
+              history.replaceState("", document.title, location.pathname + location.search);
+        }
+        else {
+          location.hash = '';
+        }
+    }
+});
+
+if (!/yes|1/.test(navigator.doNotTrack)) {
+    (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+    (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+    y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '<%= current_page.data.ga_id %>', '<%= current_page.data.ga_domain %>');
+    ga('send', 'pageview');
+}
+</script>
+<% end %>
+</body>
+</html>

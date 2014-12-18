@@ -1,11 +1,11 @@
-/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+/*! normalize.css v2.0.1 | MIT License | git.io/normalize */
 
 /* ==========================================================================
    HTML5 display definitions
    ========================================================================== */
 
-/**
- * Correct `block` display not defined in IE 8/9.
+/*
+ * Corrects `block` display not defined in IE 8/9.
  */
 
 article,
@@ -16,15 +16,14 @@ figure,
 footer,
 header,
 hgroup,
-main,
 nav,
 section,
 summary {
     display: block;
 }
 
-/**
- * Correct `inline-block` display not defined in IE 8/9.
+/*
+ * Corrects `inline-block` display not defined in IE 8/9.
  */
 
 audio,
@@ -33,8 +32,8 @@ video {
     display: inline-block;
 }
 
-/**
- * Prevent modern browsers from displaying `audio` without controls.
+/*
+ * Prevents modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
  */
 
@@ -43,13 +42,11 @@ audio:not([controls]) {
     height: 0;
 }
 
-/**
- * Address `[hidden]` styling not present in IE 8/9.
- * Hide the `template` element in IE, Safari, and Firefox < 22.
+/*
+ * Addresses styling for `hidden` attribute not present in IE 8/9.
  */
 
-[hidden],
-template {
+[hidden] {
     display: none;
 }
 
@@ -57,20 +54,20 @@ template {
    Base
    ========================================================================== */
 
-/**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
+/*
+ * 1. Sets default font family to sans-serif.
+ * 2. Prevents iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
 
 html {
     font-family: sans-serif; /* 1 */
-    -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
+    -ms-text-size-adjust: 100%; /* 2 */
 }
 
-/**
- * Remove default margin.
+/*
+ * Removes default margin.
  */
 
 body {
@@ -81,24 +78,16 @@ body {
    Links
    ========================================================================== */
 
-/**
- * Remove the gray background color from active links in IE 10.
- */
-
-a {
-    background: transparent;
-}
-
-/**
- * Address `outline` inconsistency between Chrome and other browsers.
+/*
+ * Addresses `outline` inconsistency between Chrome and other browsers.
  */
 
 a:focus {
     outline: thin dotted;
 }
 
-/**
- * Improve readability when focused and also mouse hovered in all browsers.
+/*
+ * Improves readability when focused and also mouse hovered in all browsers.
  */
 
 a:active,
@@ -110,26 +99,25 @@ a:hover {
    Typography
    ========================================================================== */
 
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari 5, and Chrome.
+/*
+ * Addresses `h1` font sizes within `section` and `article` in Firefox 4+,
+ * Safari 5, and Chrome.
  */
 
 h1 {
     font-size: 2em;
-    margin: 0.67em 0;
 }
 
-/**
- * Address styling not present in IE 8/9, Safari 5, and Chrome.
+/*
+ * Addresses styling not present in IE 8/9, Safari 5, and Chrome.
  */
 
 abbr[title] {
     border-bottom: 1px dotted;
 }
 
-/**
- * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+/*
+ * Addresses style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
 
 b,
@@ -137,26 +125,16 @@ strong {
     font-weight: bold;
 }
 
-/**
- * Address styling not present in Safari 5 and Chrome.
+/*
+ * Addresses styling not present in Safari 5 and Chrome.
  */
 
 dfn {
     font-style: italic;
 }
 
-/**
- * Address differences between Firefox and other browsers.
- */
-
-hr {
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 0;
-}
-
-/**
- * Address styling not present in IE 8/9.
+/*
+ * Addresses styling not present in IE 8/9.
  */
 
 mark {
@@ -164,8 +142,9 @@ mark {
     color: #000;
 }
 
-/**
- * Correct font family set oddly in Safari 5 and Chrome.
+
+/*
+ * Corrects font family set oddly in Safari 5 and Chrome.
  */
 
 code,
@@ -176,32 +155,34 @@ samp {
     font-size: 1em;
 }
 
-/**
- * Improve readability of pre-formatted text in all browsers.
+/*
+ * Improves readability of pre-formatted text in all browsers.
  */
 
 pre {
+    white-space: pre;
     white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
-/**
- * Set consistent quote types.
+/*
+ * Sets consistent quote types.
  */
 
 q {
     quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
-/**
- * Address inconsistent and variable font size in all browsers.
+/*
+ * Addresses inconsistent and variable font size in all browsers.
  */
 
 small {
     font-size: 80%;
 }
 
-/**
- * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+/*
+ * Prevents `sub` and `sup` affecting `line-height` in all browsers.
  */
 
 sub,
@@ -224,16 +205,16 @@ sub {
    Embedded content
    ========================================================================== */
 
-/**
- * Remove border when inside `a` element in IE 8/9.
+/*
+ * Removes border when inside `a` element in IE 8/9.
  */
 
 img {
     border: 0;
 }
 
-/**
- * Correct overflow displayed oddly in IE 9.
+/*
+ * Corrects overflow displayed oddly in IE 9.
  */
 
 svg:not(:root) {
@@ -244,8 +225,8 @@ svg:not(:root) {
    Figures
    ========================================================================== */
 
-/**
- * Address margin not present in IE 8/9 and Safari 5.
+/*
+ * Addresses margin not present in IE 8/9 and Safari 5.
  */
 
 figure {
@@ -256,7 +237,7 @@ figure {
    Forms
    ========================================================================== */
 
-/**
+/*
  * Define consistent border, margin, and padding.
  */
 
@@ -266,8 +247,8 @@ fieldset {
     padding: 0.35em 0.625em 0.75em;
 }
 
-/**
- * 1. Correct `color` not being inherited in IE 8/9.
+/*
+ * 1. Corrects color not being inherited in IE 8/9.
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
 
@@ -276,10 +257,10 @@ legend {
     padding: 0; /* 2 */
 }
 
-/**
- * 1. Correct font family not being inherited in all browsers.
- * 2. Correct font size not being inherited in all browsers.
- * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+/*
+ * 1. Corrects font family not being inherited in all browsers.
+ * 2. Corrects font size not being inherited in all browsers.
+ * 3. Addresses margins set differently in Firefox 4+, Safari 5, and Chrome
  */
 
 button,
@@ -291,8 +272,8 @@ textarea {
     margin: 0; /* 3 */
 }
 
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+/*
+ * Addresses Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
 
@@ -301,23 +282,11 @@ input {
     line-height: normal;
 }
 
-/**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
- * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
- * Correct `select` style inheritance in Firefox 4+ and Opera.
- */
-
-button,
-select {
-    text-transform: none;
-}
-
-/**
+/*
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
  *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
+ * 2. Corrects inability to style clickable `input` types in iOS.
+ * 3. Improves usability and consistency of cursor style between image-type
  *    `input` and others.
  */
 
@@ -329,18 +298,18 @@ input[type="submit"] {
     cursor: pointer; /* 3 */
 }
 
-/**
+/*
  * Re-set default cursor for disabled elements.
  */
 
 button[disabled],
-html input[disabled] {
+input[disabled] {
     cursor: default;
 }
 
-/**
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
+/*
+ * 1. Addresses box sizing set to `content-box` in IE 8/9.
+ * 2. Removes excess padding in IE 8/9.
  */
 
 input[type="checkbox"],
@@ -349,9 +318,9 @@ input[type="radio"] {
     padding: 0; /* 2 */
 }
 
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+/*
+ * 1. Addresses `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Addresses `box-sizing` set to `border-box` in Safari 5 and Chrome
  *    (include `-moz` to future-proof).
  */
 
@@ -362,8 +331,8 @@ input[type="search"] {
     box-sizing: content-box;
 }
 
-/**
- * Remove inner padding and search cancel button in Safari 5 and Chrome
+/*
+ * Removes inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
 
@@ -372,8 +341,8 @@ input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
 }
 
-/**
- * Remove inner padding and border in Firefox 4+.
+/*
+ * Removes inner padding and border in Firefox 4+.
  */
 
 button::-moz-focus-inner,
@@ -382,9 +351,9 @@ input::-moz-focus-inner {
     padding: 0;
 }
 
-/**
- * 1. Remove default vertical scrollbar in IE 8/9.
- * 2. Improve readability and alignment in all browsers.
+/*
+ * 1. Removes default vertical scrollbar in IE 8/9.
+ * 2. Improves readability and alignment in all browsers.
  */
 
 textarea {
@@ -396,7 +365,7 @@ textarea {
    Tables
    ========================================================================== */
 
-/**
+/*
  * Remove most spacing between table cells.
  */
 

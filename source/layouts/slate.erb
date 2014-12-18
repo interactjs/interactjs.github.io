@@ -1,0 +1,182 @@
+<%#
+Copyright 2008-2013 Concur Technologies, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+%>
+<% language_tabs = current_page.data.language_tabs %>
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Taye Adeyemi" />
+    <title><%= current_page.data.title || "interact.js API Documentation" %></title>
+
+    <%= favicon_tag '/images/ijs-gray-blue-64.png' %>
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site:id" content="2238211567" />
+    <meta name="twitter:creator:id" content="1173430910" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<%= current_page.data.title || "interact.js API Documentation" %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://interactjs.io/docs/images/screenshot_half_size.png" />
+    <meta property="og:description" name="description"
+      content="interact.js is a standalone javascript module for handling
+               single-pointer and multi-touch drags and gestures with powerful
+               options such as inertia and snapping" />
+
+    <%= stylesheet_link_tag :slate_screen, media: :screen %>
+    <%= stylesheet_link_tag :slate_print, media: :print %>
+
+    <%= stylesheet_link_tag :adv, media: :all %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <% if current_page.data.search %>
+      <%= javascript_include_tag  "all" %>
+    <% else %>
+      <%= javascript_include_tag  "all_nosearch" %>
+    <% end %>
+
+    <% if language_tabs %>
+      <script>
+        $(function() {
+          setupLanguages(<%= language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>);
+        });
+      </script>
+    <% end %>
+  </head>
+
+  <body class="<%= page_classes %>">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <%= image_tag('navbar.png') %>
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <%= image_tag 'ijs-anim.svg',
+        :class => 'logo',
+        :alt => 'interact.js' %>
+
+      <% if language_tabs %>
+        <div class="lang-selector">
+          <% language_tabs.each do |lang| %>
+            <% if lang.is_a? Hash %>
+              <a href="#" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
+            <% else %>
+              <a href="#" data-language-name="<%= lang %>"><%= lang %></a>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if current_page.data.search %>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <% end %>
+      <div id="toc">
+      </div>
+      <% if current_page.data.toc_footers %>
+        <ul class="toc-footer">
+          <% current_page.data.toc_footers.each do |footer| %>
+            <li><%= footer %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <%= yield %>
+        <% current_page.data.includes && current_page.data.includes.each do |include| %>
+          <%= partial "includes/#{include}" %>
+        <% end %>
+
+        <div class="ad-padding"></div>
+
+      </div>
+      <div class="dark-box">
+        <% if language_tabs %>
+          <div class="lang-selector">
+            <% language_tabs.each do |lang| %>
+              <% if lang.is_a? Hash %>
+                <a href="#" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
+              <% else %>
+                <a href="#" data-language-name="<%= lang %>"><%= lang %></a>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="ad-wrap">
+          <div id="ad-contain">
+            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+    if (!/yes|1/.test(navigator.doNotTrack)) {
+      (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+      (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+      y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-44445883-3', 'interactjs.io');
+
+      window.addEventListener('DOMContentLoaded', function () {
+        var heading = document.getElementById(window.location.hash),
+            title = heading && heading.textContent;
+
+        if (title) {
+          ga('send', {
+            hitType: 'pageview',
+            page: '/docs/' + window.location.hash,
+            title: 'Docs: ' + title
+          });
+        }
+        else {
+          ga('send', 'pageview');
+        }
+      });
+    }
+
+    function reposad () {
+      var ad = document.getElementById('ad-contain');
+
+      if (!ad) { return; }
+
+      var wrap = document.querySelector('.ad-wrap');
+
+      if (window.innerWidth <= 700 && wrap.lastElementChild === ad) {
+        $('.content h1:nth-of-type(2)').before(ad);
+      }
+      else if (window.innerWidth > 700 && wrap.lastElementChild !== ad) {
+        wrap.appendChild(ad);
+      }
+    }
+
+    $(window).on('resize', reposad);
+
+    reposad();
+
+    </script>
+
+  </body>
+</html>
