@@ -26,7 +26,7 @@ google_plus : "107750313581859477605"
     <meta property="og:title" content="interact.js" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
-    <meta property="og:image" content="<%= data.site.url %><%= data.site.baseurl %>/img/ijs-256.png" />
+    <meta property="og:image" content="<%= data.site.url %><%= image_path 'ijs-256.png' %>" />
 <% if current_page.data.description && current_page.data.description != "" %>
     <meta property="og:description" name="description" content="<%= current_page.data.description %>" />
 <% elsif current_page.data.excerpt && current_page.data.excerpt != ""%>
@@ -42,7 +42,7 @@ google_plus : "107750313581859477605"
     <%= stylesheet_link_tag :normalize, media: :screen %>
     <%= stylesheet_link_tag :main, media: :screen %>
 
-    <%= favicon_tag '/images/ijs-gray-blue-64.png' %>
+    <%= favicon_tag '/images/ijs-64.png' %>
 
     <% current_page.data.styles.each do |style| %>
         <%= stylesheet_link_tag style %>

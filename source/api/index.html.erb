@@ -23,7 +23,7 @@ description: >
         <meta property="og:title" content="<%= current_page.data.title %>" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
-        <meta property="og:image" content="<%= data.site.url %>/imager/ijs-256.png" />
+        <meta property="og:image" content="<%= data.site.url %><%= data.site.url %><%= image_path 'ijs-256.png' %>" />
 
 <% if current_page.data.excerpt && current_page.data.excerpt != ""%>
         <meta property="og:description" name="description" content="<%= current_page.data.excerpt %>" />
