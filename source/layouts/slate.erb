@@ -33,7 +33,7 @@ under the License.
     <!-- Open Graph -->
     <meta property="og:title" content="<%= current_page.data.title || "interact.js API Documentation" %>" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://interactjs.io/docs/images/screenshot_half_size.png" />
+    <meta property="og:image" content="<%= data.site.url %><%= image_path 'screenshot_half_size.png' %>" />
     <meta property="og:description" name="description"
       content="interact.js is a standalone javascript module for handling
                single-pointer and multi-touch drags and gestures with powerful
