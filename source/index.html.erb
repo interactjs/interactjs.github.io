@@ -14,6 +14,16 @@ scripts:
 
 styles:
     - livedemo
+
+links:
+    - ['https://github.com/taye/interact.js', 'View on Github' ,   'github.svg', 'Octocat' ]
+    - ['https://twitter.com/interactjs'     , '@interactjs'    ,     'bird.svg', 'Bird'    ]
+    - ['https://gitter.im/taye/interact.js' , 'Discuss'        ,     'chat.svg', 'Gitter'  ]
+    - :break
+    - ['http://interactjs.io/api'           , 'API Reference'  ,      'doc.svg', 'Docs'    ]
+    - ['http://git.io/srWhdg'               , 'Report an Issue',    'issue.svg', '!'       ]
+    - ['https://gratipay.com/taye'          , 'Donate'         , 'gratipay.svg', 'Gratipay']
+
 ---
 
 <div id="logo-area">
@@ -51,61 +61,18 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 </div>
 
 <ul class="links">
-    <li>
-        <a class="link-btn" href="https://github.com/taye/interact.js">
-            <%= image_tag 'github.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Octocat' %>
-
-            View on Github
-        </a>
-    </li>
-    <li>
-        <a class="link-btn" href="https://twitter.com/interactjs">
-            <%= image_tag 'bird.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Bird' %>
-
-            @interactjs
-        </a>
-    </li>
-    <li>
-        <a class="link-btn" href="https://gitter.im/taye/interact.js">
-            <%= image_tag 'speech.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Gitter' %>
-
-            Discuss
-        </a>
-    </li>
-    <div class="links-br"><br></div>
-    <li>
-        <a class="link-btn" href="/api">
-            <%= image_tag 'doc.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Docs' %>
-
-            API Reference
-        </a>
-    </li>
-    <li>
-        <a class="link-btn" href="https://github.com/taye/interact.js/issues?q=is%3Aissue">
-            <%= image_tag 'issue.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Alert' %>
-
-            Report an Issue
-        </a>
-    </li>
-    <li>
-        <a class="link-btn" href="https://gratipay.com/taye">
-            <%= image_tag 'gratipay.svg',
-                :class => 'link-btn-icon',
-                :alt => 'Gratipay' %>
-
-            Donate
-        </a>
-    </li>
+    <% current_page.data.links.each do |link| %>
+        <% if link == :break %>
+            <span class="links-br"><br></span>
+            <% next %>
+        <% end %>
+        <li> <%= partial :link_btn, :locals => {
+            :href => link[0],
+            :text => link[1],
+            :icon => link[2],
+            :icon_alt => link[3] } %>
+        </li>
+    <% end %>
 </ul>
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
