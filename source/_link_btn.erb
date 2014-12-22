@@ -1,0 +1,9 @@
+<a class="link-btn" href="<%= href ||= '#' %>">
+    <% if (icon ||= '') != '' %>
+    <%= image_tag icon,
+        :class => 'link-btn-icon',
+        :alt => icon_alt ||= '' %>
+    <% end %>
+
+    <%= text ||= '' %>
+</a>
