@@ -17,7 +17,9 @@ activate :syntax
 
 # This is needed for Github pages, since they're hosted on a subdomain
 #activate :relative_assets
-set :relative_links, true
+#set :relative_links, true
+
+activate :directory_indexes
 
 activate :livereload
 
