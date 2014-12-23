@@ -44,14 +44,13 @@ google_plus : "107750313581859477605"
 
     <%= favicon_tag '/images/ijs-64.png' %>
 
-    <% current_page.data.styles.each do |style| %>
+    <% current_page.data.styles.uniq.each do |style| %>
         <%= stylesheet_link_tag style %>
     <% end %>
 
-    <%= javascript_include_tag 'underscore-min' %>
     <script src="//code.interactjs.io/interact-<%= data.site.current_version %>.min.js"></script>
 
-    <% current_page.data.styles.each do |script| %>
+    <% current_page.data.scripts.uniq.each do |script| %>
         <%= javascript_include_tag script %>
     <% end %>
 
