@@ -109,6 +109,30 @@ There are effectively `targets.length * max( relativePoints.length, 1 )`
 snap targets while snap calculations are done. Snap functions are called
 multiple times with the coordinates of each `relativePoint`.
 
+offset
+------
+
+```javascript
+interact(element)
+  .drggable({
+    snap: {
+      targets: [ { x: 300, y: 300 } ],
+
+      offset: { x: 20, y: 20 }
+    }
+  })
+  .resizable({
+    snap: {
+      targets: [ { x: 300, y: 300 } ],
+      offset: 'startCorods'
+    }
+  });
+```
+
+A snap offsets lets you shift the coordinates of all snap targets by the `x`
+and `y` properties of a given object or if the string `'startCoords'` is given,
+then `pageX` and `pageY` at the start of the action are used.
+
 range
 -----
 
