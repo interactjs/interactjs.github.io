@@ -19,6 +19,8 @@ activate :syntax
 #activate :relative_assets
 #set :relative_links, true
 
+activate :i18n
+
 activate :directory_indexes
 
 activate :livereload
