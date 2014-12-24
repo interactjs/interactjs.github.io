@@ -127,8 +127,14 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 // target elements with the "draggable" class
 interact('.draggable')
   .draggable({
-    // allow dragging of multple elements at the same time
-    max: Infinity,
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    restrict: {
+      restriction: "parent",
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
 
     // call this function on every dragmove event
     onmove: function (event) {
@@ -155,18 +161,7 @@ interact('.draggable')
         + (Math.sqrt(event.dx * event.dx +
                      event.dy * event.dy)|0) + 'px');
     }
-  })
-  // enable inertial throwing
-  .inertia(true)
-  // keep the element within the area of it's parent
-  .restrict({
-    drag: "parent",
-    endOnly: true,
-    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
   });
-
-// allow more than one interaction at a time
-interact.maxInteractions(Infinity);
 <% end %>
         </div>
 
@@ -340,12 +335,20 @@ var element = document.getElementById('grid-snap'),
     x = 0, y = 0;
 
 interact(element)
-  .draggable(true)
-  .snap({
-    mode: 'grid',
-    grid: { x: 30, y: 30 },
-    range: Infinity,
-    elementOrigin: { x: 0, y: 0 }
+  .draggable({
+    snap: {
+      targets: [
+        interact.createSnapGrid({ x: 30, y: 30 })
+      ],
+      range: Infinity,
+      elementOrigin: { x: 0, y: 0 }
+    },
+    inertia: true,
+    restrict: {
+      restriction: element.parentNode,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+      endOnly: true
+    }
   })
   .on('dragmove', function (event) {
     x += event.dx;
@@ -354,12 +357,6 @@ interact(element)
     event.target.style.webkitTransform =
     event.target.style.transform =
         'translate(' + x + 'px, ' + y + 'px)';
-  })
-  .inertia(true)
-  .restrict({
-    drag: element.parentNode,
-    elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-    endOnly: true
   });
 <% end %>
         </div>
