@@ -13,7 +13,11 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations
 under the License.
 %>
-<% language_tabs = current_page.data.language_tabs %>
+
+<% language_tabs = current_page.data.language_tabs || data.slate.language_tabs %>
+<% toc_footers   = current_page.data.toc_footers   || data.slate.toc_footers   %>
+<% include_search = (current_page.data.has_attribute?:search) ? current_page.data.search : data.slate.search %>
+
 <!doctype html>
 <html prefix="og: http://ogp.me/ns#">
   <head>
@@ -45,8 +49,8 @@ under the License.
     <%= stylesheet_link_tag :adv, media: :all %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <% if current_page.data.search %>
-      <%= javascript_include_tag  "all" %>
+    <% if include_search %>
+      <%= javascript_include_tag "all" %>
     <% else %>
       <%= javascript_include_tag  "all_nosearch" %>
     <% end %>
@@ -83,7 +87,7 @@ under the License.
           <% end %>
         </div>
       <% end %>
-      <% if current_page.data.search %>
+      <% if include_search %>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -91,9 +95,9 @@ under the License.
       <% end %>
       <div id="toc">
       </div>
-      <% if current_page.data.toc_footers %>
+      <% if toc_footers %>
         <ul class="toc-footer">
-          <% current_page.data.toc_footers.each do |footer| %>
+          <% toc_footers.each do |footer| %>
             <li><%= footer %></li>
           <% end %>
         </ul>
