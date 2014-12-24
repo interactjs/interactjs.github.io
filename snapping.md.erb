@@ -16,8 +16,8 @@ includes:
 search: true
 ---
 
-Snap
-====
+Snapping
+========
 
 ```javascript
 interact(target)
@@ -33,7 +33,7 @@ Drag and resize coordinates can be snapped to specific points defined by
 objects and functions in the snap `targets` array.
 
 targets
--------
+=======
 
 The elements of this array can be any combination of *points* and *functions
 which return points* to snap to.  If there are multiple snap targets, then the
@@ -92,7 +92,7 @@ var gridTarget = interact.createSnapGrid({
   x: 50, 
   y: 50, 
   range: 10,
-  offset: { x: 5, y: 10 } // optional
+  offset: { x: 5, y: 10 }
 });
 ```
 
@@ -100,8 +100,38 @@ Use the `interact.createSnapGrid` method to create a target that snaps to a
 grid. The method takes an object describing a grid and returns a function
 that snaps to the corners of that grid.
 
+The properties of the grid are:
+
+ - `x`, `y` – the spacing between the horizontal and vertical grid lines.
+ - `range` – (optional) the distance from the grid corners within which the
+ pointer coords will be snapped.
+ - `offset` – (optiona) an object with `x` and `y` props to offset the grid
+ lines
+
+range
+=====
+
+```javascript
+interact(element).draggable({
+  snap: {
+    targets: [
+      { x: 20, y: 450, range: 50 }
+      { x: 10, y: 0 /* use default range below */},
+    ],
+    range: 300 // for targets that don't specify a range
+  }
+});
+```
+
+The `range` of a snap target is the distance the pointer must be from the
+target's coordinates for a snap to be possible.
+
+i.e. `inRange = distance <= range`.
+
+If a snap target doesn't have it's own range, the default range is used.
+
 relativePoints
----------------
+===============
 
 ```javascript
 interact(element).drggable({
@@ -128,7 +158,7 @@ snap targets while snap calculations are done. Snap functions are called
 multiple times with the coordinates of each `relativePoint`.
 
 offset
-------
+======
 
 ```javascript
 interact(element)
@@ -151,30 +181,8 @@ A snap offsets lets you shift the coordinates of all snap targets by the `x`
 and `y` properties of a given object or if the string `'startCoords'` is given,
 then `pageX` and `pageY` at the start of the action are used.
 
-range
------
-
-```javascript
-interact(element).draggable({
-  snap: {
-    targets: [
-      { x: 20, y: 450, range: 50 }
-      { x: 10, y: 0 /* use default range below */},
-    ],
-    range: 300 // for targets that don't specify a range
-  }
-});
-```
-
-The `range` of a snap target is the distance the pointer must be from the
-target's coordinates for a snap to be possible.
-
-i.e. `inRange = distance <= range`.
-
-If a snap target doesn't have it's own range, the default range is used.
-
 endOnly
--------
+=======
 
 ```javascript
 interact(element).draggable({
