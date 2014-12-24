@@ -1,0 +1,152 @@
+Action options
+==============
+
+```javascript
+interact(target)
+  .draggable({
+    max          : Number,
+    maxPerElement: Number,
+    snap         : {/* ... */},
+    restrict     : {/* ... */},
+    inertia      : {/* ... */},
+    autoScroll   : {/* ... */},
+
+    axis         : 'x' || 'y'
+
+  })
+  .resizable({
+    max          : Number,
+    maxPerElement: Number,
+    snap         : {/* ... */},
+    restrict     : {/* ... */},
+    inertia      : {/* ... */},
+    autoScroll   : {/* ... */},
+
+    square       : true || false,
+    axis         : 'x' || 'y'
+  })
+  .gesturable({
+    max          : Number,
+    maxPerElement: Number,
+    restrict     : {/* ... */}
+  });
+```
+
+The Interactable methods `draggable`, `resizable` and `gesturable` take either
+`true` or `false` to simply allow/dissallow the action or an object with
+properties to change certain settings.
+
+If an object parameter is given, the action is enabled unless `enabled: false`
+is a property of the object.
+
+enabled
+-------
+
+Enable the action for the Interactable. If the options object has no `enabled`
+property or the property value is `true` then the action is enabled. If
+`enabled` is false, the action is disabled.
+
+max
+---
+
+`max` is used to limit the number of concurrent interactions that can target an
+interactable. By default, any number of interactions can target an
+interactable.
+
+maxPerElement
+-------------
+
+By default only 1 interaction can target the same interactable+element
+combination. If you want to allow multiple interactions on the same target
+element, set the `maxPerElement` property of your object to a value `>= 2`.
+
+snap
+----
+
+Change snapping settings for drag and resize. See [docs/snapping](<%= url_for 'docs/snapping' %>).
+
+restrict
+--------
+
+Change restriction settings for drag, resize and gesture. See [docs/restriction](<%= url_for 'docs/restriction' %>).
+
+inertia
+-------
+
+Change inertia settings for drag, and resize. See [docs/inertia](<%= url_for 'docs/inertia' %>).
+
+autoScroll
+----------
+
+Change autoScroll settings for drag, and resize. See [docs/autoScroll](<%= url_for 'docs/autoscroll' %>).
+
+drag axis
+---------
+
+```javascript
+interact(target).draggable({
+  axis: 'x'
+});
+```
+
+The axis in which the first movement must be in for the drag sequence to start.
+After the movement in that axis, the the action can move in both the x and y
+axes.
+
+<aside>
+I'm thinking of changing this so that movement is actually restricted to the
+given axis. Let me know what you think. https://gitter.im/taye/interact.js.
+</aside>
+
+resize axis
+-----------
+
+```javascript
+interact(target).resizable({
+  axis: 'x'
+});
+```
+
+The axis in which resizing is allowed. `x` to only resize horizontally from the
+right edge. `y` to only resize vertically form the bottom edge. Any other value
+will allow resizing from both edges borizontally and vertically.
+
+resize squareResize
+-------------------
+
+```javascript
+interact(target).resizable({
+  squareResize: true
+});
+```
+
+When resizing, change `x` and `y` by the same amount.
+
+dropzone accept
+---------------
+```javascript
+interact(target).dropzone({
+  acept: '.drag0, .drag1',
+});
+```
+
+The CSS selector or element which must match the dragged element in order for
+drop events to be fired.
+
+dropzone overlap
+----------------
+
+```javascript
+interact(target).dropzone({
+  overlap: 0.25
+});
+```
+
+Set how drops are checked for. The allowed values are:
+
+ - `'pointer'` – the pointer must be over the dropzone (default)
+ - `'center'` – the draggable element's center must be over the dropzone
+ - a number from 0-1 which is the (intersection area) / (draggable area).  e.g.
+ `0.5` for drop to happen when half of the area of the draggable is over the
+ dropzone
+

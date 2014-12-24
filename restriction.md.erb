@@ -1,0 +1,84 @@
+---
+title: Restriction - interact.js Documentation
+
+layout: slate
+
+language_tabs:
+  - javascript
+
+toc_footers:
+  - <a href='http://interactjs.io'>Project homepage</a>
+  - <a href='https://github.com/taye/interact.js'>View on Github</a>
+  - <a href='http://github.com/tripit/slate'>(Docs Powered by Slate)</a>
+
+includes:
+
+search: true
+---
+
+Restrict
+========
+
+```javascript
+interact(target)
+  .draggable({
+    restrict: { /* restrict options */ }
+  })
+  .resizable({
+    restrict: { /* restrict options */ }
+  });
+  .gesturable({
+    restrict: { /* restrict options */ }
+  });
+```
+
+Restriction
+-----------
+
+```javascript
+interact(target)
+  .draggable({
+    restrict: {
+      restriction: 'parent',
+    }
+  })
+  .gesturable({
+    restrict: {
+      restriction: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      }
+    }
+  })
+```
+
+elementRect
+-----------
+
+```javascript
+interact(target)
+  .draggable({
+    restrict: {
+      restriction: 'parent',
+      elementRect: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      }
+    }
+  })
+  .gesturable({
+    restrict: {
+      restriction: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      },
+      endOnly: true
+    }
+  })
+```
