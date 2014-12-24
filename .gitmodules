@@ -2,5 +2,5 @@
 	path = source/repo
 	url = https://github.com/taye/interact.js.git
 [submodule "source/docs"]
-	path = source/docs
+	path = source/localizable/docs
 	url = git@github.com:interactjs/docs-en.git
