@@ -86,7 +86,7 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="drag-me" class="draggable">
-    <p> Click or touch and drag this element around </p>
+  <p> Click or touch and drag this element around </p>
 </div>
 <% end %>
         </div>
@@ -97,24 +97,24 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #drag-me {
-    width: 25%;
-    height: 100%;
-    margin: 10%;
+  width: 25%;
+  height: 100%;
+  margin: 10%;
 
-    background-color: #29e;
-    color: white;
-    
-    border: solid 0.4em #666;
-    border-radius: 0.75em;
-    padding: 3%;
+  background-color: #29e;
+  color: white;
 
-    -webkit-transform: translate(0px, 0px);
-            transform: translate(0px, 0px);
+  border: solid 0.4em #666;
+  border-radius: 0.75em;
+  padding: 3%;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
 }
 
 #drag-me::before {
-    content: "#" attr(id);
-    color: #000;
+  content: "#" attr(id);
+  color: #000;
 }
 <% end %>
         </div>
@@ -126,47 +126,47 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
 /* enable javascript to view a demo */
 // target elements with the "draggable" class
 interact('.draggable')
-    .draggable({
-        // allow dragging of multple elements at the same time
-        max: Infinity,
+  .draggable({
+    // allow dragging of multple elements at the same time
+    max: Infinity,
 
-        // call this function on every dragmove event
-        onmove: function (event) {
-            var target = event.target,
-                // keep the dragged position in the data-x/data-y attributes
-                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+    // call this function on every dragmove event
+    onmove: function (event) {
+      var target = event.target,
+          // keep the dragged position in the data-x/data-y attributes
+          x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+          y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-            // translate the element
-            target.style.webkitTransform =
-            target.style.transform =
-                'translate(' + x + 'px, ' + y + 'px)';
+      // translate the element
+      target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
 
-            // update the posiion attributes
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
-        },
-        // call this function on every dragend event
-        onend: function (event) {
-            var textEl = event.target.querySelector('p');
-            
-            textEl && (textEl.textContent =
-                'moved a distance of '
-                + (Math.sqrt(event.dx * event.dx +
-                             event.dy * event.dy)|0) + 'px');
-        }
-    })
-    // enable inertial throwing
-    .inertia(true)
-    // keep the element within the area of it's parent
-    .restrict({
-        drag: "parent",
-        endOnly: true,
-        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-    });
+      // update the posiion attributes
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
+    },
+    // call this function on every dragend event
+    onend: function (event) {
+      var textEl = event.target.querySelector('p');
 
-    // allow more than one interaction at a time
-    interact.maxInteractions(Infinity);
+      textEl && (textEl.textContent =
+        'moved a distance of '
+        + (Math.sqrt(event.dx * event.dx +
+                     event.dy * event.dy)|0) + 'px');
+    }
+  })
+  // enable inertial throwing
+  .inertia(true)
+  // keep the element within the area of it's parent
+  .restrict({
+    drag: "parent",
+    endOnly: true,
+    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+  });
+
+// allow more than one interaction at a time
+interact.maxInteractions(Infinity);
 <% end %>
         </div>
 
@@ -186,8 +186,8 @@ interact('.draggable')
 <div id="yes-drop" class="draggable drag-drop"> #yes-drop </div>
 
 <div id="outer-dropzone" class="dropzone">
-    #outer-dropzone
-    <div id="inner-dropzone" class="dropzone">#inner-dropzone</div>
+  #outer-dropzone
+  <div id="inner-dropzone" class="dropzone">#inner-dropzone</div>
  </div>
 <% end %>
         </div>
@@ -198,43 +198,43 @@ interact('.draggable')
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #outer-dropzone {
-    height: 140px;
+  height: 140px;
 }
 
 #inner-dropzone {
-    height: 80px;
+  height: 80px;
 }
 
 .dropzone {
-    background-color: #ccc;
-    border: dashed 4px transparent;
-    border-radius: 4px;
-    margin: 10px auto 30px;
-    padding: 10px;
-    width: 80%;
-    transition: background-color 0.3s, border-color 0.3s;
+  background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .drop-active {
-    border-color: #666;
+  border-color: #666;
 }
 
 .drop-target {
-    background-color: #29e;
+  background-color: #29e;
 }
 
 .drag-drop {
-    display: inline-block;
-    min-width: 40px;
-    padding: 2em 0.5em;
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
 
-    background-color: #99e;
-    border: solid 2px white;
+  background-color: #99e;
+  border: solid 2px white;
 
-    -webkit-transform: translate(0px, 0px);
-            transform: translate(0px, 0px);
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
 
-    transition: background-color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .drag-drop.can-drop { background-color: #4e4; }
@@ -251,40 +251,40 @@ interact('.draggable')
 
 // enable draggables to be dropped into this
 interact('.dropzone').dropzone({
-    // only accept elements matching this CSS selector
-    accept: '#yes-drop',
-    // Require a 75% element overlap for a drop to be possible
-    overlap: 0.75,
+  // only accept elements matching this CSS selector
+  accept: '#yes-drop',
+  // Require a 75% element overlap for a drop to be possible
+  overlap: 0.75,
 
-    // listen for drop related events:
+  // listen for drop related events:
 
-    ondropactivate: function (event) {
-        // add active dropzone feedback
-        event.target.classList.add('drop-active');
-    },
-    ondragenter: function (event) {
-        var draggableElement = event.relatedTarget,
-            dropzoneElement = event.target;
+  ondropactivate: function (event) {
+    // add active dropzone feedback
+    event.target.classList.add('drop-active');
+  },
+  ondragenter: function (event) {
+    var draggableElement = event.relatedTarget,
+        dropzoneElement = event.target;
 
-        // feedback the possibility of a drop
-        dropzoneElement.classList.add('drop-target');
-        draggableElement.classList.add('can-drop');
-        draggableElement.textContent = 'Dragged in';
-    },
-    ondragleave: function (event) {
-        // remove the drop feedback style
-        event.target.classList.remove('drop-target');
-        event.relatedTarget.classList.remove('can-drop');
-        event.relatedTarget.textContent = 'Dragged out';
-    },
-    ondrop: function (event) {
-        event.relatedTarget.textContent = 'Dropped';
-    },
-    ondropdeactivate: function (event) {
-        // remove active dropzone feedback
-        event.target.classList.remove('drop-active');
-        event.target.classList.remove('drop-target');
-    }
+    // feedback the possibility of a drop
+    dropzoneElement.classList.add('drop-target');
+    draggableElement.classList.add('can-drop');
+    draggableElement.textContent = 'Dragged in';
+  },
+  ondragleave: function (event) {
+    // remove the drop feedback style
+    event.target.classList.remove('drop-target');
+    event.relatedTarget.classList.remove('can-drop');
+    event.relatedTarget.textContent = 'Dragged out';
+  },
+  ondrop: function (event) {
+    event.relatedTarget.textContent = 'Dropped';
+  },
+  ondropdeactivate: function (event) {
+    // remove active dropzone feedback
+    event.target.classList.remove('drop-active');
+    event.target.classList.remove('drop-target');
+  }
 });
 <% end %>
         </div>
@@ -302,7 +302,7 @@ interact('.dropzone').dropzone({
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="grid-snap">
-    Dragging is constrained to the corners of a grid
+  Dragging is constrained to the corners of a grid
 </div>
 <% end %>
         </div>
@@ -313,20 +313,20 @@ interact('.dropzone').dropzone({
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #grid-snap {
-    width: 40%;
-    background-color: #4e4;
-    color: #fff;
-    font-size: 1.2em;
-    border-radius: 4px;
-    padding: 2%;
-    margin: 5%;
+  width: 40%;
+  background-color: #4e4;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 2%;
+  margin: 5%;
 }
 
 #grid-snap::after {
-    content: attr(data-x) ", " attr(data-y);
-    background-color: #29e;
-    color: #fff;
-    float: right;
+  content: attr(data-x) ", " attr(data-y);
+  background-color: #29e;
+  color: #fff;
+  float: right;
 }
 <% end %>
         </div>
@@ -340,27 +340,27 @@ var element = document.getElementById('grid-snap'),
     x = 0, y = 0;
 
 interact(element)
-    .draggable(true)
-    .snap({
-        mode: 'grid',
-        grid: { x: 30, y: 30 },
-        range: Infinity,
-        elementOrigin: { x: 0, y: 0 }
-    }) 
-    .on('dragmove', function (event) {
-        x += event.dx;
-        y += event.dy;
+  .draggable(true)
+  .snap({
+    mode: 'grid',
+    grid: { x: 30, y: 30 },
+    range: Infinity,
+    elementOrigin: { x: 0, y: 0 }
+  })
+  .on('dragmove', function (event) {
+    x += event.dx;
+    y += event.dy;
 
-        event.target.style.webkitTransform =
-        event.target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)';
-    })
-    .inertia(true)
-    .restrict({
-        drag: element.parentNode,
-        elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-        endOnly: true
-    });
+    event.target.style.webkitTransform =
+    event.target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+  })
+  .inertia(true)
+  .restrict({
+    drag: element.parentNode,
+    elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+    endOnly: true
+  });
 <% end %>
         </div>
 
@@ -377,10 +377,10 @@ interact(element)
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div class="resize-container">
-    <div class="resize"
-         style="width: 100px; height: 200px">
-         Resize from the bottom and right edges
-    </div>
+  <div class="resize"
+       style="width: 100px; height: 200px">
+     Resize from the bottom and right edges
+  </div>
 </div>
 <% end %>
         </div>
@@ -424,9 +424,8 @@ interact('.resize')
     var target = event.target;
 
     // add the change in coords to the previous width of the target element
-    var
-      newWidth  = parseFloat(target.style.width ) + event.dx,
-      newHeight = parseFloat(target.style.height) + event.dy;
+    var newWidth  = parseFloat(target.style.width ) + event.dx,
+        newHeight = parseFloat(target.style.height) + event.dy;
 
     // update the element's style
     target.style.width  = newWidth + 'px';
@@ -450,12 +449,12 @@ interact('.resize')
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="rotate-area">
-    <div id="angle-info">0&deg;</div>
-    <svg id="arrow" viewBox="0 0 100 100">
-        <polygon
-            points="50,0 75,25 62.5,25 62.5,100 37.5,100 37.5,25 25,25" 
-            fill="#29e" />
-    </svg>
+  <div id="angle-info">0&deg;</div>
+  <svg id="arrow" viewBox="0 0 100 100">
+    <polygon
+      points="50,0 75,25 62.5,25 62.5,100 37.5,100 37.5,25 25,25"
+      fill="#29e" />
+  </svg>
 </div>
 <% end %>
         </div>
@@ -466,18 +465,18 @@ interact('.resize')
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #rotate-area {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 #arrow {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 #angle-info {
-    color: #666;
-    font-size: 2em;
-    position: absolute;
+  color: #666;
+  font-size: 2em;
+  position: absolute;
 }
 <% end %>
         </div>
@@ -490,18 +489,18 @@ interact('.resize')
 var angle = 0;
 
 interact('#rotate-area').gesturable({
-    onmove: function (event) {
-        var arrow = document.getElementById('arrow');
+  onmove: function (event) {
+    var arrow = document.getElementById('arrow');
 
-        angle += event.da;
+    angle += event.da;
 
-        arrow.style.webkitTransform =
-        arrow.style.transform =
-            'rotate(' + angle + 'deg)';
+    arrow.style.webkitTransform =
+    arrow.style.transform =
+      'rotate(' + angle + 'deg)';
 
-        document.getElementById('angle-info').textContent =
-            angle.toFixed(2) + '°';
-    }
+    document.getElementById('angle-info').textContent =
+      angle.toFixed(2) + '°';
+  }
 });
 
 <% end %>
@@ -521,8 +520,8 @@ interact('#rotate-area').gesturable({
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="gesture-area">
-    <%= image_tag 'ijs-anim.svg',
-        :id => 'scale-element' %>
+  <%= image_tag 'ijs-anim.svg',
+    :id => 'scale-element' %>
 </div>
 <% end %>
         </div>
@@ -533,12 +532,12 @@ interact('#rotate-area').gesturable({
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #scale-element {
-    width: 100%;
+  width: 100%;
 }
 
 #scale-element.reset {
-    transition: -webkit-transform 0.3s ease-in-out;
-    transition: transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 <% end %>
         </div>
@@ -554,28 +553,28 @@ var scale = 1,
     resetTimeout;
 
 interact(gestureArea).gesturable({
-    onstart: function (event) {
-        clearTimeout(resetTimeout);
-        scaleElement.classList.remove('reset');
-    },
-    onmove: function (event) {
-        scale = scale * (1 + event.ds);
-        
-        scaleElement.style.webkitTransform =
-        scaleElement.style.transform =
-            'scale(' + scale + ')';
-    },
-    onend: function (event) {
-        resetTimeout = setTimeout(reset, 1000);
-        scaleElement.classList.add('reset');
-    }
+  onstart: function (event) {
+    clearTimeout(resetTimeout);
+    scaleElement.classList.remove('reset');
+  },
+  onmove: function (event) {
+    scale = scale * (1 + event.ds);
+
+    scaleElement.style.webkitTransform =
+    scaleElement.style.transform =
+      'scale(' + scale + ')';
+  },
+  onend: function (event) {
+    resetTimeout = setTimeout(reset, 1000);
+    scaleElement.classList.add('reset');
+  }
 });
 
 function reset () {
-    scale = 1;
-    scaleElement.style.webkitTransform =
-    scaleElement.style.transform =
-        'scale(1)';
+  scale = 1;
+  scaleElement.style.webkitTransform =
+  scaleElement.style.transform =
+    'scale(1)';
 }
 
 // prevent browser's native drag on the image
@@ -600,10 +599,10 @@ gestureArea.addEventListener('dragstart', function (event) {
 <object id="star-demo" type="image/svg+xml" data="repo/demo/star.svg"></object>
 
 <p>
-interact.js is referenced within the <a href="repo/demo/star.svg">star.svg</a>
-file as well as <a
-    href="https://github.com/taye/interact.js/tree/master/demo/js/star.js">another
-script</a> to bind and handle drag event listeners
+  interact.js is referenced within the <a href="repo/demo/star.svg">star.svg</a>
+  file as well as
+  <a href="https://github.com/taye/interact.js/tree/master/demo/js/star.js">
+  another script</a> to bind and handle drag event listeners
 </p>
 
 <% end %>
@@ -615,8 +614,8 @@ script</a> to bind and handle drag event listeners
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #star-demo {
-    display: block;
-    margin: auto;
+  display: block;
+  margin: auto;
 }
 <% end %>
         </div>
@@ -633,8 +632,11 @@ script</a> to bind and handle drag event listeners
         <div class="html-code">
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
-<div class="tap-target"> <p>Tap to change color</p> <p>Doubletap to change size</p> <p>Hold to rotate</p> </div>
-
+<div class="tap-target">
+  <p>Tap to change color</p>
+  <p>Doubletap to change size</p>
+  <p>Hold to rotate</p>
+</div>
 <% end %>
         </div>
 
@@ -684,19 +686,19 @@ script</a> to bind and handle drag event listeners
 <% code 'javascript' do %>
 /* enable javascript to view a demo */
 interact('.tap-target')
-    .on('tap', function (event) {
-        event.currentTarget.classList.toggle('switch-bg');
-        event.preventDefault();
-    })
-    .on('doubletap', function (event) {
-        event.currentTarget.classList.toggle('large');
-        event.currentTarget.classList.remove('rotate');
-        event.preventDefault();
-    })
-    .on('hold', function (event) {
-        event.currentTarget.classList.toggle('rotate');
-        event.currentTarget.classList.remove('large');
-    });
+  .on('tap', function (event) {
+    event.currentTarget.classList.toggle('switch-bg');
+    event.preventDefault();
+  })
+  .on('doubletap', function (event) {
+    event.currentTarget.classList.toggle('large');
+    event.currentTarget.classList.remove('rotate');
+    event.preventDefault();
+  })
+  .on('hold', function (event) {
+    event.currentTarget.classList.toggle('rotate');
+    event.currentTarget.classList.remove('large');
+  });
 <% end %>
         </div>
 
