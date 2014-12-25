@@ -72,9 +72,12 @@ under the License.
       </span>
     </a>
     <div class="tocify-wrapper">
-      <%= image_tag 'ijs-anim.svg',
-        :class => 'logo',
-        :alt => 'interact.js' %>
+      <% link_to '/docs' do %>
+        <%= image_tag 'ijs-anim.svg',
+          :class => 'logo',
+          :alt => 'interact.js',
+          :title => 'Docs index' %>
+      <% end %>
 
       <% if language_tabs %>
         <div class="lang-selector">
