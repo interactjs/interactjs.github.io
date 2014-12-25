@@ -78,7 +78,22 @@ Change inertia settings for drag, and resize. See [docs/inertia](<%= url_for '/d
 autoScroll
 ----------
 
-Change autoScroll settings for drag, and resize. See [docs/autoScroll](<%= url_for '/docs/autoscroll' %>).
+```javascript
+interact(element)
+  .draggable({
+    autoScroll: true,
+  });
+  .resizable({
+  autoScroll: {
+    container: document.body
+    margin: 50,
+    distance: 5,
+    interval: 10
+  });
+```
+
+Scroll a container (`window` or an HTMLElement) when a drag or resize move
+happens at the edge of the container.
 
 drag axis
 ---------
