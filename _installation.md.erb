@@ -1,26 +1,45 @@
 Installation
 ============
 
-```shell
-$ bower install --save interact
+Download
+--------
 
-$ npm install --save interact.js
+```shell
+$ bower install interact
+$ npm install interact.js
 ```
+
+Either:
+
+* with [Bower](http://bower.io/)
+* with [npm](https://www.npmjs.org/)
+* manually from http://interactjs.io/#download
+
+Link
+----
 
 ```html
-<head>
-    <script type="text/javascript" src="/path/to/interact.js"></script>
-</head>
+<script src="/path/to/interact.js"></script>
 ```
 
-* [Bower](http://bower.io/): `bower install interact`
-* [npm](https://www.npmjs.org/): `npm install interact.js`
-* Direct download the latest version: http://interactjs.io/#download
-* [jsDelivr CDN](http://www.jsdelivr.com/#!interact.js):
-`<script src="//cdn.jsdelivr.net/interact.js/VERSION/interact.min.js"></script>`
-(replace `VERSION` with the SemVer you want to use)
+After downloading the file, add a `<script>` tag who's `src` attribute points
+to the file to your page's HTML.
 
+jsDelivr CDN
+------------
 
-`interact` is exposed as a CommonJS, AMD module, or a global object
+```html
+<script src="//cdn.jsdelivr.net/interact.js/VERSION/interact.min.js"></script>
+```
+
+If you'd prefer to use the [jsDelivr
+CDN](http://www.jsdelivr.com/#!interact.js) instead, simply add a script tag
+pointing to `//cdn.jsdelivr.net/interact.js/VERSION/interact.min.js`. `VERSION`
+should be replaced by the version number that you want to use.
+
+Module
+------
+
+`interact` is exposed as a CommonJS module, an AMD module, or a global object
 depending on what the environment supports.
 
