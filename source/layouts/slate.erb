@@ -14,9 +14,9 @@ License for the specific language governing permissions and limitations
 under the License.
 %>
 
-<% language_tabs = current_page.data.language_tabs || data.slate.language_tabs %>
-<% toc_footers   = current_page.data.toc_footers   || data.slate.toc_footers   %>
-<% include_search = (current_page.data.has_attribute?:search) ? current_page.data.search : data.slate.search %>
+<% language_tabs = current_page.data.language_tabs || data.docs.language_tabs %>
+<% toc_footers   = current_page.data.toc_footers   || data.docs.toc_footers   %>
+<% include_search = (current_page.data.has_attribute?:search) ? current_page.data.search : data.docs.search %>
 
 <!doctype html>
 <html prefix="og: http://ogp.me/ns#">
