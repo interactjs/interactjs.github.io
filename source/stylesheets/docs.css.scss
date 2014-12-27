@@ -9,27 +9,3 @@
   margin-top: 2em;
   margin-bottom: 2em;
 }
-
-@media screen and (max-width: 430px) {
-  .links {
-    display: block;
-    width: 100%;
-
-    li {
-      display: block;
-      min-width: 75%;
-      margin: 0.5em;
-    }
-
-    .link-btn {
-      min-width: 65%;
-      text-align: initial;
-      padding-left: 5%;
-      padding-right: 5%;
-    }
-
-    .links-br {
-      display: none;
-    }
-  }
-}
