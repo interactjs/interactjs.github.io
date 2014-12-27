@@ -2,7 +2,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href='http://interactjs.io'>Project homepage</a>
+  - <a href='/'>Project homepage</a>
   - <a href='https://github.com/taye/interact.js'>View on Github</a>
   - <a href='http://github.com/tripit/slate'>(Docs Powered by Slate)</a>
 
