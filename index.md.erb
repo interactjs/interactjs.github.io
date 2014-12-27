@@ -10,8 +10,7 @@ sections:
 search: true
 ---
 
-interact.js
-===========
+<h1 style="text-align: center">Welcome</h1>
 
 interact.js is a JavaScript module for drag and drop, resizing and multi-touch
 gestures with inertia and snapping for modern browsers (and also IE8+).
@@ -22,6 +21,28 @@ To get a quick overview of how interact.js is intended to be used, read this
 For a reference of all methods, go to <%= data.site.url %>/api.
 
 [ijs-moz-hacks]: https://hacks.mozilla.org/2014/11/interact-js-for-drag-and-drop-resizing-and-multi-touch-gestures/
+
+<ul class="links">
+<% links = [
+  ['/', 'Homepage'],
+  ['snapping', 'Snapping' ],
+  ['restriction', 'Restriction'],
+  ['inertia', 'Inertia'],
+] %>
+
+<% links.each do |link| %>
+    <% if link == :break %>
+        <span class="links-br"><br></span>
+        <% next %>
+    <% end %>
+    <li> <%= partial :link_btn, :locals => {
+        :href => url_for(link[0]),
+        :text => link[1],
+        :icon => link[2],
+        :icon_alt => link[3] } %>
+    </li>
+<% end %>
+</ul>
 
 <% current_page.data.sections && current_page.data.sections.each do |section| %>
 <%= partial "#{section}" %>
