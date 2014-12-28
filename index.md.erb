@@ -22,27 +22,14 @@ For a reference of all methods, go to <%= data.site.url %>/api.
 
 [ijs-moz-hacks]: https://hacks.mozilla.org/2014/11/interact-js-for-drag-and-drop-resizing-and-multi-touch-gestures/
 
-<ul class="links">
 <% links = [
   ['/', 'Homepage'],
   ['snapping', 'Snapping' ],
   ['restriction', 'Restriction'],
   ['inertia', 'Inertia'],
-] %>
+].each { |link| link[0] = url_for link[0] } %>
 
-<% links.each do |link| %>
-    <% if link == :break %>
-        <span class="links-br"><br></span>
-        <% next %>
-    <% end %>
-    <li> <%= partial :link_btn, :locals => {
-        :href => url_for(link[0]),
-        :text => link[1],
-        :icon => link[2],
-        :icon_alt => link[3] } %>
-    </li>
-<% end %>
-</ul>
+<%= partial :link_btn_list, :locals => { :links => links } %>
 
 <% current_page.data.sections && current_page.data.sections.each do |section| %>
 <%= partial "#{section}" %>
