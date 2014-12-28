@@ -1,0 +1,12 @@
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+<button type="submit" class="link-btn">
+<%= image_tag 'paypal.svg',
+    :class => 'link-btn-icon',
+    :alt => 'PayPal' %>
+Donate
+</button>
+
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="9QND7CATDL7E4">
+</form>

@@ -59,20 +59,9 @@ gestures with inertia and snapping for modern browsers (and&nbsp;also&nbsp;IE8+)
     </div>
 </div>
 
-<ul class="links">
-    <% current_page.data.links.each do |link| %>
-        <% if link == :break %>
-            <span class="links-br"><br></span>
-            <% next %>
-        <% end %>
-        <li> <%= partial :link_btn, :locals => {
-            :href => link[0],
-            :text => link[1],
-            :icon => link[2],
-            :icon_alt => link[3] } %>
-        </li>
-    <% end %>
-</ul>
+<%= if current_page.data.links
+  partial :link_btn_list, :locals => { :links => current_page.data.links }
+end %>
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
 

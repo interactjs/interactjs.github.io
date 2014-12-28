@@ -1,0 +1,16 @@
+<ul class="links">
+<% links.each do |link| %>
+  <% if link == :break %>
+    <span class="links-br"><br></span>
+  <% elsif link == :donate_btn %>
+    <li class="links-item"> <%= partial :donate_btn %> </li>
+  <% else %>
+    <li class="links-item"> <%= partial :link_btn, :locals => {
+        :href => link[0],
+        :text => link[1],
+        :icon => link[2],
+        :icon_alt => link[3] } %>
+    </li>
+  <% end %>
+<% end %>
+</ul>
