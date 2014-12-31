@@ -5,22 +5,26 @@ InteractEvents
 --------------
 
 ``` javascript
-interact(target).on('dragmove', function (event) {
+function listener (event) {
   console.log(event.type, event.pageX, event.pageY);
-});
-// or
-interact(target).draggable({
-  onmove: function (event) {
-    console.log(event.type, event.pageX, event.pageY);
-  }
-});
-// or
-interact(target).ondragmove = function (event) {
-  console.log(event.type, event.pageX, event.pageY);
-};
+}
 
-// or for all dragmove events on all Interactables
-interact.on('dragmove', function (event) {
+interact(target)
+  .on('dragstart', listener)
+  .on('dragmove dragend', listener)
+  .on(['resizemove', 'resizeend'], listener)
+  .on({
+    gesturestart: listener,
+    gestureend: listener
+  });
+
+interact(target).draggable({
+  onstart: listener,
+  onmove: listener,
+  onend: listener
+});
+
+interact.on('dragmove resizestart', function (event) {
   console.log(event.type, event.pageX, event.pageY);
 });
 ```
