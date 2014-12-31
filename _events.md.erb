@@ -148,11 +148,11 @@ roughly as the real `PointerEvent` interface does, specifically:
 </aside>
 
 `pointerEvent` coordinates are copied directly from the source event and are
-not modified – no snapping, restriction or origin for tap and doubletap. `tap`
-events have a `dt` property which is the time between the related `down` and
-`up` events. For `doubletap` `dt` is the time between the two previous taps.
-`dt` for `hold` events is the length of time that te pointer has been held down
-for (around 600ms).
+not modified – no snapping, restriction or origin modifications. `tap` events
+have a `dt` property which is the time between the related `down` and `up`
+events. For `doubletap` `dt` is the time between the two previous taps.  `dt`
+for `hold` events is the length of time that the pointer has been held down for
+(around 600ms).
 
 ```javascript
 // fast click
