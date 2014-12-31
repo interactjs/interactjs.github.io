@@ -141,10 +141,10 @@ roughly as the real `PointerEvent` interface does, specifically:
  - There are no simulated mouse events after touch events
 
 <aside class="notice">
-  The properties of the events may vary accross browsers and devices depending on
-  which event interface is supported. For Example, a `down` event from a
-  `touchstart` will not provide tilt or pressure as specified in the
-  `PointerEvent` interface.
+  The properties of the events may vary accross browsers and devices depending
+  on which event interface is supported. For Example, a <code>down</code> event
+  from a <code>touchstart</code> will not provide tilt or pressure as specified
+  in the <code>PointerEvent</code> interface.
 </aside>
 
 `pointerEvent` coordinates are copied directly from the source event and are
@@ -169,9 +169,11 @@ regular click events, a tap isn’t fired if the pointer is moved before being
 released.
 
 <aside class="warning">
-  At the moment, `pointerEvent`s are fired before corresponding
-  `InteractEvent`s – `move` is fired before `dragmove`, `up` before `dragend`.
-  This may change. If you feel that it should change or have reasons for it to
-  stay the same, [let us know](https://gitter.im/taye/interact.js)!
+  At the moment, <code>pointerEvent</code>s are fired before corresponding
+  <code>InteractEvent</code>s – <code>move</code> is fired before
+  <code>dragmove</code>, <code>up</code> before <code>dragend</code>.  This may
+  change. If you feel that it should change or have reasons for it to stay the
+  same, <a target="_blank" href="https://gitter.im/taye/interact.js">let us
+  know</a>!
 </aside>
 
