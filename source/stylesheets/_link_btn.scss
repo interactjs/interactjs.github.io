@@ -8,11 +8,14 @@
   text-align: center;
   color: #ffffff;
   background-color: #92e;
+  background-image: none;
   border-color: #285e8e;
 
   border: none;
+  border-radius: 0;
   padding: 0.5em 1em;
   display: inline-block;
+  box-sizing: content-box;
 
   cursor: pointer;
 
