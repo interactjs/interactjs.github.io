@@ -496,7 +496,7 @@ interact('#rotate-area').gesturable({
         <label class="demo-label" for="demo-3-demo"> Demo only </label>
     </div>
 
-    <h1 id="pinch-zoom">Gesture Pinch-to-zoom</h1>
+    <h1 id="pinch-zoom">Pinch-to-zoom</h1>
 
     <div class="demo-area">
 
@@ -506,7 +506,7 @@ interact('#rotate-area').gesturable({
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div id="gesture-area">
-  <%= image_tag 'ijs-anim.svg',
+  <%= image_tag 'ijs-256.png',
     :id => 'scale-element' %>
 </div>
 <% end %>
@@ -518,7 +518,9 @@ interact('#rotate-area').gesturable({
 <% code 'css' do %>
 /* enable javascript to view a demo */
 #scale-element {
-  width: 100%;
+  display: block;
+  max-width: 100%;
+  margin: auto;
 }
 
 #scale-element.reset {
