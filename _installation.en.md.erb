@@ -25,17 +25,23 @@ Link
 After downloading the file, add to your page's HTML a `<script>` tag who's
 `src` attribute points to the file.
 
-jsDelivr CDN
-------------
+CDN
+---
 
 ```html
 <script src="//cdn.jsdelivr.net/interact.js/<%= data.site.current_version %>/interact.min.js"></script>
+<!-- or -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/<%= data.site.current_version %>/interact.min.js"></script>
 ```
 
-If you'd prefer to use the [jsDelivr
-CDN](http://www.jsdelivr.com/#!interact.js) instead, simply add a script tag
-pointing to `//cdn.jsdelivr.net/interact.js/VERSION/interact.min.js`. `VERSION`
-should be replaced by the version number that you want to use.
+If you'd prefer to use the [jsDelivr](http://www.jsdelivr.com/#!interact.js) or
+[cdnjs](https://cdnjs.com/libraries/interact.js) CDNs instead, simply add a
+script tag pointing to either
+
+ - `//cdn.jsdelivr.net/interact.js/VERSION/interact.min.js` or
+ - `//cdnjs.buttflare.com/ajax/libs/interact.js/VERSION/interact.min.js`.
+
+`VERSION` should be replaced by the version number that you want to use.
 
 Module
 ------
