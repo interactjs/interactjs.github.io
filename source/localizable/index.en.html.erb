@@ -696,19 +696,23 @@ interact('.tap-target')
 </div>
 
 <script>
-    window.liveDemoSettings.codeElementDepth = 3;
-    window.liveDemoSettings.insertPosition = 'beforeend';
+    var lds = window.liveDemoSettings;
 
-    window.liveDemoSettings.HTMLSelector += ', .highlight.html code';
-    window.liveDemoSettings.CSSSelector  += ', .highlight.css code';
-    window.liveDemoSettings.JSSelector   += ', .highlight.javascript code';
+    _.extend(window.liveDemoSettings, {
+        codeElementDepth: 3,
+        insertPosition  : 'beforeend',
+
+        HTMLSelector : lds.HTMLSelector + ', .highlight.html code',
+        CSSSelector  : lds.CSSSelector + ', .highlight.css code',
+        JSSelector   : lds.JSSelector + ', .highlight.javascript code',
+    });
 
     interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
         .on('tap', showTab);
 
     // Hide demo code if the screen is initially narrow
     if (window.innerWidth <= 570) {
-        [].forEach.call(document.querySelectorAll('.demo-area .demo-label'), function (label) {
+        _.each(document.querySelectorAll('.demo-area .demo-label'), function (label) {
             showTab({ currentTarget: label });
 
             label.previousElementSibling.checked = true;
@@ -721,7 +725,7 @@ interact('.tap-target')
             codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code'),
             liveDemo = label.nextElementSibling;
 
-        [].forEach.call(codeBlocks, function (block) {
+        _.each(codeBlocks, function (block) {
             block.style.display = 'none';
         });
 
