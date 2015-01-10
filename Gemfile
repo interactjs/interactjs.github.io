@@ -23,3 +23,5 @@ gem "rake", "~> 10.3.0"
 gem 'therubyracer', :platforms => :ruby
 
 gem "rouge", "~> 1.7.7"
+
+gem "middleman-sitemap", "~> 0.0.13"

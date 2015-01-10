@@ -23,6 +23,8 @@ activate :i18n
 
 activate :directory_indexes
 
+activate :sitemap, :gzip => false, :hostname => "http://interactjs.io"
+
 activate :livereload
 
 page "docs/*", :layout => :slate
