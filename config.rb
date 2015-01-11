@@ -29,6 +29,8 @@ activate :livereload
 
 page "docs/*", :layout => :slate
 
+ignore "docs/data.yml"
+
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
