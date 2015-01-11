@@ -86,7 +86,7 @@ google_plus : "107750313581859477605"
     </footer>
 </div>
 
-<% if current_page.data.do_not_track != true and current_page.data.ga_create and current_page.data.ga_create != empty and current_page.data.ga_create != "" %>
+<% if current_page.data.do_not_track != true %>
 <script>
 window.addEventListener('hashchange', function () {
     if (location.hash === '#top') {
