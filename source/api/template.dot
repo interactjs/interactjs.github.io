@@ -1,16 +1,45 @@
+---
+title: interact.js API Reference
+description: >
+               interact.js is a standalone javascript module for handling
+               single-pointer and multi-touch drags and gestures with powerful
+               options such as inertia and snapping to grids or custom coordintes
+---
+
 <!DOCTYPE html>
-<html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{= (it.title || '') + ' ' + (it.subtitle || 'API Reference') }}</title>
+        <title><%= current_page.data.title %></title>
         <meta name="viewport" content="device-width">
-        <link rel="stylesheet" href="fonts/stylesheet.css">
-        <link rel="stylesheet" href="css/topcoat-desktop-light.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/dr.css">
-        <link rel="stylesheet" href="css/prism.css">
-        <link rel="icon" href="../img/ijs-32.png"/>
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site:id" content="2238211567" />
+        <meta name="twitter:creator:id" content="1173430910" />
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="<%= current_page.data.title %>" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="<%= data.site.url %><%= current_page.data.url %>" />
+        <meta property="og:image" content="<%= data.site.url %><%= image_path 'ijs-256.png' %>" />
+
+<% if current_page.data.excerpt && current_page.data.excerpt != ""%>
+        <meta property="og:description" name="description" content="<%= current_page.data.excerpt %>" />
+<% elsif current_page.data.description && current_page.data.description != "" %>
+        <meta property="og:description" name="description" content="<%= current_page.data.description %>" />
+<% end %>
+
+        <link rel="stylesheet" href="/api/fonts/stylesheet.css">
+        <link rel="stylesheet" href="/api/css/topcoat-desktop-light.css">
+        <link rel="stylesheet" href="/api/css/main.css">
+        <link rel="stylesheet" href="/api/css/dr.css">
+        <link rel="stylesheet" href="/api/css/prism.css">
+
+        <%= stylesheet_link_tag :main, media: :screen %>
+
+        <%= favicon_tag 'images/ijs-32.png' %>
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     </head>
@@ -36,16 +65,52 @@
                   <header id="main-header">
                       <div class="max-width">
                           <hgroup>
-                              <h1><a href="/"><img src="../img/ijs-anim.svg" height="80px" alt="{{= it.title }}"></a></h1>
+                              <h1><a href="/">
+                              <%= image_tag 'ijs-anim-short.svg',
+                                  :class => 'logo',
+                                  :alt => 'interact.js',
+                                  :style => 'background-color:#dfe2e2;height:80px' %>
+                              </a></h1>
                               <p>{{= it.subtitle || 'API Reference' }}</p>
                           </hgroup>
                       </div>
+<style>
+.logo {
+    background-color: #333;
+}
+
+#carbonads {
+  float: right;
+  width: 46%;
+
+  background-color: #dfe2e2;
+  border-color: #dfe2e2;
+}
+
+.carbon-text {
+  color: #111 !important;
+}
+
+.carbon-poweredby {
+  color: #111 !important;
+}
+
+@media screen and (max-width: 649px) {
+  #carbonads {
+    float: none;
+    width: auto;
+  }
+}
+
+</style>
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=interactjsio" id="_carbonads_js"></script>
+
                   </header>
                   <div id="content" class="max-width">
                       {{~it.out :item:index}}
                       <article id="{{=item[0].title}}">
                           <header>
-                              <h3 class="{{=item[0].clas}}">{{=item[0].name}}<a href="#{{=item[0].title}}" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line {{=item[0].line}} in the source" href="https://github.com/taye/interact.js/blob/v1.1.3/interact.js#L{{=item[0].line}}">&#x27ad;</a></h3>
+                              <h3 class="{{=item[0].clas}}">{{=item[0].name}}<a href="#{{=item[0].title}}" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line {{=item[0].line}} in the source" href="https://github.com/taye/interact.js/blob/<%= data.site.api_rev %>/interact.js#L{{=item[0].line}}">&#x27ad;</a></h3>
                           </header>
                           <section>
                               <div class="extra" id="{{=item[0].title}}-extra"></div>
@@ -103,7 +168,9 @@
         <footer></footer>
       </div>
     </div>
-    <script src="js/prism.js"></script>
+
+    <%= javascript_include_tag '/api/js/prism.js' %>
+
     {{~ it.scripts :scriptPath }}
     <script src="{{= scriptPath }}"></script>
     {{~}}
@@ -121,4 +188,37 @@ h.onclick=h.onchange=h.onkeydown=h.onkeyup=function(){var t=h.value,r=[]
 if(t.length>1){for(var i=0,o=a.length;o>i;i++)r[i]={li:a[i].li,weight:n(a[i].text,t)}
 r.sort(f)}else r=a
 for(i=0,o=r.length;o>i;i++)e.appendChild(r[i].li)}}}(document.getElementById("dr-toc"))</script>
+
+<script>
+if (!/yes|1/.test(navigator.doNotTrack) || /MSIE|Trident/i.test(navigator.userAgent)) {
+  (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+    (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+    y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-44445883-3', 'interactjs.io');
+  function validateMethod (hash) {
+    var anchor = document.querySelector('.dr-method[href="'+hash+'"]');
+    return anchor? anchor.textContent: '';
+  }
+  function trackApiTarget () {
+    var title = validateMethod(window.location.hash);
+    if (!title) { return; }
+    ga('send', {
+      hitType: 'pageview',
+      page: '/api/' + window.location.hash,
+      title: 'API: ' + title
+    });
+  }
+  window.addEventListener('DOMContentLoaded', function () {
+      if (validateMethod(window.location.hash)) {
+          trackApiTarget();
+      }
+      else {
+          ga('send', 'pageview');
+      }
+  });
+  window.addEventListener('hashchange', trackApiTarget);
+}
+</script>
+
 </body></html>

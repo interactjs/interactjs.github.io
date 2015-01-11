@@ -30,6 +30,7 @@ activate :livereload
 page "docs/*", :layout => :slate
 
 ignore "docs/data.yml"
+ignore /api\/(dr\.json|template.dot)/
 
 # Build-specific configuration
 configure :build do
