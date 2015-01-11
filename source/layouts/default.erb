@@ -1,9 +1,6 @@
 ---
 author      : "Taye Adeyemi"
-ga_id       : "UA-44445883-3"
-ga_domain   : "interactjs.io"
 google_plus : "107750313581859477605"
-
 ---
 
 <!DOCTYPE html>
@@ -104,7 +101,7 @@ if (!/yes|1/.test(navigator.doNotTrack) || /MSIE|Trident/i.test(navigator.userAg
     (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
     y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', '<%= current_page.data.ga_id %>', '<%= current_page.data.ga_domain %>');
+    ga('create', '<%= data.site.ga_id %>', '<%= data.site.ga_domain %>');
     ga('send', 'pageview');
 }
 </script>

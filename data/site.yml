@@ -1,4 +1,8 @@
 url: "http://interactjs.io"
 cdn: "//code.interactjs.io"
+
+ga_id    : "UA-44445883-3"
+ga_domain: "interactjs.io"
+
 current_version: "1.2.2"
 api_rev: "e7c3ade"
