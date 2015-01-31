@@ -4,6 +4,12 @@
 
 ---
 
-This work is licensed under the Creative Commons Attribution-ShareAlike 3.0
-Unported License. To view a copy of this license, visit
-http://creativecommons.org/licenses/by-sa/3.0/deed.en_US.
+License
+-------
+
+[interact.js](https://github.com/taye/interact.js) is licensed under the [MIT
+License](https://raw.githubusercontent.com/taye/interact.js/master/LICENSE).
+
+The documentation at http://interactjs.io is licensed under the [Creative
+Commons Attribution 4.0 International License]
+(http://creativecommons.org/licenses/by/4.0/).
