@@ -6,6 +6,7 @@ interact(target)
   .draggable({
     max          : Number,
     maxPerElement: Number,
+    manualStart  : Boolean,
     snap         : {/* ... */},
     restrict     : {/* ... */},
     inertia      : {/* ... */},
@@ -17,6 +18,7 @@ interact(target)
   .resizable({
     max          : Number,
     maxPerElement: Number,
+    manualStart  : Boolean,
     snap         : {/* ... */},
     restrict     : {/* ... */},
     inertia      : {/* ... */},
@@ -28,6 +30,7 @@ interact(target)
   .gesturable({
     max          : Number,
     maxPerElement: Number,
+    manualStart  : Boolean,
     restrict     : {/* ... */}
   });
 ```
@@ -59,6 +62,13 @@ maxPerElement
 By default only 1 interaction can target the same interactable+element
 combination. If you want to allow multiple interactions on the same target
 element, set the `maxPerElement` property of your object to a value `>= 2`.
+
+manualStart
+-----------
+
+If this is changed to `true` then drag, resize and gesture actions will have to
+be started with a call to [`Interaction#start`][interaction-start] as the usual
+`down`, `move`, `<action>start`... sequence will no longer work.
 
 snap
 ----
@@ -166,3 +176,4 @@ Set how drops are checked for. The allowed values are:
  `0.5` for drop to happen when half of the area of the draggable is over the
  dropzone
 
+[interaction-start]: http://interactjs.io/api/#Interaction.start
