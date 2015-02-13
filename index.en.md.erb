@@ -23,10 +23,11 @@ For a reference of all methods, go to <%= data.site.url %>/api.
 [ijs-moz-hacks]: https://hacks.mozilla.org/2014/11/interact-js-for-drag-and-drop-resizing-and-multi-touch-gestures/
 
 <% links = [
-  ['/', 'Homepage'],
+  ['faq', 'FAQ'],
   ['snapping', 'Snapping' ],
   ['restriction', 'Restriction'],
   ['inertia', 'Inertia'],
+  ['/', 'Homepage'],
 ].each { |link| link[0] = url_for link[0] } %>
 
 <%= partial :link_btn_list, :locals => { :links => links } %>
