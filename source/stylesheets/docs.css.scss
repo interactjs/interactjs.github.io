@@ -3,9 +3,18 @@
 .link-btn {
   background-color: #444;
   font-size: 1em;
+  margin: 0.25em 0;
 }
 
 .links {
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+.content {
+  ol, ul {
+    &.links {
+      padding: 0 1em;
+    }
+  }
 }
