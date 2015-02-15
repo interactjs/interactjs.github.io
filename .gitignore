@@ -16,6 +16,10 @@ tmp
 build/
 .cache
 
+source/api/*
+!source/api/template.dot
+!source/api/dr.json
+
 # YARD artifacts
 .yardoc
 _yardoc
