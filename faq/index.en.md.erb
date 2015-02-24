@@ -43,7 +43,9 @@ Clone target draggable
 ```
 
 ```javascript
-interact('.item').on('dragmove', function (event) {
+interact('.item')
+  .draggable({ manualStart: true })
+  .on('move', function (event) {
     var interaction = event.interaction;
 
     // if the pointer was moved while being held down
