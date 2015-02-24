@@ -74,7 +74,22 @@ interaction to any element that you create.
 Remove an Interactable
 ======================
 
-To remove an 
+```javascript
+interact(target)
+  .draggable(true)
+  .resizable(true);
+
+interact.isSet(target);         // true
+
+interact(target).unset();
+
+interact.isSet(target);         // false
+interact(target).draggable();   // false
+interact(target).resizable();   // false
+```
+
+To remove an Interactable, use `interact(target).unset()`. That should remove
+all event listeners and make interact.js forget completely about the target.
 
 Changing dropzones while dragging
 =================================
