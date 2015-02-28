@@ -93,9 +93,8 @@ end %>
   background-color: #29e;
   color: white;
 
-  border: solid 0.4em #666;
   border-radius: 0.75em;
-  padding: 3%;
+  padding: 4%;
 
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
@@ -103,7 +102,7 @@ end %>
 
 #drag-me::before {
   content: "#" attr(id);
-  color: #000;
+  font-weight: bold;
 }
 <% end %>
         </div>
@@ -196,15 +195,17 @@ interact('.draggable')
   margin: 10px auto 30px;
   padding: 10px;
   width: 80%;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .drop-active {
-  border-color: #666;
+  border-color: #aaa;
 }
 
 .drop-target {
   background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
 }
 
 .drag-drop {
@@ -212,8 +213,9 @@ interact('.draggable')
   min-width: 40px;
   padding: 2em 0.5em;
 
-  background-color: #99e;
-  border: solid 2px white;
+  color: #fff;
+  background-color: #29e;
+  border: solid 2px #fff;
 
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
@@ -221,7 +223,10 @@ interact('.draggable')
   transition: background-color 0.3s;
 }
 
-.drag-drop.can-drop { background-color: #4e4; }
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
 <% end %>
         </div>
 
@@ -298,19 +303,12 @@ interact('.dropzone').dropzone({
 /* enable javascript to view a demo */
 #grid-snap {
   width: 40%;
-  background-color: #4e4;
+  background-color: #29e;
   color: #fff;
   font-size: 1.2em;
   border-radius: 4px;
   padding: 2%;
   margin: 5%;
-}
-
-#grid-snap::after {
-  content: attr(data-x) ", " attr(data-y);
-  background-color: #29e;
-  color: #fff;
-  float: right;
 }
 <% end %>
         </div>
@@ -330,7 +328,7 @@ interact(element)
         interact.createSnapGrid({ x: 30, y: 30 })
       ],
       range: Infinity,
-      elementOrigin: { x: 0, y: 0 }
+      relativePoints: [ { x: 0, y: 0 } ]
     },
     inertia: true,
     restrict: {
@@ -364,7 +362,7 @@ interact(element)
 <!-- enable javascript to view a demo -->
 <div class="resize-container">
   <div class="resize"
-       style="width: 100px; height: 200px">
+       style="width: 120px; height: 200px">
      Resize from the bottom and right edges
   </div>
 </div>
@@ -384,7 +382,7 @@ interact(element)
   border-radius: 8px;
   box-sizing: border-box;
   padding: 20px;
-  margin: 20px;
+  margin: 30px 20px;
 
   /* The width is set in the element's HTML
    * so that it can be read by the resizing
