@@ -361,9 +361,8 @@ interact(element)
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
 <div class="resize-container">
-  <div class="resize"
-       style="width: 120px; height: 200px">
-     Resize from the bottom and right edges
+  <div class="resize">
+     Resize from any edge or corner
   </div>
 </div>
 <% end %>
@@ -380,14 +379,13 @@ interact(element)
   font-size: 20px;
   font-family: sans-serif;
   border-radius: 8px;
-  box-sizing: border-box;
   padding: 20px;
   margin: 30px 20px;
 
-  /* The width is set in the element's HTML
-   * so that it can be read by the resizing
-   * function
-   */
+  width: 120px;
+
+  /* This makes things *much* easier */
+  box-sizing: border-box;
 }
 
 .resize-container {
@@ -402,20 +400,28 @@ interact(element)
         <div class="js-code">
 <% code 'javascript' do %>
 /* enable javascript to view a demo */
+var offset = { x: 0, y: 0 };
+
 interact('.resize')
-  .resizable(true)
+  .resizable({
+    edges: { left: true, right: true, bottom: true, top: true }
+  })
   .on('resizemove', function (event) {
     var target = event.target;
 
-    // add the change in coords to the previous width of the target element
-    var newWidth  = parseFloat(target.style.width ) + event.dx,
-        newHeight = parseFloat(target.style.height) + event.dy;
-
     // update the element's style
-    target.style.width  = newWidth + 'px';
-    target.style.height = newHeight + 'px';
+    target.style.width  = event.rect.width + 'px';
+    target.style.height = event.rect.height + 'px';
 
-    target.textContent = newWidth + '×' + newHeight;
+    // translate when resizing from top or left edges
+    offset.x += event.deltaRect.left;
+    offset.y += event.deltaRect.top;
+
+    target.style.transform = ('translate('
+                              + offset.x + 'px,'
+                              + offset.y + 'px)');
+
+    target.textContent = event.rect.width + '×' + event.rect.height;
   });
 <% end %>
         </div>
