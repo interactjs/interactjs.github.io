@@ -133,12 +133,68 @@ interact(target).resizable({
 });
 ```
 
-The axis in which resizing is allowed. `x` to only resize horizontally from the
-right edge. `y` to only resize vertically form the bottom edge. Any other value
+<aside class="warning">
+  The resize axis API has been deprecated in favor of the <a
+  href="https://github.com/taye/interact.js/pull/145">resize edges API</a>
+  described below. The axis API is used by default for the sake of backwards
+  compatibility, but will be removed in future.
+</aside>
+
+The axis in which resizing is allowed.
+
+ - `x` to only resize horizontally from the
+right edge.
+ - `y` to only resize vertically form the bottom edge. Any other value
 will allow resizing from both edges borizontally and vertically.
 
-resize squareResize
--------------------
+resize edges
+------------
+
+```javascript
+interact(target).resizable({
+  edges: {
+    top   : true,       // Use pointer coords to check for resize.
+    left  : false,      // Disable resizing from left edge.
+    bottom: '.resize-s',// Resize if pointer target matches selector
+    right : handleEl    // Resize if pointer target is the given Element
+  }
+});
+```
+
+
+If resize edges are used, resize events will have `rect` and `deltaRect`
+properties. In `resizestart`, `rect` will be identical to the rect returned by
+`interctable.getRect(element)` and `deltaRect` will have all-zero properties.
+`rect` is updated on each `resizemove` and the values in `deltaRect` reflect
+the changes.
+
+
+Resize handle elements must be children of the resizable element. If you need
+the handles to be outside the target element, then you will need to use
+[`Interaction#start`](interaction-start).
+
+resize invert
+-------------
+
+```javascript
+interact(target).resizable({
+  edges: { bottom: true, right: true },
+  invert: 'reposition'
+});
+```
+
+Choose what should happen if the target would be resized to dimensions less
+than `0x0`. The possible values are:
+
+ - `'none'` will limit the resize rect to a minimum of `0x0`
+ - `'negate'` will allow the rect to have negative width/height
+ - `'reposition'` will keep the width/height positive by swapping the top and
+ bottom edges and/or swapping the left and right edges
+
+[Demo on Codepen][resize-codepen]
+
+resize square
+-------------
 
 ```javascript
 interact(target).resizable({
@@ -146,7 +202,8 @@ interact(target).resizable({
 });
 ```
 
-When resizing, change `x` and `y` by the same amount.
+When resizing, change the width and height by the same amount. This doesn't
+necessarily maintain the aspect ratio of the object.
 
 dropzone accept
 ---------------
@@ -177,3 +234,4 @@ Set how drops are checked for. The allowed values are:
  dropzone
 
 [interaction-start]: http://interactjs.io/api/#Interaction.start
+[resize-codepen]: http://codepen.io/taye/pen/LEpmOL
