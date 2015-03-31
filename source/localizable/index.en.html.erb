@@ -74,8 +74,11 @@ end %>
         <div class="html-code">
 <% code 'html' do %>
 <!-- enable javascript to view a demo -->
-<div id="drag-me" class="draggable">
-  <p> Click or touch and drag this element around </p>
+<div id="drag-1" class="draggable">
+  <p> You can drag one element </p>
+</div>
+<div id="drag-2" class="draggable">
+    <p> with each pointer </p>
 </div>
 <% end %>
         </div>
@@ -85,9 +88,10 @@ end %>
         <div class="css-code">
 <% code 'css' do %>
 /* enable javascript to view a demo */
-#drag-me {
+#drag-1, #drag-2 {
   width: 25%;
   height: 100%;
+  min-height: 6.5em;
   margin: 10%;
 
   background-color: #29e;
