@@ -51,6 +51,7 @@ The value can be:
  - a rect object with `top`, `left`, `bottom` and `right` or `x`, `y`,
  `width` and `height`,
  - an element whose dimensions will be used as the restriction area,
+ - a function which takes `(x, y, element)` and returns a rect or an element
  - one of these strings:
   - `'self'` – restrict to the target element's rect
   - `'parent'` – restrict to the rect of the element's parentNode or
