@@ -132,6 +132,18 @@ drag. To do this, you must store the position at `dragstart` and change the
 element's style so that it returns to the start position on `dragend`. You can
 use CSS transitions to animate change in position.
 
+Touch input on Internet Explorer
+================================
+
+```css
+.draggable {
+    -ms-touch-action: none;
+        touch-action: none;
+}
+```
+
+To allow touch interactions on Internet explorer, the [touch-action CSS property][touch-action] must be used.
+
 Draging between iFrames
 =======================
 
@@ -146,4 +158,5 @@ addressed.
 [prevent-default]: http://interactjs.io/api/#Interactable.preventDefault
 [allow-from]: http://interactjs.io/api/#Interactable.allowFrom
 [dynamic-drop]: http://interactjs.io/docs/#interact.dynamicDrop
+[touch-action]: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
 [iframe-pr]: https://github.com/taye/interact.js/pull/98
