@@ -4,5 +4,5 @@ cdn: "//code.interactjs.io"
 ga_id    : "UA-44445883-3"
 ga_domain: "interactjs.io"
 
-current_version: "1.2.4"
-api_rev: "v1.2.4"
+current_version: "1.2.5"
+api_rev: "v1.2.5"
