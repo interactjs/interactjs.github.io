@@ -233,5 +233,37 @@ Set how drops are checked for. The allowed values are:
  `0.5` for drop to happen when half of the area of the draggable is over the
  dropzone
 
+dropzone checker
+----------------
+
+```javascript
+interact(target).dropzone({
+  checker: function (dragEvent,         // related dragmove or dragend
+                     event,             // Touch, Pointer or Mouse Event
+                     dropped,           // bool default checker result
+                     dropzone,          // dropzone Interactable
+                     dropElement,       // dropzone elemnt
+                     draggable,         // draggable Interactable
+                     draggableElement) {// draggable element
+
+    // only allow drops into empty dropzone elements
+    return dropped && !dropElement.hasChildNodes();
+  }
+});
+ ```
+
+A dropzone checker is an optional function that can be used to add additional
+conditions to check if a dragged element can be dropped into a dropzone.
+
+The checker function takes the following arguments:
+
+ - **dragEvent**: related dragmove or dragend event
+ - **event**: The user move/up/end Event related to the dragEvent
+ - **dropped**: The value from the default drop checker
+ - **dropzone**: The dropzone interactable
+ - **dropElement**: The dropzone element
+ - **draggable**: The Interactable being dragged
+ - **draggableElement**: The actual element that's being dragged
+
 [interaction-start]: http://interactjs.io/api/#Interaction.start
 [resize-codepen]: http://codepen.io/taye/pen/LEpmOL
