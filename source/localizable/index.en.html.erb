@@ -157,7 +157,7 @@ interact('.draggable')
     target.setAttribute('data-y', y);
   }
 
-  // this is used later in the resizing demo
+  // this is used later in the resizing and gesture demos
   window.dragMoveListener = dragMoveListener;
 <% end %>
         </div>
@@ -557,23 +557,27 @@ var scale = 1,
     scaleElement = document.getElementById('scale-element'),
     resetTimeout;
 
-interact(gestureArea).gesturable({
-  onstart: function (event) {
-    clearTimeout(resetTimeout);
-    scaleElement.classList.remove('reset');
-  },
-  onmove: function (event) {
-    scale = scale * (1 + event.ds);
+interact(gestureArea)
+  .gesturable({
+    onstart: function (event) {
+      clearTimeout(resetTimeout);
+      scaleElement.classList.remove('reset');
+    },
+    onmove: function (event) {
+      scale = scale * (1 + event.ds);
 
-    scaleElement.style.webkitTransform =
-    scaleElement.style.transform =
-      'scale(' + scale + ')';
-  },
-  onend: function (event) {
-    resetTimeout = setTimeout(reset, 1000);
-    scaleElement.classList.add('reset');
-  }
-});
+      scaleElement.style.webkitTransform =
+      scaleElement.style.transform =
+        'scale(' + scale + ')';
+
+      dragMoveListener(event);
+    },
+    onend: function (event) {
+      resetTimeout = setTimeout(reset, 1000);
+      scaleElement.classList.add('reset');
+    }
+  })
+  .draggable({ onmove: dragMoveListener });
 
 function reset () {
   scale = 1;
