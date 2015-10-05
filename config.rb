@@ -40,8 +40,6 @@ configure :build do
   # Minify Javascript on build
   activate :minify_javascript
 
-  ignore 'repo/README.md'
-
   # Enable cache buster
   # activate :asset_hash
 

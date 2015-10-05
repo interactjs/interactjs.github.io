@@ -45,7 +45,7 @@ google_plus : "107750313581859477605"
         <%= stylesheet_link_tag style %>
     <% end %>
 
-    <script src="//code.interactjs.io/interact-<%= data.site.current_version %>.min.js"></script>
+    <script src="//code.interactjs.io/v<%= data.site.current_version %>/interact.min.js"></script>
 
     <% current_page.data.scripts.uniq.each do |script| %>
         <%= javascript_include_tag script %>
