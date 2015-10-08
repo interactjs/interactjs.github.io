@@ -437,7 +437,7 @@ interact('.resize-drag')
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
-    target.textContent = event.rect.width + '×' + event.rect.height;
+    target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
   });
 <% end %>
         </div>
