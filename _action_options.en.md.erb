@@ -68,7 +68,7 @@ manualStart
 
 If this is changed to `true` then drag, resize and gesture actions will have to
 be started with a call to [`Interaction#start`][interaction-start] as the usual
-`down`, `move`, `<action>start`... sequence will no longer work.
+`down`, `move`, `<action>start`... sequence will not start an action.
 
 snap
 ----
@@ -94,11 +94,12 @@ interact(element)
     autoScroll: true,
   });
   .resizable({
-  autoScroll: {
-    container: document.body
-    margin: 50,
-    distance: 5,
-    interval: 10
+    autoScroll: {
+      container: document.body
+      margin: 50,
+      distance: 5,
+      interval: 10
+    }
   });
 ```
 
