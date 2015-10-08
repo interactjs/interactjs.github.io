@@ -14,10 +14,10 @@
             var user = debugVersion.match(/^[^/]+/)[0],
                 version = debugVersion.match(/[^/]+$/)[0];
 
-            newScript.src = '//rawgit.com/' + user + '/interact.js/' + version + '/interact.js';
+            newScript.src = '//rawgit.com/' + user + '/interact.js/' + version + '/dist/interact.js';
         }
         else {
-            newScript.src = '//rawgit.com/taye/interact.js/' + debugVersion + '/interact.js';
+            newScript.src = '//rawgit.com/taye/interact.js/' + debugVersion + '/dist/interact.js';
         }
 
         document.write(newScript.outerHTML);
