@@ -52,3 +52,52 @@ interact('li') === interact('li', { context: myList })    // false
 
 `interact` returns a different object if the same selector is used but a
 different context is specified. The default context is the `document`.
+
+Allowable Selectors
+-------------------
+
+```html
+<div id="movable-box">
+  <div id="drag-point" />
+</div>
+```
+
+```javascript
+var movable = document.querySelector('#movable-box');
+
+interact(movable, {
+    allowFrom: '#drag-point',
+  })
+  .draggable({ /* ... */ });
+```
+
+To interact with elements only by elements within the interactable
+object you can use `allowFrom`. Using this will limit the scope of
+what is interactable in case you do not want to interact with the
+whole element and its children.
+
+Ignorable Selectors
+-------------------
+
+```html
+<div id="movable-box">
+  <div id="undraggable-when-on-this-element" />
+</div>
+```
+
+```javascript
+var movable = document.querySelector('#movable-box');
+
+interact(movable, {
+    ignoreFrom: '#undraggable-when-on-this-element',
+  })
+  .draggable({ /* ... */ });
+```
+
+Like `allowFrom`, `ignoreFrom` gives you the ability to avoid certain
+elements in your interactable element. Which is good when certain
+elements need to maintain default behavior when interacted with.
+
+For example, dragging around a text/contentEditable, by wrapping this
+object with a draggable element and ignoring the editable content you
+maintain the ability to highlight text without moving the element.
