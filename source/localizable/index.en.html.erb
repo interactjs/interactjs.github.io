@@ -7,9 +7,8 @@ description: >
                powerful features including inertia and snapping.
 
 scripts:
-    - underscore-min
+    - home/index.bundle
     - debug
-    - livedemo
 
 styles:
     - livedemo
@@ -713,43 +712,3 @@ interact('.tap-target')
         <label class="demo-label" for="demo-7-demo"> Demo only </label>
     </div>
 </div>
-
-<script>
-    var lds = window.liveDemoSettings;
-
-    _.extend(window.liveDemoSettings, {
-        codeElementDepth: 3,
-        insertPosition  : 'beforeend',
-
-        HTMLSelector : lds.HTMLSelector + ', .highlight.html code',
-        CSSSelector  : lds.CSSSelector + ', .highlight.css code',
-        JSSelector   : lds.JSSelector + ', .highlight.javascript code',
-    });
-
-    interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
-        .on('tap', showTab);
-
-    // Hide demo code if the screen is initially narrow
-    if (window.innerWidth <= 570) {
-        _.each(document.querySelectorAll('.demo-area .demo-label'), function (label) {
-            showTab({ currentTarget: label });
-
-            label.previousElementSibling.checked = true;
-        });
-    }
-
-    function showTab (event) {
-        var label = event.currentTarget,
-            demoArea = label.parentNode,
-            codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code'),
-            liveDemo = label.nextElementSibling;
-
-        _.each(codeBlocks, function (block) {
-            block.style.display = 'none';
-        });
-
-        if (liveDemo) {
-            liveDemo.style.display = '';
-        }
-    }
-</script>

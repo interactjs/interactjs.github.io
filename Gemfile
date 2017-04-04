@@ -1,27 +1,19 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem "middleman", "~>3.3.7"
+gem "middleman", "~> 4.2"
+gem "middleman-autoprefixer", "~> 2.7"
+gem "middleman-compass", "~> 4.0.1"
+gem "middleman-livereload", "~> 3.4"
+#gem "middleman-sitemap", "~> 0.0.13"
+gem "middleman-syntax", "~> 3.0"
+gem "tzinfo-data", platforms: [:mswin, :mingw, :jruby]
 
-# For syntax highlighting
-gem "middleman-syntax"
-
-# Live-reloading plugin
-gem "middleman-livereload", "~> 3.4.1"
-
-gem 'redcarpet', '~> 3.2.2'
+gem "redcarpet", "~> 3.4"
+gem "rouge", "~> 2.0"
 
 # For faster file watcher updates on Windows:
-gem "wdm", "~> 0.1.0", :platforms => [:mswin, :mingw]
+gem "wdm", "~> 0.1", :platforms => [:mswin, :mingw]
 
-# Cross-templating language block fix for Ruby 1.8
-platforms :mri_18 do
-  gem "ruby18_source_location"
-end
+#gem "rake", "~> 10.3.0"
 
-gem "rake", "~> 10.3.0"
-
-gem 'therubyracer', :platforms => :ruby
-
-gem "rouge", "~> 1.7.7"
-
-gem "middleman-sitemap", "~> 0.0.13"
+gem "therubyracer", :platforms => :ruby

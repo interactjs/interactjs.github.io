@@ -1,0 +1,31 @@
+{
+  "scripts": {
+    "bundle": "simplifyify -dm 'source/javascripts/{slate,home}/index.js' -o 'tmp/npm/javascripts/_/*.bundle.js'",
+    "docs": "cp -r node_modules/interactjs interactjs && dr.js api-dr.json; rm -r interactjs",
+    "watch": "npm run bundle -- --watch"
+  },
+  "dependencies": {
+    "interactjs": "taye/interact.js#unstable",
+    "livedemo": "taye/livedemo#master",
+    "jquery": "^3.2.1",
+    "jquery-highlight": "^3.4.0",
+    "jquery.tocify": "^1.9.1",
+    "lunr": "^1.0.0"
+  },
+  "devDependencies": {
+    "babelify": "^7.3.0",
+    "dr.js": "github:taye/dr.js",
+    "errorify": "^0.3.1",
+    "mkdirp": "^0.5.1",
+    "simplifyify": "^3.2.1",
+    "uglify-js": "^2.8.21",
+    "yargs": "^7.0.2"
+  },
+  "transform": [
+    [
+      "babelify",
+      {}
+    ]
+  ],
+  "private": true
+}
