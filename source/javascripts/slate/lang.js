@@ -17,7 +17,6 @@ const toc = require('./toc')
 const $ = require('jquery');
 
 var languages = [];
-window.setupLanguages = setupLanguages;
 
 function activateLanguage(language) {
   if (!language) return;
@@ -29,8 +28,6 @@ function activateLanguage(language) {
     $(".highlight." + languages[i]).parent().hide();
   }
   $(".highlight." + language).parent().show();
-
-  toc.calculateHeights();
 
   // scroll to the new location of the position
   $(window.location.hash).get(0).scrollIntoView(true);
@@ -81,3 +78,7 @@ $(function() {
     activateLanguage(window.location.search.substr(1));
   };
 });
+
+module.exports = {
+  setupLanguages: setupLanguages,
+};

@@ -1,5 +1,6 @@
 const $ = require('jquery');
 
+require('jquery-ui-browserify');
 require('jquery.tocify');
 
 var closeToc = function() {
@@ -8,7 +9,7 @@ var closeToc = function() {
 };
 
 var makeToc = function() {
-  window.toc = $("#toc").tocify({
+  module.exports.toc = $("#toc").tocify({
     selectors: 'h1, h2',
     extendPage: false,
     theme: 'none',
@@ -18,7 +19,7 @@ var makeToc = function() {
     ignoreSelector: '.toc-ignore',
     highlightOffset: 60,
     scrollTo: -1,
-    scrollHistory: true,
+    scrollHistory: false,
     hashGenerator: function (text, element) {
       return element.prop('id');
     }
@@ -38,9 +39,11 @@ var makeToc = function() {
 // instead of displaying an ugly animation
 function animate () {
   setTimeout(function() {
-    toc.setOption('showEffectSpeed', 180);
+    module.exports.toc.setOption('showEffectSpeed', 180);
   }, 50);
 }
 
-$(makeToc);
-$(animate);
+document.addEventListener('DOMContentLoaded', function () {
+  makeToc();
+  animate();
+});

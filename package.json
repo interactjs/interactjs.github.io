@@ -6,10 +6,12 @@
   },
   "dependencies": {
     "interactjs": "taye/interact.js#unstable",
-    "livedemo": "taye/livedemo#master",
-    "jquery": "^3.2.1",
+    "jquery": "^2.2.3",
     "jquery-highlight": "^3.4.0",
+    "jquery-ui": "^1.11.0",
+    "jquery-ui-browserify": "^1.11.0-pre-seelio",
     "jquery.tocify": "^1.9.1",
+    "livedemo": "taye/livedemo#master",
     "lunr": "^1.0.0"
   },
   "devDependencies": {

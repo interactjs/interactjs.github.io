@@ -50,18 +50,11 @@ under the License.
     <%= stylesheet_link_tag :adv, media: :all %>
     <%= stylesheet_link_tag :docs, media: :all %>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <% if include_search %>
-      <%= javascript_include_tag "all" %>
-    <% else %>
-      <%= javascript_include_tag  "all_nosearch" %>
-    <% end %>
+    <%= javascript_include_tag "slate/index.bundle" %>
 
     <% if language_tabs %>
       <script>
-        $(function() {
-          setupLanguages(<%= language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>);
-        });
+          window.slateLanguages = <%= language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>;
       </script>
     <% end %>
   </head>
@@ -165,26 +158,6 @@ under the License.
         }
       });
     }
-
-    function reposad () {
-      var ad = document.getElementById('ad-contain');
-
-      if (!ad) { return; }
-
-      var wrap = document.querySelector('.ad-wrap');
-
-      if (window.innerWidth <= 700 && wrap.lastElementChild === ad) {
-        $('.content h1:nth-of-type(2)').before(ad);
-      }
-      else if (window.innerWidth > 700 && wrap.lastElementChild !== ad) {
-        wrap.appendChild(ad);
-      }
-    }
-
-    $(window).on('resize', reposad);
-
-    reposad();
-
     </script>
 
   </body>
