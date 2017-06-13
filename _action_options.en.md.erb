@@ -36,7 +36,7 @@ interact(target)
 ```
 
 The Interactable methods `draggable`, `resizable` and `gesturable` take either
-`true` or `false` to simply allow/dissallow the action or an object with
+`true` or `false` to simply allow/disallow the action or an object with
 properties to change certain settings.
 
 If an object parameter is given, the action is enabled unless `enabled: false`
@@ -146,7 +146,7 @@ The axis in which resizing is allowed.
  - `x` to only resize horizontally from the
 right edge.
  - `y` to only resize vertically form the bottom edge. Any other value
-will allow resizing from both edges borizontally and vertically.
+will allow resizing from both edges horizontally and vertically.
 
 resize edges
 ------------
@@ -165,7 +165,7 @@ interact(target).resizable({
 
 If resize edges are used, resize events will have `rect` and `deltaRect`
 properties. In `resizestart`, `rect` will be identical to the rect returned by
-`interctable.getRect(element)` and `deltaRect` will have all-zero properties.
+`interactable.getRect(element)` and `deltaRect` will have all-zero properties.
 `rect` is updated on each `resizemove` and the values in `deltaRect` reflect
 the changes.
 

@@ -105,7 +105,7 @@ The properties of the grid are:
  - `x`, `y` – the spacing between the horizontal and vertical grid lines.
  - `range` – (optional) the distance from the grid corners within which the
  pointer coords will be snapped.
- - `offset` – (optiona) an object with `x` and `y` props to offset the grid
+ - `offset` – (optional) an object with `x` and `y` props to offset the grid
  lines
 
 range
@@ -172,7 +172,7 @@ interact(element)
   .resizable({
     snap: {
       targets: [ { x: 300, y: 300 } ],
-      offset: 'startCorods'
+      offset: 'startCoords'
     }
   });
 ```
