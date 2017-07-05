@@ -1,7 +1,8 @@
 {
   "scripts": {
     "bundle": "simplifyify -dm 'source/javascripts/{slate,home}/index.js' -o 'tmp/npm/javascripts/_/*.bundle.js'",
-    "docs": "cp -r node_modules/interactjs interactjs && dr.js api-dr.json; rm -r interactjs",
+    "docs": "sh docs.sh",
+    "_docs": "dr.js",
     "watch": "npm run bundle -- --watch"
   },
   "dependencies": {

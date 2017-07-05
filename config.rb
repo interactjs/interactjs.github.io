@@ -31,9 +31,12 @@ page "docs/*", :layout => :slate
 
 ignore "docs/data.yml"
 
+require 'yaml'
+site_data = YAML.load_file(File.join(__dir__, 'data/site.yml'))
+
 activate :external_pipeline,
   name: :npm,
-  command: "npm run #{build? ? :bundle : :watch}#{build? ? ' && npm run docs' : '' }",
+  command: "#{build? ? 'npm install;' : '' } npm run docs #{site_data['api_rev']} #{site_data['archive_url']}; npm run #{build? ? :bundle : :watch}",
   source: "tmp/npm",
   latency: 0.25
 
