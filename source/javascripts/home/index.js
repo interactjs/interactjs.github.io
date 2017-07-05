@@ -1,15 +1,15 @@
 const extend = require('extend');
 
-const lds = window.liveDemoSettings;
+const liveDemo = require('livedemo');
 
-extend(window.liveDemoSettings, {
+const liveDemoOptions = {
   codeElementDepth: 3,
   insertPosition  : 'beforeend',
 
-  HTMLSelector : lds.HTMLSelector + ', .highlight.html code',
-  CSSSelector  : lds.CSSSelector + ', .highlight.css code',
-  JSSelector   : lds.JSSelector + ', .highlight.javascript code',
-});
+  HTMLSelector : liveDemo.options.HTMLSelector + ', .highlight.html code',
+  CSSSelector  : liveDemo.options.CSSSelector + ', .highlight.css code',
+  JSSelector   : liveDemo.options.JSSelector + ', .highlight.javascript code',
+};
 
 interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
   .on('tap', showTab);
@@ -38,4 +38,6 @@ function showTab (event) {
   }
 }
 
-require('livedemo');
+document.addEventListener('DOMContentLoaded', function () {
+  liveDemo(liveDemoOptions);
+});

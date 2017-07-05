@@ -11,7 +11,7 @@
     "jquery-ui": "^1.11.0",
     "jquery-ui-browserify": "^1.11.0-pre-seelio",
     "jquery.tocify": "^1.9.1",
-    "livedemo": "taye/livedemo#master",
+    "livedemo": "github:taye/livedemo#master",
     "lunr": "^1.0.0"
   },
   "devDependencies": {
