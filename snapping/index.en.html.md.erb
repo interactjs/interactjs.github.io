@@ -25,39 +25,54 @@ interact(target)
     snap: { /* snap options */ }
   })
   .resizable({
-    snap: { /* snap options */ }
+    snapSize: { /* snapSize options */ }
   });
 ```
 
-Drag and resize coordinates can be snapped to specific points defined by
-objects and functions in the snap `targets` array.
+Using the `snap` option while dragging, The coordinates of the pointer that the
+drag event listeners receive will be modified to meet the coordinates of the
+snap targets. This option can also be used with resizable targets, but may not
+yield intuitive results. The `snapSize` option is specifically for snapping the
+dimensions of targets when resizing.  With both `snap` and `snapSize`, the
+snapping `targets` is an array of objects and functions. There are more options
+listed below.
 
 targets
-=======
+-------
 
 The elements of this array can be any combination of *points* and *functions
-which return points* to snap to.  If there are multiple snap targets, then the
+which return points* to snap to. If there are multiple snap targets, then the
 nearest snap target that is in range is used.
 
-Point targets
--------------
+### Point targets
 
 ```javascript
-interact(element).resizable({
-  snap: {
-    targets: [
-      // snap to the point (0, 450)
-      { x: 0, y: 450, range: 50 },
+interact(element)
+  .draggable({
+    snap: {
+      targets: [
+        // snap to the point (0, 450) if the pointer gets 50 pixels close
+        { x: 0, y: 450, range: 50 },
 
-      // snap only the y coord to 100
-      // i.e. move horizontally at y=100
-      { y: 100, range: Infinity }
-    ]
-  }
-});
+        // snap only the y coord to 100
+        // i.e. move horizontally at y=100
+        { y: 100, range: Infinity }
+      ]
+    }
+  })
+  .resizable({
+    snapSize: {
+      targets: [
+        // snap the width and height to multiples of 100 when the element size
+        // is 25 pixels away from the target size
+        { width: 50, height: 50, range: 25 },
+      ]
+    }
+  });
 ```
 
-A snap target can be an object with x, y and range properties. If a target
+A snap target can be an object with x, y and range properties. `snapSize`
+targets may have either `width` and `height`, or `x` and `y`. If a target
 specifies a coordinate in only one axis then snapping will be on a line.
 
 If a target is defined as `{ y: 100, range Infinity }` then the snapped
@@ -74,25 +89,28 @@ interact(element).draggable({
     function (x, y) {
       return { x: x,
                y: (75 + 50 * Math.sin(x * 0.04)),
-               range: 40 };  
+               range: 40 };
     }
   ]}
 })
 ```
 
-If a snap target is a function, then it called and given the pageX and pageY
+If a snap target is a function, then it called and given the `pageX` and `pageY`
 coordinates of the event. If the function returns an object, that function is
 used like a point target.
 
-Snap grids
-----------
+## Snap grids
 
 ```javascript
 var gridTarget = interact.createSnapGrid({
-  x: 50, 
-  y: 50, 
+  x: 50,
+  y: 50,
   range: 10,
   offset: { x: 5, y: 10 }
+});
+
+interact(element).draggable({
+  snap: { targets: [gridTarget] }
 });
 ```
 
@@ -109,7 +127,7 @@ The properties of the grid are:
  lines
 
 range
-=====
+-----
 
 ```javascript
 interact(element).draggable({
@@ -131,7 +149,7 @@ i.e. `inRange = distance <= range`.
 If a snap target doesn't have it's own range, the default range is used.
 
 relativePoints
-===============
+---------------
 
 ```javascript
 interact(element).drggable({
@@ -146,29 +164,31 @@ interact(element).drggable({
 });
 ```
 
-If you want to specify points on the element which snapping should be relative
-to, then use an array of `relativePoints`. Each item in the array should be an
-object with `x` and `y` properties which are scalars specifying the position on
-the element to which snapping should be relative. If no `relativePoints` array
-is specified or the array is empty then snapping is relative to the pointer
-coordinates (default).
+If you want to specify for `snap` (not `snapSize`) the points on the element
+which snapping should be relative to, then use an array of `relativePoints`.
+Each item in the array should be an object with `x` and `y` properties which are
+scalars specifying the position on the element to which snapping should be
+relative. If no `relativePoints` array is specified or the array is empty then
+snapping is relative to the pointer coordinates (default).
 
 There are effectively `targets.length * max( relativePoints.length, 1 )`
 snap targets while snap calculations are done. Snap functions are called
 multiple times with the coordinates of each `relativePoint`.
 
 offset
-======
+------
 
 ```javascript
-interact(element)
+interact(element1)
   .drggable({
     snap: {
       targets: [ { x: 300, y: 300 } ],
 
       offset: { x: 20, y: 20 }
     }
-  })
+  });
+
+interact(element2)
   .resizable({
     snap: {
       targets: [ { x: 300, y: 300 } ],
@@ -182,7 +202,7 @@ and `y` properties of a given object or if the string `'startCoords'` is given,
 then `pageX` and `pageY` at the start of the action are used.
 
 endOnly
-=======
+-------
 
 ```javascript
 interact(element).draggable({
@@ -199,4 +219,3 @@ fired.
 
 If [inertia](#inertia) is enabled and `endOnly` is set to `true` then the
 pointer will follow a curve to the snap target.
-

@@ -24,7 +24,7 @@ If an action ends without inertia but is snapped or restricted with the
 to the snapped/restricted coords.
 
 resistance
-==========
+----------
 
 ```javascript
 interact(target).draggable({
@@ -40,24 +40,24 @@ The `resistance` is a number greater than zero which sets the rate at which the
 action slows down. Higher values slow it down more quickly.
 
 minSpeed
-========
+--------
 
 The `minSpeed` is a number which is the minimum launch speed (pixels per
 second) that can start inertia.
 
 endSpeed
-========
+--------
 
 `endSpeed` is the speed (pixels per second) at which the action is considered to have stopped.
 
 allowResume
-===========
+-----------
 
 `allowResume` is a `boolean` value which indicates whether the user should be
 allowed to resume an action while it is in the inertia phase.
 
 zeroResumeDelta
-===============
+---------------
 
 `zeroResumeDelta` is a `boolean` which can allow the jump when resuming from
 inertia to be ignored in the next move event's `dx`/`dy`. This should be set to
@@ -66,7 +66,7 @@ around. For things like drawing on a canvas it should generally be changed to
 `false`.
 
 smoothEndDuration
-=================
+-----------------
 
 ```javascript
 interact(target).draggable({
