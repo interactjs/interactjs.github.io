@@ -14,22 +14,13 @@ const liveDemoOptions = {
 interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
   .on('tap', showTab);
 
-// Hide demo code if the screen is initially narrow
-if (window.innerWidth <= 570) {
-  [].forEach.call(document.querySelectorAll('.demo-area .demo-label'), function (label) {
-    showTab({ currentTarget: label });
-
-    label.previousElementSibling.checked = true;
-  });
-}
-
 function showTab (event) {
   const label = event.currentTarget,
     demoArea = label.parentNode,
     codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code'),
     liveDemo = label.nextElementSibling;
 
-  _.each(codeBlocks, function (block) {
+  codeBlocks.forEach(function (block) {
     block.style.display = 'none';
   });
 
@@ -39,5 +30,14 @@ function showTab (event) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Hide demo code if the screen is initially narrow
+  if (window.innerWidth <= 570) {
+    [].forEach.call(document.querySelectorAll('.demo-area .demo-label'), function (label) {
+      showTab({ currentTarget: label });
+
+      label.previousElementSibling.checked = true;
+    });
+  }
+
   liveDemo(liveDemoOptions);
 });

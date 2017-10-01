@@ -1,0 +1,61 @@
+<title>Tap, doubletap and hold</title>
+
+<body>
+<div class="tap-target">
+  <p>Tap to change color</p>
+  <p>Doubletap to change size</p>
+  <p>Hold to rotate</p>
+</div>
+</body>
+
+<style>
+.tap-target {
+  width: 50%;
+  height: 100%;
+  padding: 10%;
+  margin: 10% auto;
+
+  border-radius: 100%;
+
+  font-size: 1.125em;
+  text-align: center;
+  color: #fff;
+  background-color: #29e;
+
+  cursor: pointer;
+
+  transition: all 0.3s;
+}
+
+.tap-target.switch-bg {
+  background-color: #f40;
+}
+
+.tap-target.large {
+  -webkit-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+</style>
+
+<script>
+interact('.tap-target')
+  .on('tap', function (event) {
+    event.currentTarget.classList.toggle('switch-bg');
+    event.preventDefault();
+  })
+  .on('doubletap', function (event) {
+    event.currentTarget.classList.toggle('large');
+    event.currentTarget.classList.remove('rotate');
+    event.preventDefault();
+  })
+  .on('hold', function (event) {
+    event.currentTarget.classList.toggle('rotate');
+    event.currentTarget.classList.remove('large');
+  });
+</script>

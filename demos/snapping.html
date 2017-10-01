@@ -1,0 +1,50 @@
+<title> Snapping </title>
+
+<body>
+<div id="grid-snap">
+  Dragging is constrained to the corners of a grid
+</div>
+</body>
+
+<style>
+#grid-snap {
+  width: 40%;
+  background-color: #29e;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 2%;
+  margin: 5%;
+}
+<% end %>
+</style>
+
+<script>
+var element = document.getElementById('grid-snap'),
+    x = 0, y = 0;
+
+interact(element)
+  .draggable({
+    snap: {
+      targets: [
+        interact.createSnapGrid({ x: 30, y: 30 })
+      ],
+      range: Infinity,
+      relativePoints: [ { x: 0, y: 0 } ]
+    },
+    inertia: true,
+    restrict: {
+      restriction: element.parentNode,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+      endOnly: true
+    }
+  })
+  .on('dragmove', function (event) {
+    x += event.dx;
+    y += event.dy;
+
+    event.target.style.webkitTransform =
+    event.target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+  });
+</script>

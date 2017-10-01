@@ -1,4 +1,5 @@
 require './lib/redcarpet_header_fix'
+require './lib/live_demo'
 
 set :css_dir, 'stylesheets'
 
@@ -39,6 +40,8 @@ activate :external_pipeline,
   command: "#{build? ? 'npm install;' : '' } npm run docs #{site_data['api_rev']} #{site_data['archive_url']}; npm run #{build? ? :bundle : :watch}",
   source: "tmp/npm",
   latency: 0.25
+
+activate :live_demo
 
 # Build-specific configuration
 configure :build do

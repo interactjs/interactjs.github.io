@@ -17,3 +17,5 @@ gem "wdm", "~> 0.1", :platforms => [:mswin, :mingw]
 #gem "rake", "~> 10.3.0"
 
 gem "therubyracer", :platforms => :ruby
+
+gem "nokogiri", "~> 1.8"
