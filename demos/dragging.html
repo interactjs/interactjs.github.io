@@ -55,8 +55,8 @@ interact('.draggable')
 
       textEl && (textEl.textContent =
         'moved a distance of '
-        + (Math.sqrt(event.dx * event.dx +
-                     event.dy * event.dy)|0) + 'px');
+        + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+                     Math.pow(event.pageY - event.y0, 2) | 0)) + 'px');
     }
   });
 
