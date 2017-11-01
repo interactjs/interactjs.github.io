@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><?js= title ?> - Documentation</title>
 
+    <script>
+    // redirect links to fragments of the old, dr.js-generated page
+    (function (match) {
+      const oldTargets = match && { Interactable: 1, Interaction: 1, interact: 1 };
+
+      if (oldTargets && oldTargets[match[1]]) {
+        location.href = location.href
+          .replace(match[0], '/' + match[1] + '.html#' + match[2]);
+      }
+    })(location.hash.match(/#([^.]+)[.](.*)/));
+    </script>
     <script src="<?js= env.conf.templates.baseUrl ?>scripts/prettify/prettify.js"></script>
     <script src="<?js= env.conf.templates.baseUrl ?>scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
