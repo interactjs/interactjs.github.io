@@ -24,6 +24,8 @@ activate :i18n
 
 activate :directory_indexes
 
+page "api/*", :directory_index => false
+
 #activate :sitemap, :gzip => false, :hostname => "http://interactjs.io"
 
 activate :livereload

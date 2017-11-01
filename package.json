@@ -2,7 +2,6 @@
   "scripts": {
     "bundle": "simplifyify -dm 'source/javascripts/{slate,home}/index.js' -o 'tmp/npm/javascripts/_/*.bundle.js'",
     "docs": "sh docs.sh",
-    "_docs": "dr.js",
     "watch": "npm run bundle -- --watch"
   },
   "dependencies": {
@@ -12,13 +11,15 @@
     "jquery-ui": "^1.11.0",
     "jquery-ui-browserify": "^1.11.0-pre-seelio",
     "jquery.tocify": "^1.9.1",
+    "jsdoc": "github:taye/jsdoc#master",
+    "jsdoc-stale": "github:taye/jsdoc-stale#master",
     "livedemo": "github:taye/livedemo#master",
     "lunr": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^7.3.0",
-    "dr.js": "github:taye/dr.js",
+    "bulma": "^0.5.3",
     "errorify": "^0.3.1",
     "mkdirp": "^0.5.1",
     "simplifyify": "^3.2.1",
