@@ -8,7 +8,7 @@ ARCHIVE_NAME=archive.tar.gz
 DEST=$ROOT/tmp/npm/api
 
 mkdir -p $DEST $ARCHIVE_DIR
-rm -r $DEST/*
+rm -r $DEST/* > /dev/null
 pushd $ARCHIVE_DIR > /dev/null
 
 [ -f $ARCHIVE_NAME ] || {

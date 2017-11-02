@@ -20,8 +20,11 @@ module.exports = {
     idInHeadings: true,
   },
 
+  articles: ['**/*.md'],
+
   templates: {
     cleverLinks: true,
+    baseDir: path.join(pwd, '..'),
     baseUrl: '/api/',
 
     default: {
