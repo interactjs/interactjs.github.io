@@ -10,25 +10,16 @@ chat][gitter] and [Github issues][gh-issues].
 Start action after hold
 =======================
 
+Use the `delay` option which takes the number of milliseconds that the pointer
+must be held down for.
+
 ```javascript
 interact(target)
   .draggable({
-    manualStart: true
+    // start dragging after the pointer is held down for 1 second
+    delay: 1000
   })
-  .on('hold', function (event) {
-    var interaction = event.interaction;
-
-    if (!interaction.interacting()) {
-      interaction.start({ name: 'drag' },
-                        event.interactable,
-                        event.currentTarget);
-    }
-    });
 ```
-
-Use the [`manualStart`][manual-start] option to disable the default start
-sequence (`down`, `move`, `<action>start`...) then in a `hold` event listener,
-start a new interaction with [`Interaction#start`][interaction-start].
 
 If you are having problems with default browser behaviour like scrolling,
 context menus, etc. have a look at the

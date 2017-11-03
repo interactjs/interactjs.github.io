@@ -7,6 +7,7 @@ interact(target)
     max          : Number,
     maxPerElement: Number,
     manualStart  : Boolean,
+    hold         : Number,
     snap         : {/* ... */},
     restrict     : {/* ... */},
     inertia      : {/* ... */},
@@ -19,6 +20,7 @@ interact(target)
     max          : Number,
     maxPerElement: Number,
     manualStart  : Boolean,
+    hold         : Number,
     snap         : {/* ... */},
     restrict     : {/* ... */},
     inertia      : {/* ... */},
@@ -31,6 +33,7 @@ interact(target)
     max          : Number,
     maxPerElement: Number,
     manualStart  : Boolean,
+    hold         : Number,
     restrict     : {/* ... */}
   });
 ```
@@ -69,6 +72,11 @@ manualStart
 If this is changed to `true` then drag, resize and gesture actions will have to
 be started with a call to [`Interaction#start`][interaction-start] as the usual
 `down`, `move`, `<action>start`... sequence will not start an action.
+
+hold
+----
+
+The action will start after the pointer is held down for the given number of milliseconds.
 
 snap
 ----
