@@ -3,7 +3,7 @@ title: Upgrade from `v1.2` to `v1.3`
 ---
 
 `v1.3` fixes several bugs, allows setting more options on a per-action basis,
-adds configuration optinos to `pointerEvents` and adds several new methods and
+adds configuration options to `pointerEvents` and adds several new methods and
 options. The [changelog][changelog-v1.3.0] lists all the major changes.
 
 Removed Methods
@@ -11,8 +11,8 @@ Removed Methods
 
 The methods in the table below were removed and replaced with action method options:
 
-| Method                                                     | Replaced with                                                   |
-| ---------------------------------------------------------- | --------------------------------------------------------------- |
+| Method                                                      | Replaced with                                                    |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- |
 | `interactable .squareResize(bool)`                          | `interactable .resizable({ square: bool })`                      |
 | `interactable .snap({ actions: ['drag'], ...snapOptions })` | `interactable .draggable({ snap: snapOptions })`                 |
 | `interactable .restrict({ restriction: 'self' })`           | `interactable .draggable({ restrict: { restriction: 'self' } })` |
@@ -27,15 +27,17 @@ There's 1 new snap modifier and 2 new resize modifiers for resize actions:
 
  - `snapSize: { min: rectLike, max: rectLink }`
  - `restrictSize: { min: rectLike, max: rectLink }`
- - `restrictEdges: { outer: rectLike, inner: rectLink }:
+ - `restrictEdges: { outer: rectLike, inner: rectLink }`
 
 ```js
 interact(target).resize({
   edges: { bottom: true, right: true },
 
-  // snap size
+  // sizes at fixed grid points
   snapSize: {
-    targets: [interact.createSnapGrid({ x: 25, y: 25 }),
+    targets: [
+      interact.createSnapGrid({ x: 25, y: 25, range: Infinity }),
+    ],
   },
 
   // minimum size
