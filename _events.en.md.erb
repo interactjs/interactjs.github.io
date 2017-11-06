@@ -132,11 +132,11 @@ interact(target).on(pointerEventType, listenerFunction);
  - `doubletap`
  - `hold`
 
-I call these `pointerEvents` because they present the events
-roughly as the real `PointerEvent` interface does, specifically:
+I call these `pointerEvents` because they present the events roughly as the
+real `PointerEvent` interface does, specifically:
 
- - `event.pointerId` provides the `TouchEvent#identifier` or `PointerEvent#pointerId` or
-   `undefined` for MouseEvents
+ - `event.pointerId` provides the `TouchEvent#identifier` or
+ `PointerEvent#pointerId` or `undefined` for MouseEvents
  - `event.pointerType` provides the pointer type
  - There are no simulated mouse events after touch events
 
@@ -147,13 +147,24 @@ roughly as the real `PointerEvent` interface does, specifically:
   in the <code>PointerEvent</code> interface.
 </aside>
 
-`pointerEvent` coordinates are copied directly from the source event and are
-not modified – no snapping, restriction or origin modifications. `tap` events
-have a `dt` property which is the time between the related `down` and `up`
-events. For `doubletap` `dt` is the time between the two previous taps.  `dt`
-for `hold` events is the length of time that the pointer has been held down for
-(around 600ms).
+### Configuring pointer events
 
+```javascript
+interact(target).pointerEvents({
+  holdDuration: 1000,
+  ignoreFrom: '[no-pointer]',
+  allowFrom: '.handle',
+  origin: 'self',
+});
+```
+
+`pointerEvent` are not snapped or restricted, but can be modified with the
+origin modifications. `tap` events have a `dt` property which is the time
+between the related `down` and `up` events. For `doubletap` `dt` is the time
+between the two previous taps.  `dt` for `hold` events is the length of time
+that the pointer has been held down for (around 600ms).
+
+### fast click
 ```javascript
 // fast click
 interact('a[href]').on('tap', function (event) {
@@ -167,13 +178,4 @@ interact('a[href]').on('tap', function (event) {
 devices so it works great for fast buttons and anchor links. Also, unlike
 regular click events, a tap isn’t fired if the pointer is moved before being
 released.
-
-<aside class="warning">
-  At the moment, <code>pointerEvent</code>s are fired before corresponding
-  <code>InteractEvent</code>s – <code>move</code> is fired before
-  <code>dragmove</code>, <code>up</code> before <code>dragend</code>.  This may
-  change. If you feel that it should change or have reasons for it to stay the
-  same, <a target="_blank" href="https://gitter.im/taye/interact.js">let us
-  know</a>!
-</aside>
 
