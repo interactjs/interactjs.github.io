@@ -42,9 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    interact(root)
-        .on('mousedown', applyTransforms)
-        .on('touchstart', applyTransforms);
+    interact(root).on('down', applyTransforms);
 
     interact('.point-handle')
         .draggable({
