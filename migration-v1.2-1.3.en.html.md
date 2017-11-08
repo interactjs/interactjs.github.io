@@ -1,5 +1,5 @@
 ---
-title: Upgrade from `v1.2` to `v1.3`
+title: Migrating from `v1.2` to `v1.3`
 ---
 
 `v1.3` fixes several bugs, allows setting more options on a per-action basis,
