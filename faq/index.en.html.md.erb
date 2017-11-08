@@ -10,14 +10,14 @@ chat][gitter] and [Github issues][gh-issues].
 Start action after hold
 =======================
 
-Use the `delay` option which takes the number of milliseconds that the pointer
+Use the `hold` option which takes the number of milliseconds that the pointer
 must be held down for.
 
 ```javascript
 interact(target)
   .draggable({
     // start dragging after the pointer is held down for 1 second
-    delay: 1000
+    hold: 1000
   })
 ```
 
@@ -62,7 +62,7 @@ There's no direct API to drag a clone of the target element. However, you can
 use [`Interaction#start`][interaction-start] to change the target of an
 interaction to any element that you create.
 
-Remove an Interactable
+Remove/destroy/release an Interactable
 ======================
 
 ```javascript
@@ -106,14 +106,35 @@ Drag handle
 
 ```javascript
 interact('.item')
-  .draggable(/* ... */)
-  .allowFrom('.handle');
+  .draggable({
+    allowFrom: '.handle',
+  });
 ```
 
-To make an element be the handle of a parent draggable, use the [allowFrom
-setting][allow-from] to allow an action to start only if the element matches a
+To make an element be the handle of a parent draggable, use the allowFrom
+setting option to allow an action to start only if the element matches a
 certain CSS selector or is a specific element.
 
+Prevent actions on child
+========================
+
+```html
+<div class="resizable">
+  A resizable item
+  <textarea></textarea>
+</div>
+```
+
+```javascript
+interact('.item')
+  .draggable({
+    // don't drag from textarea elments
+    ignoreFrom: 'textarea',
+  });
+```
+
+Use the `ignoreFrom` option to prevent actions from starting if the pointer
+went down on an element matching the given selector or HTMLElement.
 
 Revert/restore/undo drag position
 =================================
@@ -145,9 +166,8 @@ addressed.
 [gitter]: https://gitter.im/taye/interact.js
 [gh-issues]: http://git.io/srWhdg
 [manual-start]: /docs#manualstart
-[interaction-start]: http://interactjs.io/api/#Interaction.start
-[prevent-default]: http://interactjs.io/api/#Interactable.preventDefault
-[allow-from]: http://interactjs.io/api/#Interactable.allowFrom
-[dynamic-drop]: http://interactjs.io/docs/#interact.dynamicDrop
+[interaction-start]: /api/Interaction.html#start
+[prevent-default]: /api/Interactable.html#preventDefault
+[dynamic-drop]: /api/module-interact.html#.dynamicDrop
 [touch-action]: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
 [iframe-pr]: https://github.com/taye/interact.js/pull/98
