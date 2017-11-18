@@ -1,45 +1,31 @@
 Installation
 ============
 
-Download
---------
+npm dependency
+--------------
 
 ```shell
-$ bower install interact
-$ npm install interact.js
+$ npm install --save interactjs
 ```
 
-Either:
-
-* with [Bower](http://bower.io/)
-* with [npm](https://www.npmjs.org/)
-* manually from http://interactjs.io/#download
-
-Link
-----
-
-```html
-<script src="/path/to/interact.js"></script>
+```js
+const interact = require('interactjs');
 ```
 
-After downloading the file, add to your page's HTML a `<script>` tag who's
-`src` attribute points to the file.
+Install the package as a dependency with npm then `require` the `interact` function.
 
 CDN
 ---
 
 ```html
-<script src="//cdn.jsdelivr.net/interact.js/<%= data.site.current_version %>/interact.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs@<%= data.site.current_version %>/dist/interact.min.js"></script>
 <!-- or -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/<%= data.site.current_version %>/interact.min.js"></script>
+<script src="https://unpkg.com/interactjs@<%= data.site.current_version %>/dist/interact.min.js"></script>
 ```
 
-If you'd prefer to use the [jsDelivr](http://www.jsdelivr.com/#!interact.js) or
-[cdnjs](https://cdnjs.com/libraries/interact.js) CDNs instead, simply add a
-script tag pointing to one of:
-
-- `//cdn.jsdelivr.net/interact.js/<%= data.site.current_version %>/interact.min.js`
-- `//cdnjs.cloudflare.com/ajax/libs/interact.js/<%= data.site.current_version %>/interact.min.js`
+You can use the [jsDelivr](https://www.jsdelivr.com/package/npm/interactjs) or
+[unpkg](https://unpkg.com/interactjs/) CDNs, simply add to your HTML a script
+tag pointing to their servers.
 
 Module
 ------
