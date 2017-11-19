@@ -1,5 +1,5 @@
 url: "http://interactjs.io"
-cdn: "//code.interactjs.io"
+cdn: "https://unpkg.com/interactjs@"
 
 ga_id    : "UA-44445883-3"
 ga_domain: "interactjs.io"
