@@ -1,0 +1,35 @@
+Installation
+============
+
+npm dependency
+--------------
+
+```shell
+$ npm install --save interactjs
+```
+
+```js
+const interact = require('interactjs');
+```
+
+Install the package as a dependency with npm then `require` the `interact` function.
+
+CDN
+---
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/interactjs@<%= data.site.current_version %>/dist/interact.min.js"></script>
+<!-- or -->
+<script src="https://unpkg.com/interactjs@<%= data.site.current_version %>/dist/interact.min.js"></script>
+```
+
+You can use the [jsDelivr](https://www.jsdelivr.com/package/npm/interactjs) or
+[unpkg](https://unpkg.com/interactjs/) CDNs, simply add to your HTML a script
+tag pointing to their servers.
+
+Module
+------
+
+`interact` is exposed as a CommonJS module, an AMD module, or a global object
+depending on what the environment supports.
+

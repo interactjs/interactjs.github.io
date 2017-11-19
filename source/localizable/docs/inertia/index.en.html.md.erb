@@ -1,0 +1,88 @@
+---
+title: Inertia - interact.js Documentation
+---
+
+Inertia
+=======
+
+```javascript
+interact(target)
+  .draggable({
+    inertia: true
+  })
+  .resizable({
+    inertia: {/* ... */}
+  });
+```
+
+Inertia allows drag and resize actions to continue after the user releases the
+pointer at a fast enough speed. The required launch speed, end speed and
+resistance can optionally be configured with the settings below.
+
+If an action ends without inertia but is snapped or restricted with the
+`endOnly` option, then the the coordinates are interpolated from the end coords
+to the snapped/restricted coords.
+
+resistance
+----------
+
+```javascript
+interact(target).draggable({
+  inertia: {
+    resistance: 30,
+    minSpeed: 200,
+    endSpeed: 100
+  }
+});
+```
+
+The `resistance` is a number greater than zero which sets the rate at which the
+action slows down. Higher values slow it down more quickly.
+
+minSpeed
+--------
+
+The `minSpeed` is a number which is the minimum launch speed (pixels per
+second) that can start inertia.
+
+endSpeed
+--------
+
+`endSpeed` is the speed (pixels per second) at which the action is considered to have stopped.
+
+allowResume
+-----------
+
+`allowResume` is a `boolean` value which indicates whether the user should be
+allowed to resume an action while it is in the inertia phase.
+
+zeroResumeDelta
+---------------
+
+`zeroResumeDelta` is a `boolean` which can allow the jump when resuming from
+inertia to be ignored in the next move event's `dx`/`dy`. This should be set to
+`true` (default) when resizing with inertia or dragging or panning elements
+around. For things like drawing on a canvas it should generally be changed to
+`false`.
+
+smoothEndDuration
+-----------------
+
+```javascript
+interact(target).draggable({
+  restrict: {
+    restriction: parent,
+    endOnly: true
+  },
+  inertia: {
+    smoothEndDuration: 0
+  });
+```
+
+`smoothEndDuration` is the duration (milliseconds) of the interpolated movement
+from the actual end coords to the position that is [snapped][snap-endonly] or
+[restricted][restrict-endonly] with `endOnly`. Set the value to `0` to disable
+end transitions with `endOnly` snap/restrict.
+
+[snap-endonly]: <%= url_for '/docs/snapping' %>#endonly
+[restrict-endonly]: <%= url_for '/docs/restriction' %>#endonly

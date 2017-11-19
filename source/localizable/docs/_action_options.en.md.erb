@@ -1,0 +1,300 @@
+Action options
+==============
+
+```javascript
+interact(target)
+  .draggable({
+    max          : Number,
+    maxPerElement: Number,
+    manualStart  : Boolean,
+    hold         : Number,
+    snap         : {/* ... */},
+    restrict     : {/* ... */},
+    inertia      : {/* ... */},
+    autoScroll   : {/* ... */},
+
+    axis         : 'x' || 'y'
+
+  })
+  .resizable({
+    max          : Number,
+    maxPerElement: Number,
+    manualStart  : Boolean,
+    hold         : Number,
+    snap         : {/* ... */},
+    restrict     : {/* ... */},
+    inertia      : {/* ... */},
+    autoScroll   : {/* ... */},
+
+    square       : true || false,
+    axis         : 'x' || 'y'
+  })
+  .gesturable({
+    max          : Number,
+    maxPerElement: Number,
+    manualStart  : Boolean,
+    hold         : Number,
+    restrict     : {/* ... */}
+  });
+```
+
+The Interactable methods `draggable`, `resizable` and `gesturable` take either
+`true` or `false` to simply allow/disallow the action or an object with
+properties to change certain settings.
+
+If an object parameter is given, the action is enabled unless `enabled: false`
+is a property of the object.
+
+enabled
+-------
+
+Enable the action for the Interactable. If the options object has no `enabled`
+property or the property value is `true` then the action is enabled. If
+`enabled` is false, the action is disabled.
+
+max
+---
+
+`max` is used to limit the number of concurrent interactions that can target an
+interactable. By default, any number of interactions can target an
+interactable.
+
+maxPerElement
+-------------
+
+By default only 1 interaction can target the same interactable+element
+combination. If you want to allow multiple interactions on the same target
+element, set the `maxPerElement` property of your object to a value `>= 2`.
+
+manualStart
+-----------
+
+If this is changed to `true` then drag, resize and gesture actions will have to
+be started with a call to [`Interaction#start`][interaction-start] as the usual
+`down`, `move`, `<action>start`... sequence will not start an action.
+
+hold
+----
+
+The action will start after the pointer is held down for the given number of milliseconds.
+
+snap
+----
+
+Change snapping settings for drag and resize. See [docs/snapping](<%= url_for '/docs/snapping' %>).
+
+restrict
+--------
+
+Change restriction settings for drag, resize and gesture. See [docs/restriction](<%= url_for '/docs/restriction' %>).
+
+inertia
+-------
+
+Change inertia settings for drag, and resize. See [docs/inertia](<%= url_for '/docs/inertia' %>).
+
+autoScroll
+----------
+
+```javascript
+interact(element)
+  .draggable({
+    autoScroll: true,
+  });
+  .resizable({
+    autoScroll: {
+      container: document.body,
+      margin: 50,
+      distance: 5,
+      interval: 10
+    }
+  });
+```
+
+Scroll a container (`window` or an HTMLElement) when a drag or resize move
+happens at the edge of the container.
+
+drag axis
+---------
+
+```javascript
+interact(target).draggable({
+  axis: 'x'
+});
+```
+
+The axis in which the first movement must be in for the drag sequence to start.
+After the movement in that axis, the the action can move in both the x and y
+axes.
+
+<aside>
+I'm thinking of changing this so that movement is actually restricted to the
+given axis. Let me know what you think. <a target="_blank"
+href="https://gitter.im/taye/interact.js">https://gitter.im/taye/interact.js.</a>
+</aside>
+
+resize axis
+-----------
+
+```javascript
+interact(target).resizable({
+  axis: 'x'
+});
+```
+
+<aside class="warning">
+  The resize axis API has been deprecated in favor of the <a
+  href="https://github.com/taye/interact.js/pull/145">resize edges API</a>
+  described below. The axis API is used by default for the sake of backwards
+  compatibility, but will be removed in future.
+</aside>
+
+The axis in which resizing is allowed.
+
+ - `x` to only resize horizontally from the
+right edge.
+ - `y` to only resize vertically form the bottom edge. Any other value
+will allow resizing from both edges horizontally and vertically.
+
+resize edges
+------------
+
+```javascript
+interact(target).resizable({
+  edges: {
+    top   : true,       // Use pointer coords to check for resize.
+    left  : false,      // Disable resizing from left edge.
+    bottom: '.resize-s',// Resize if pointer target matches selector
+    right : handleEl    // Resize if pointer target is the given Element
+  }
+});
+```
+
+
+If resize edges are used, resize events will have `rect` and `deltaRect`
+properties. In `resizestart`, `rect` will be identical to the rect returned by
+`interactable.getRect(element)` and `deltaRect` will have all-zero properties.
+`rect` is updated on each `resizemove` and the values in `deltaRect` reflect
+the changes.
+
+```html
+<div class="resizable">
+  <!-- top-left resize handle -->
+  <div class="resize-top    resize-left"></div>
+
+  <!-- bottom-right resize handle -->
+  <div class="resize-bottom resize-right"></div>
+</div>
+```
+```js
+interact('.resizable').resizable({
+  edges: {
+    top   : '.resize-top',
+    left  : '.resize-left',
+    bottom: '.resize-bottom',
+    right : '.resize-right',
+  },
+});
+
+If you'd like an element to behave as a resize corner, let it match the
+selectors of two adjacent edges.
+
+
+Resize handle elements must be children of the resizable element. If you need
+the handles to be outside the target element, then you will need to use
+[`Interaction#start`](interaction-start).
+
+resize invert
+-------------
+
+```javascript
+interact(target).resizable({
+  edges: { bottom: true, right: true },
+  invert: 'reposition'
+});
+```
+
+Choose what should happen if the target would be resized to dimensions less
+than `0x0`. The possible values are:
+
+ - `'none'` will limit the resize rect to a minimum of `0x0`
+ - `'negate'` will allow the rect to have negative width/height
+ - `'reposition'` will keep the width/height positive by swapping the top and
+ bottom edges and/or swapping the left and right edges
+
+[Demo on Codepen][resize-codepen]
+
+resize square
+-------------
+
+```javascript
+interact(target).resizable({
+  squareResize: true
+});
+```
+
+When resizing, change the width and height by the same amount. This doesn't
+necessarily maintain the aspect ratio of the object.
+
+dropzone accept
+---------------
+```javascript
+interact(target).dropzone({
+  accept: '.drag0, .drag1',
+});
+```
+
+The CSS selector or element which must match the dragged element in order for
+drop events to be fired.
+
+dropzone overlap
+----------------
+
+```javascript
+interact(target).dropzone({
+  overlap: 0.25
+});
+```
+
+Set how drops are checked for. The allowed values are:
+
+ - `'pointer'` – the pointer must be over the dropzone (default)
+ - `'center'` – the draggable element's center must be over the dropzone
+ - a number from 0-1 which is the (intersection area) / (draggable area).  e.g.
+ `0.5` for drop to happen when half of the area of the draggable is over the
+ dropzone
+
+dropzone checker
+----------------
+
+```javascript
+interact(target).dropzone({
+  checker: function (dragEvent,         // related dragmove or dragend
+                     event,             // Touch, Pointer or Mouse Event
+                     dropped,           // bool default checker result
+                     dropzone,          // dropzone Interactable
+                     dropElement,       // dropzone elemnt
+                     draggable,         // draggable Interactable
+                     draggableElement) {// draggable element
+
+    // only allow drops into empty dropzone elements
+    return dropped && !dropElement.hasChildNodes();
+  }
+});
+ ```
+
+A dropzone checker is an optional function that can be used to add additional
+conditions to check if a dragged element can be dropped into a dropzone.
+
+The checker function takes the following arguments:
+
+ - **dragEvent**: related dragmove or dragend event
+ - **event**: The user move/up/end Event related to the dragEvent
+ - **dropped**: The value from the default drop checker
+ - **dropzone**: The dropzone interactable
+ - **dropElement**: The dropzone element
+ - **draggable**: The Interactable being dragged
+ - **draggableElement**: The actual element that's being dragged
+
+[interaction-start]: http://interactjs.io/api/#Interaction.start
+[resize-codepen]: http://codepen.io/taye/pen/LEpmOL

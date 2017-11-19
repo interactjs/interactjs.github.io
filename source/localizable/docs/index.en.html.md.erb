@@ -1,0 +1,40 @@
+---
+title: interact.js API Documentation
+
+sections:
+  - installation
+  - interactables
+  - action_options
+  - events
+
+search: true
+---
+
+<h1 style="text-align: center">Welcome</h1>
+
+interact.js is a JavaScript module for drag and drop, resizing and multi-touch
+gestures with inertia and snapping for modern browsers (and also IE9+).
+
+To get a quick overview of how interact.js is intended to be used, read this
+[post on Mozilla Hacks][ijs-moz-hacks].
+
+For a reference of all methods, go to the <%= link_to 'API Reference', '/api' %>.
+
+[ijs-moz-hacks]: https://hacks.mozilla.org/2014/11/interact-js-for-drag-and-drop-resizing-and-multi-touch-gestures/
+
+There's a guide to <%= link_to 'upgrade from `v1.2` to `v1.3`', 'upgrade-v1.2-1.3' %>
+
+<% links = [
+  ['faq', 'FAQ'],
+  ['snapping', 'Snapping' ],
+  ['restriction', 'Restriction'],
+  ['inertia', 'Inertia'],
+  ['/', 'Homepage'],
+].each { |link| link[0] = url_for link[0] } %>
+
+<%= partial :link_btn_list, :locals => { :links => links } %>
+
+<% current_page.data.sections && current_page.data.sections.each do |section| %>
+<%= partial "#{section}" %>
+
+<% end %>
