@@ -177,6 +177,28 @@ properties. In `resizestart`, `rect` will be identical to the rect returned by
 `rect` is updated on each `resizemove` and the values in `deltaRect` reflect
 the changes.
 
+```html
+<div class="resizable">
+  <!-- top-left resize handle -->
+  <div class="resize-top    resize-left"></div>
+
+  <!-- bottom-right resize handle -->
+  <div class="resize-bottom resize-right"></div>
+</div>
+```
+```js
+interact('.resizable').resizable({
+  edges: {
+    top   : '.resize-top',
+    left  : '.resize-left',
+    bottom: '.resize-bottom',
+    right : '.resize-right',
+  },
+});
+
+If you'd like an element to behave as a resize corner, let it match the
+selectors of two adjacent edges.
+
 
 Resize handle elements must be children of the resizable element. If you need
 the handles to be outside the target element, then you will need to use
