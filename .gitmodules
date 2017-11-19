@@ -1,3 +1,0 @@
-[submodule "source/docs"]
-	path = source/localizable/docs
-	url = git@github.com:interactjs/docs.git
