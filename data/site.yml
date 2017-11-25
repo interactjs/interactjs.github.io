@@ -1,9 +1,9 @@
 url: "http://interactjs.io"
-cdn: "https://unpkg.com/interactjs@"
+cdn: "http://code.interactjs.io/v"
 
 ga_id    : "UA-44445883-3"
 ga_domain: "interactjs.io"
 
-current_version: "next"
+current_version: "1.3.0"
 api_rev: "master"
 archive_url: https://github.com/taye/interact.js/archive
