@@ -58,7 +58,24 @@ Action end event dx/dy
 
 The `dx` and `dy` fields on `dragend`, `resizeend` and `gestureend` events were
 formally the difference between the start and end coordinates. Now they are
-always `0` (the difference between the end and the last move event).
+always `0` (the difference between the end and the last move event). Use
+`event.X0` and `event.Y0` (or `event.clientX0` and `event.clientY0`) to get the
+starting coordinates and subtract them from the end event coordinates.
+
+```js
+interact(target).draggable({
+  onend: function (event) {
+    console.log(event.pageX - event.X0, event.pageY - event.Y0);
+  },
+});
+```
+
+Drop events
+-----------
+
+`dragend` events are now fired *before* `drop` events. Use
+`dragendEvent.relatedTarget` to get the dropzone element if there will be a drop
+event.
 
 Mouse buttons
 -------------
