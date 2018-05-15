@@ -4,6 +4,6 @@ cdn: "http://code.interactjs.io/v"
 ga_id    : "UA-44445883-3"
 ga_domain: "interactjs.io"
 
-current_version: "1.3.3"
-api_rev: "master"
+current_version: "1.3.4"
+api_rev: "stable"
 archive_url: https://github.com/taye/interact.js/archive
