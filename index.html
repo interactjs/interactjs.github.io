@@ -1,0 +1,529 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta content="IE=edge" http-equiv="X-UA-Compatible"><meta content="width=device-width,initial-scale=1" name="viewport"><meta content="#213544" name="theme-color"><link href="/img/ijs-64.png" rel="icon" type="image/png"><title>interact.js - JavaScript drag and drop, resizing and multi-touch gestures for modern browsers</title><meta content="JavaScript drag and drop, resizing, and multi-touch gestures for modern browsers (and also IE9+)" name="description"><script>!window.__PRERENDER_INJECTED && document.documentElement.classList.add('js')</script><link href="/css/Docs.912cacea.css" rel="prefetch"><link href="/css/DocsApi.954a7ac8.css" rel="prefetch"><link href="/css/chunk-77282559.912cacea.css" rel="prefetch"><link href="/js/Docs.654005c8.js" rel="prefetch"><link href="/js/DocsApi.81b4f7f9.js" rel="prefetch"><link href="/js/Home.def67d66.js" rel="prefetch"><link href="/js/LiveDemo.c8c85217.js" rel="prefetch"><link href="/js/chunk-16fd081e.3fa02e1b.js" rel="prefetch"><link href="/js/chunk-19da166c.bfffad04.js" rel="prefetch"><link href="/js/chunk-1f6626b7.5d77730d.js" rel="prefetch"><link href="/js/chunk-2b8fe640.6fd3680c.js" rel="prefetch"><link href="/js/chunk-2d0b8a1b.7946b24b.js" rel="prefetch"><link href="/js/chunk-2d0c5564.da6f3318.js" rel="prefetch"><link href="/js/chunk-2d0d617e.7e5f122d.js" rel="prefetch"><link href="/js/chunk-2d213ac8.aeaf1650.js" rel="prefetch"><link href="/js/chunk-2d237aa4.3c4e4155.js" rel="prefetch"><link href="/js/chunk-48083e5b.491e158e.js" rel="prefetch"><link href="/js/chunk-75628a2e.069e15c1.js" rel="prefetch"><link href="/js/chunk-77282559.0b869b4d.js" rel="prefetch"><link href="/js/chunk-fba8c980.9d1efae8.js" rel="prefetch"><link href="/js/docs/action-options.c31f98c4.js" rel="prefetch"><link href="/js/docs/api/-_actions_drag_plugin.ts.html.0d4a8bc0.js" rel="prefetch"><link href="/js/docs/api/-_actions_drop_DropEvent.ts.html.0784e0c0.js" rel="prefetch"><link href="/js/docs/api/-_actions_drop_plugin.ts.html.20dfb869.js" rel="prefetch"><link href="/js/docs/api/-_actions_gesture_plugin.ts.html.7d88c5a7.js" rel="prefetch"><link href="/js/docs/api/-_actions_resize_plugin.ts.html.1ad676ff.js" rel="prefetch"><link href="/js/docs/api/-_auto-start_InteractableMethods.ts.html.65633cb6.js" rel="prefetch"><link href="/js/docs/api/-_auto-start_base.ts.html.824b1716.js" rel="prefetch"><link href="/js/docs/api/-_core_BaseEvent.ts.html.3cd33469.js" rel="prefetch"><link href="/js/docs/api/-_core_InteractEvent.ts.html.399978ff.js" rel="prefetch"><link href="/js/docs/api/-_core_Interactable.ts.html.31b4820f.js" rel="prefetch"><link href="/js/docs/api/-_core_Interaction.ts.html.c41570f7.js" rel="prefetch"><link href="/js/docs/api/-_core_interactablePreventDefault.ts.html.963309d2.js" rel="prefetch"><link href="/js/docs/api/-_modifiers_snap_edges.ts.html.4e915736.js" rel="prefetch"><link href="/js/docs/api/-_pointer-events_PointerEvent.ts.html.48a1849a.js" rel="prefetch"><link href="/js/docs/api/-_reflow_plugin.ts.html.67f0c959.js" rel="prefetch"><link href="/js/docs/api/DropEvent.html.cb311194.js" rel="prefetch"><link href="/js/docs/api/InteractEvent_InteractEvent.html.18648624.js" rel="prefetch"><link href="/js/docs/api/Interactable.html.4220d983.js" rel="prefetch"><link href="/js/docs/api/Interaction_Interaction.html.47b80ade.js" rel="prefetch"><link href="/js/docs/api/doclets.json.0efd5184.js" rel="prefetch"><link href="/js/docs/api/global.html.a67d4b30.js" rel="prefetch"><link href="/js/docs/api/index.html.0c5318ae.js" rel="prefetch"><link href="/js/docs/api/module-interact.html.8bb1d09f.js" rel="prefetch"><link href="/js/docs/api/module-modifiers_snapEdges.html.8a5599d4.js" rel="prefetch"><link href="/js/docs/draggable.43f82695.js" rel="prefetch"><link href="/js/docs/dropzone.1c3a448f.js" rel="prefetch"><link href="/js/docs/events.b8914425.js" rel="prefetch"><link href="/js/docs/faq.414bd699.js" rel="prefetch"><link href="/js/docs/gesturable.35ea9719.js" rel="prefetch"><link href="/js/docs/inertia.24243c39.js" rel="prefetch"><link href="/js/docs/intro.c8b581a5.js" rel="prefetch"><link href="/js/docs/migrating.93276e2f.js" rel="prefetch"><link href="/js/docs/modifiers.68ec547d.js" rel="prefetch"><link href="/js/docs/reflow.08e9ee22.js" rel="prefetch"><link href="/js/docs/resizable.8242e059.js" rel="prefetch"><link href="/js/docs/restriction.c26993ac.js" rel="prefetch"><link href="/js/docs/snapping.e03dc463.js" rel="prefetch"><link href="/js/home-demos.96781bb1.js" rel="prefetch"><link href="/js/newsletter.5c735238.js" rel="prefetch"><link href="/js/router.672c7a69.js" rel="prefetch"><link href="/css/chunk-vendors.5b17fc67.css" rel="preload" as="style"><link href="/css/index.2b947cbc.css" rel="preload" as="style"><link href="/js/chunk-vendors.991e5c6c.js" rel="preload" as="script"><link href="/js/index.bd046239.js" rel="preload" as="script"><link href="/css/chunk-vendors.5b17fc67.css" rel="stylesheet"><link href="/css/index.2b947cbc.css" rel="stylesheet"><script src="/js/router.672c7a69.js" charset="utf-8"></script><script src="/js/Home.def67d66.js" charset="utf-8"></script><script src="/js/chunk-2d0c5564.da6f3318.js" charset="utf-8"></script><script src="/js/chunk-16fd081e.3fa02e1b.js" charset="utf-8"></script><script src="/js/LiveDemo.c8c85217.js" charset="utf-8"></script><script src="/js/home-demos.96781bb1.js" charset="utf-8"></script><script src="/js/chunk-2d0d617e.7e5f122d.js" charset="utf-8"></script></head><body><div class="app-wrapper" id="app" data-server-rendered="true"><div id="top"></div><div><section class="hero is-medium is-primary intro is-clipped is-fullheight"><div class="hero-head"><header><div class="container"><div class="spacer is-size-6-mobile"></div><nav aria-label="navigation" class="columns" role="navigation"><div class="column is-narrow"><div class="has-text-centered-mobile"><a href="/" class="router-link-exact-active router-link-active" title="Homepage"><img alt="Δ interact.js logo" src="/img/ijs.e9d09045.svg" class="ijs-logo"></a></div></div><div class="column"><div class="level-right navbar is-primary"><div class="dropdown dropdown-menu-animation navbar-item header-dropdown fade-in is-mobile-modal"><div class="dropdown-trigger" aria-haspopup="true" role="button"><label class="button is-danger has-text-weight-bold" for="name-12">Newsletter</label></div><div class="background" style="display: none;" aria-hidden="true"></div><div class="dropdown-menu" style="display: none;" aria-hidden="true"><div class="dropdown-content"><div class="is-paddingless dropdown-item" tabindex="0"><div class="has-text-centered" style="max-width: 20em; margin: auto; width: 20em;"><div class="delay-point-5"><div><form class="box is-shadowless newsletter-form has-bg-primary-dark"><div class="has-text-light">Subscribe to our spam-free newsletter to stay up to date with new features and releases</div><br><div class="field"><label class="label is-small has-text-left has-text-light" for="name-12">First Name</label><div class="control"><input class="input is-small" id="name-12" placeholder="Name" required></div></div><div class="field"><label class="label is-small has-text-left has-text-light" for="email-12">Email address</label><div class="control"><input class="input is-small" id="email-12" placeholder="mail@example.com" required type="email"></div></div><div class="field is-grouped is-grouped-right"><div class="control"><button class="button is-primary is-small" type="submit">Subscribe</button></div></div></form><!----></div></div></div></div></div></div></div><div class="dropdown dropdown-menu-animation navbar-item is-paddingless is-mobile-modal"><div class="dropdown-trigger" aria-haspopup="true" role="button"><div class="navbar-link"><img alt="Docs" src="/img/doc.1e73cd16.svg" class="is-hidden-mobile white-icon"> Docs</div></div><div class="background" style="display: none;" aria-hidden="true"></div><div class="dropdown-menu" style="display: none;" aria-hidden="true"><div class="dropdown-content"><div class="has-link"><a href="/docs/" class="navbar-link is-arrowless">Intro</a></div><div class="has-link"><a href="/docs/draggable" class="navbar-link is-arrowless">Draggable</a></div><div class="has-link"><a href="/docs/resizable" class="navbar-link is-arrowless">Resizable</a></div><div class="has-link"><a href="/docs/gesturable" class="navbar-link is-arrowless">Gesturable</a></div><div class="has-link"><a href="/docs/dropzone" class="navbar-link is-arrowless">Dropzone</a></div><div class="has-link"><a href="/docs/action-options" class="navbar-link is-arrowless">Action Options</a></div><div class="has-link"><a href="/docs/events" class="navbar-link is-arrowless">Events</a></div><div class="has-link"><a href="/docs/modifiers" class="navbar-link is-arrowless">Modifiers</a></div><div class="has-link"><a href="/docs/snapping" class="navbar-link is-arrowless">Snapping</a></div><div class="has-link"><a href="/docs/restriction" class="navbar-link is-arrowless">Restriction</a></div><div class="has-link"><a href="/docs/inertia" class="navbar-link is-arrowless">Inertia</a></div><div class="has-link"><a href="/docs/reflow" class="navbar-link is-arrowless">Reflow</a></div><div class="has-link"><a href="/docs/faq" class="navbar-link is-arrowless">FAQ</a></div><div class="has-link"><a href="/docs/migrating" class="navbar-link is-arrowless">Migrating from v1.2</a></div><div class="has-link"><a href="/docs/api/Interactable.html" class="navbar-link is-arrowless">API</a></div></div></div></div><div class="navbar-item is-paddingless"><a href="https://github.com/taye/interact.js" class="navbar-link is-arrowless"><img alt="Code" src="/img/code.556c2baa.svg" class="is-hidden-mobile white-icon">  Source</a></div><div class="navbar-item is-paddingless"><a href="https://gitter.im/taye/interact.js" class="navbar-link is-arrowless"><img alt="Gitter" src="/img/chat.1752e4d9.svg" class="is-hidden-mobile white-icon"> Chat</a></div></div></div></nav></div></header></div><div class="joiner is-size-1 is-double is-hidden-mobile"></div><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column is-6"><div class="joiner is-size-4 is-hidden-tablet"></div><h1 class="fancy-text title is-1 is-size-4-mobile has-text-centered-mobile fade-in-down delay-point-25">JavaScript drag and drop, resizing, and multi-touch gestures for modern browsers (and also IE9+) <a href="https://www.npmjs.com/package/interactjs/v/" class="version-badge tags has-addons is-inline-flex fade-in delay-point-25" style="vertical-align: super;"><span class="tag is-light">version</span><span class="tag is-success"></span></a></h1><div class="features is-size-5 content is-hidden-mobile fade-in delay-point-50"><ul class="features__list"><li>Free and <a href="https://github.com/taye/interact.js">open source</a></li><li>Powerful snap and restriction modifiers</li><li>Inertial throwing</li><li>Multiple simultaneous interactions</li><li>Unified API for touch and mouse events</li><li>Auto scroll</li><li>Support for HTML and SVG</li></ul></div></div><div class="column is-6 anim-column"><div class="joiner is-double is-size-2 is-hidden-tablet"></div><div><div class="title anim-title is-3 has-text-centered"><div> </div></div><div class="anim-area is-flex" style="visibility: hidden;"><div class="code-sizer-parent box is-marginless is-size-7-mobile"><code style="white-space: pre-wrap; font-size: 1.25em;">&lt;script type="module"> import interact from 'https://cdn.jsdelivr.net/npm/@interactjs/interactjs/index.js' interact('.item').draggable({ onmove(event) { console.log(event.pageX, event.pageY) } }) &lt;/script></code></div><iframe class="code-frame box is-marginless is-size-7-mobile" style="width: 486.5px; height: 343px;" title="Code samples"><link href="https://unpkg.com/prismjs@1.15.0/themes/prism-okaidia.css" rel="stylesheet"><style>body {
+  font-size: 1.25rem;
+  color: #eee;
+}
+pre {
+  /* resolves a bug in chrome android */
+  display: inline;
+  white-space: pre-wrap
+}
+.blast {
+  position: relative
+}
+.cursor::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 0.125em;
+  height: 100%;
+  width: 0.25em;
+  background: #ccc;
+}</style><pre/></iframe></div></div></div></div></div></div><div class="hero-foot is-relative"></div></section><div class="joiner is-size-1 is-size-4-mobile is-double"></div><div class="features is-size-5 box--mobile is-hidden-tablet fade-in-up delay-point-50"><div class="fancy-text title is-4 is-hidden-tablet has-text-centered-mobile has-text-primary">Features</div><ul class="features__list"><li>Free and <a href="https://github.com/taye/interact.js">open source</a></li><li>Powerful snap and restriction modifiers</li><li>Inertial throwing</li><li>Multiple simultaneous interactions</li><li>Unified API for touch and mouse events</li><li>Auto scroll</li><li>Support for HTML and SVG</li></ul></div><div class="container"><div class="box--mobile fade-in-up delay-point-50"><div class="title has-text-centered has-text-primary">How does it work?</div><div class="columns is-vcentered"><div class="column"><div class="frontmatter-markdown box is-shadowless content is-size-5"><p>interact.js takes a slightly different approach compared to most drag and drop libraries. To give you as much control as possible, it tries to provide a simple, flexible API that gives you all the pointer event data you'll need to move elements around.</p><p>The library doesn't even do any moving at all! This is great because you decide exactly what feedback your users get. You can drag elements, draw on a canvas or (if you <em>really</em> need to) scroll the page.</p><p>Have a look at the demos below to get an idea of how the API works, or <a href="/docs" class="">read through the documentation</a>.</p></div></div><div class="column is-half"><div><div class="live-demo box is-shadowless"><p class="title is-4 has-text-dark">Here's a simple pixel drawing app with interact.js</p><div><div class="tabs is-marginless"><ul><li class=""><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class="is-active"><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column" style="display: none;"><pre class="live-demo__code"><code><span class="token keyword">var</span> pixelSize <span class="token operator">=</span> <span class="token number">16</span>
+
+<span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.rainbow-pixel-canvas'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    max<span class="token operator">:</span> <span class="token number">Infinity</span><span class="token punctuation">,</span>
+    maxPerElement<span class="token operator">:</span> <span class="token number">Infinity</span><span class="token punctuation">,</span>
+    origin<span class="token operator">:</span> <span class="token string">'self'</span><span class="token punctuation">,</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">snap</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token comment">// snap to the corners of a grid</span>
+        targets<span class="token operator">:</span> <span class="token punctuation">[</span>
+          interact<span class="token punctuation">.</span>snappers<span class="token punctuation">.</span><span class="token function">grid</span><span class="token punctuation">(</span><span class="token punctuation">{</span> x<span class="token operator">:</span> pixelSize<span class="token punctuation">,</span> y<span class="token operator">:</span> pixelSize <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token comment">// draw colored squares on move</span>
+      <span class="token function-variable function">move</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> context <span class="token operator">=</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token string">'2d'</span><span class="token punctuation">)</span>
+        <span class="token comment">// calculate the angle of the drag direction</span>
+        <span class="token keyword">var</span> dragAngle <span class="token operator">=</span> <span class="token number">180</span> <span class="token operator">*</span> Math<span class="token punctuation">.</span><span class="token function">atan2</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>dx<span class="token punctuation">,</span> event<span class="token punctuation">.</span>dy<span class="token punctuation">)</span> <span class="token operator">/</span> Math<span class="token punctuation">.</span><span class="token constant">PI</span>
+
+        <span class="token comment">// set color based on drag angle and speed</span>
+        context<span class="token punctuation">.</span>fillStyle <span class="token operator">=</span>
+          <span class="token string">'hsl('</span> <span class="token operator">+</span>
+          dragAngle <span class="token operator">+</span>
+          <span class="token string">', 86%, '</span> <span class="token operator">+</span>
+          <span class="token punctuation">(</span><span class="token number">30</span> <span class="token operator">+</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>speed <span class="token operator">/</span> <span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+          <span class="token string">'%)'</span>
+
+        <span class="token comment">// draw squares</span>
+        context<span class="token punctuation">.</span><span class="token function">fillRect</span><span class="token punctuation">(</span>
+          event<span class="token punctuation">.</span>pageX <span class="token operator">-</span> pixelSize <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          event<span class="token punctuation">.</span>pageY <span class="token operator">-</span> pixelSize <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          pixelSize<span class="token punctuation">,</span>
+          pixelSize
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment">// clear the canvas on doubletap</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'doubletap'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> context <span class="token operator">=</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token string">'2d'</span><span class="token punctuation">)</span>
+
+    context<span class="token punctuation">.</span><span class="token function">clearRect</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> context<span class="token punctuation">.</span>canvas<span class="token punctuation">.</span>width<span class="token punctuation">,</span> context<span class="token punctuation">.</span>canvas<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+    <span class="token function">resizeCanvases</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> <span class="token function">resizeCanvases</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'.rainbow-pixel-canvas'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>
+    <span class="token parameter">canvas</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">delete</span> canvas<span class="token punctuation">.</span>width
+    <span class="token keyword">delete</span> canvas<span class="token punctuation">.</span>height
+
+    <span class="token keyword">var</span> rect <span class="token operator">=</span> canvas<span class="token punctuation">.</span><span class="token function">getBoundingClientRect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    canvas<span class="token punctuation">.</span>width <span class="token operator">=</span> rect<span class="token punctuation">.</span>width
+    canvas<span class="token punctuation">.</span>height <span class="token operator">=</span> rect<span class="token punctuation">.</span>height
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">resizeCanvases</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// interact.js can also add DOM event listeners</span>
+<span class="token function">interact</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'resize'</span><span class="token punctuation">,</span> resizeCanvases<span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><canvas class="rainbow-pixel-canvas"></canvas>Drag to draw. Double tap to clear.</div></div></div><style>.rainbow-pixel-canvas {
+  width: 100%;
+  height: 200px;
+  border: solid 2px gray;
+  background: white;
+
+  webkit-user-select: none;
+         user-select: none;
+  -ms-touch-action: none;
+      touch-action: none;
+}</style></div></div></div></div></div><br><div class="live-demo box--mobile"><h1 class="title is-3">Dragging</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token comment">// target elements with the "draggable" class</span>
+<span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.draggable'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token comment">// enable inertial throwing</span>
+    inertia<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token comment">// keep the element within the area of it's parent</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrictRect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        restriction<span class="token operator">:</span> <span class="token string">'parent'</span><span class="token punctuation">,</span>
+        endOnly<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// enable autoScroll</span>
+    autoScroll<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token comment">// call this function on every dragmove event</span>
+      move<span class="token operator">:</span> dragMoveListener<span class="token punctuation">,</span>
+
+      <span class="token comment">// call this function on every dragend event</span>
+      <span class="token function">end</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> textEl <span class="token operator">=</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'p'</span><span class="token punctuation">)</span>
+
+        textEl <span class="token operator">&&</span> <span class="token punctuation">(</span>textEl<span class="token punctuation">.</span>textContent <span class="token operator">=</span>
+          <span class="token string">'moved a distance of '</span> <span class="token operator">+</span>
+          <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">sqrt</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageX <span class="token operator">-</span> event<span class="token punctuation">.</span>x0<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                     Math<span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>pageY <span class="token operator">-</span> event<span class="token punctuation">.</span>y0<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'px'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> <span class="token function">dragMoveListener</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> target <span class="token operator">=</span> event<span class="token punctuation">.</span>target
+  <span class="token comment">// keep the dragged position in the data-x/data-y attributes</span>
+  <span class="token keyword">var</span> x <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'data-x'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> event<span class="token punctuation">.</span>dx
+  <span class="token keyword">var</span> y <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'data-y'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> event<span class="token punctuation">.</span>dy
+
+  <span class="token comment">// translate the element</span>
+  target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span>
+    target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+      <span class="token string">'translate('</span> <span class="token operator">+</span> x <span class="token operator">+</span> <span class="token string">'px, '</span> <span class="token operator">+</span> y <span class="token operator">+</span> <span class="token string">'px)'</span>
+
+  <span class="token comment">// update the posiion attributes</span>
+  target<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-x'</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+  target<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-y'</span><span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// this function is used later in the resizing and gesture demos</span>
+window<span class="token punctuation">.</span>dragMoveListener <span class="token operator">=</span> dragMoveListener</code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div class="draggable" id="drag-1"><p>You can drag one element</p></div><div class="draggable" id="drag-2"><p>with each pointer</p></div></div></div></div><style>#drag-1, #drag-2 {
+  width: 25%;
+  min-height: 6.5em;
+  margin: 10%;
+  background-color: #29e;
+  color: white;
+  border-radius: 0.75em;
+  padding: 4%;
+  touch-action: none;
+  user-select: none;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Drag and drop</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token comment">/* The dragging code for '.draggable' from the demo above
+ * applies to this demo as well so it doesn't have to be repeated. */</span>
+
+<span class="token comment">// enable draggables to be dropped into this</span>
+<span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.dropzone'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">dropzone</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token comment">// only accept elements matching this CSS selector</span>
+  accept<span class="token operator">:</span> <span class="token string">'#yes-drop'</span><span class="token punctuation">,</span>
+  <span class="token comment">// Require a 75% element overlap for a drop to be possible</span>
+  overlap<span class="token operator">:</span> <span class="token number">0.75</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// listen for drop related events:</span>
+
+  <span class="token function-variable function">ondropactivate</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// add active dropzone feedback</span>
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'drop-active'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">ondragenter</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> draggableElement <span class="token operator">=</span> event<span class="token punctuation">.</span>relatedTarget
+    <span class="token keyword">var</span> dropzoneElement <span class="token operator">=</span> event<span class="token punctuation">.</span>target
+
+    <span class="token comment">// feedback the possibility of a drop</span>
+    dropzoneElement<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'drop-target'</span><span class="token punctuation">)</span>
+    draggableElement<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'can-drop'</span><span class="token punctuation">)</span>
+    draggableElement<span class="token punctuation">.</span>textContent <span class="token operator">=</span> <span class="token string">'Dragged in'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">ondragleave</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// remove the drop feedback style</span>
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'drop-target'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>relatedTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'can-drop'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>relatedTarget<span class="token punctuation">.</span>textContent <span class="token operator">=</span> <span class="token string">'Dragged out'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">ondrop</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    event<span class="token punctuation">.</span>relatedTarget<span class="token punctuation">.</span>textContent <span class="token operator">=</span> <span class="token string">'Dropped'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">ondropdeactivate</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// remove active dropzone feedback</span>
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'drop-active'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'drop-target'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.drag-drop'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    inertia<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrictRect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        restriction<span class="token operator">:</span> <span class="token string">'parent'</span><span class="token punctuation">,</span>
+        endOnly<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    autoScroll<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token comment">// dragMoveListener from the dragging demo above</span>
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span> move<span class="token operator">:</span> dragMoveListener <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div class="drag-drop" id="no-drop">#no-drop</div><div class="drag-drop" id="yes-drop">#yes-drop</div><div class="dropzone" id="outer-dropzone">#outer-dropzone<div class="dropzone" id="inner-dropzone">#inner-dropzone</div></div></div></div></div><style>#outer-dropzone {
+  height: 140px;
+}
+
+#inner-dropzone {
+  height: 80px;
+}
+
+.dropzone {
+  background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+.drag-drop {
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
+
+  color: #fff;
+  background-color: #29e;
+  border: solid 2px #fff;
+
+  touch-action: none;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Snapping</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token keyword">var</span> element <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'grid-snap'</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token keyword">var</span> y <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token function">interact</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">snap</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        targets<span class="token operator">:</span> <span class="token punctuation">[</span>
+          interact<span class="token punctuation">.</span><span class="token function">createSnapGrid</span><span class="token punctuation">(</span><span class="token punctuation">{</span> x<span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span> y<span class="token operator">:</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        range<span class="token operator">:</span> <span class="token number">Infinity</span><span class="token punctuation">,</span>
+        relativePoints<span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token punctuation">{</span> x<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> y<span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span> <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrict</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        restriction<span class="token operator">:</span> element<span class="token punctuation">.</span>parentNode<span class="token punctuation">,</span>
+        elementRect<span class="token operator">:</span> <span class="token punctuation">{</span> top<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> left<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> bottom<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        endOnly<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    inertia<span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'dragmove'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    x <span class="token operator">+=</span> event<span class="token punctuation">.</span>dx
+    y <span class="token operator">+=</span> event<span class="token punctuation">.</span>dy
+
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span>
+    event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+        <span class="token string">'translate('</span> <span class="token operator">+</span> x <span class="token operator">+</span> <span class="token string">'px, '</span> <span class="token operator">+</span> y <span class="token operator">+</span> <span class="token string">'px)'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div id="grid-snap">Dragging is constrained to the corners of a grid</div></div></div></div><style>#grid-snap {
+  width: 40%;
+  background-color: #29e;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 2%;
+  margin: 5%;
+  touch-action: none;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Resizing</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.resize-drag'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">resizable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token comment">// resize from all edges and corners</span>
+    edges<span class="token operator">:</span> <span class="token punctuation">{</span> left<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> right<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> bottom<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> top<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token function">move</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> target <span class="token operator">=</span> event<span class="token punctuation">.</span>target
+        <span class="token keyword">var</span> x <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'data-x'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">var</span> y <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'data-y'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// update the element's style</span>
+        target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>width <span class="token operator">=</span> event<span class="token punctuation">.</span>rect<span class="token punctuation">.</span>width <span class="token operator">+</span> <span class="token string">'px'</span>
+        target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>height <span class="token operator">=</span> event<span class="token punctuation">.</span>rect<span class="token punctuation">.</span>height <span class="token operator">+</span> <span class="token string">'px'</span>
+
+        <span class="token comment">// translate when resizing from top or left edges</span>
+        x <span class="token operator">+=</span> event<span class="token punctuation">.</span>deltaRect<span class="token punctuation">.</span>left
+        y <span class="token operator">+=</span> event<span class="token punctuation">.</span>deltaRect<span class="token punctuation">.</span>top
+
+        target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span> target<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+          <span class="token string">'translate('</span> <span class="token operator">+</span> x <span class="token operator">+</span> <span class="token string">'px,'</span> <span class="token operator">+</span> y <span class="token operator">+</span> <span class="token string">'px)'</span>
+
+        target<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-x'</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+        target<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-y'</span><span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+        target<span class="token punctuation">.</span>textContent <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>rect<span class="token punctuation">.</span>width<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'\u00D7'</span> <span class="token operator">+</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>rect<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token comment">// keep the edges inside the parent</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrictEdges</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        outer<span class="token operator">:</span> <span class="token string">'parent'</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+      <span class="token comment">// minimum size</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrictSize</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        min<span class="token operator">:</span> <span class="token punctuation">{</span> width<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span> height<span class="token operator">:</span> <span class="token number">50</span> <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+    inertia<span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span> move<span class="token operator">:</span> window<span class="token punctuation">.</span>dragMoveListener <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    inertia<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    modifiers<span class="token operator">:</span> <span class="token punctuation">[</span>
+      interact<span class="token punctuation">.</span>modifiers<span class="token punctuation">.</span><span class="token function">restrictRect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        restriction<span class="token operator">:</span> <span class="token string">'parent'</span><span class="token punctuation">,</span>
+        endOnly<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div class="resize-drag">Resize from any edge or corner</div></div></div></div><style>.resize-drag {
+  background-color: #29e;
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  padding: 20px;
+  touch-action: none;
+
+  width: 120px;
+
+  /* This makes things *much* easier */
+  box-sizing: border-box;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Multi-touch Rotation (touchscreen only)</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token keyword">var</span> angle <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'#rotate-area'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">gesturable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">move</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">var</span> arrow <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'arrow'</span><span class="token punctuation">)</span>
+
+      angle <span class="token operator">+=</span> event<span class="token punctuation">.</span>da
+
+      arrow<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span>
+      arrow<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+        <span class="token string">'rotate('</span> <span class="token operator">+</span> angle <span class="token operator">+</span> <span class="token string">'deg)'</span>
+
+      document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'angle-info'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent <span class="token operator">=</span>
+        angle<span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'\u00b0'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div id="rotate-area"><div id="angle-info">0°</div><svg id="arrow" viewBox="0 0 100 100"><polygon fill="#29e" points="50,0 75,25 62.5,25 62.5,100 37.5,100 37.5,25 25,25"></polygon></svg></div></div></div></div><style>#rotate-area {
+  margin: 3em;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#arrow {
+  width: 100%;
+  height: 100%;
+}
+
+#angle-info {
+  color: #666;
+  font-size: 2em;
+  position: absolute;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Pinch-to-zoom (touchscreen only)</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token keyword">var</span> angleScale <span class="token operator">=</span> <span class="token punctuation">{</span>
+  angle<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  scale<span class="token operator">:</span> <span class="token number">1</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> gestureArea <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'gesture-area'</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> scaleElement <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'scale-element'</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> resetTimeout
+
+<span class="token function">interact</span><span class="token punctuation">(</span>gestureArea<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">gesturable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token function">start</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        angleScale<span class="token punctuation">.</span>angle <span class="token operator">-=</span> event<span class="token punctuation">.</span>angle
+
+        <span class="token function">clearTimeout</span><span class="token punctuation">(</span>resetTimeout<span class="token punctuation">)</span>
+        scaleElement<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'reset'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token function">move</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// document.body.appendChild(new Text(event.scale))</span>
+        <span class="token keyword">var</span> currentAngle <span class="token operator">=</span> event<span class="token punctuation">.</span>angle <span class="token operator">+</span> angleScale<span class="token punctuation">.</span>angle
+        <span class="token keyword">var</span> currentScale <span class="token operator">=</span> event<span class="token punctuation">.</span>scale <span class="token operator">*</span> angleScale<span class="token punctuation">.</span>scale
+
+        scaleElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span>
+        scaleElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+          <span class="token string">'rotate('</span> <span class="token operator">+</span> currentAngle <span class="token operator">+</span> <span class="token string">'deg)'</span> <span class="token operator">+</span> <span class="token string">'scale('</span> <span class="token operator">+</span> currentScale <span class="token operator">+</span> <span class="token string">')'</span>
+
+        <span class="token comment">// uses the dragMoveListener from the draggable demo above</span>
+        <span class="token function">dragMoveListener</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token function">end</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        angleScale<span class="token punctuation">.</span>angle <span class="token operator">=</span> angleScale<span class="token punctuation">.</span>angle <span class="token operator">+</span> event<span class="token punctuation">.</span>angle
+        angleScale<span class="token punctuation">.</span>scale <span class="token operator">=</span> angleScale<span class="token punctuation">.</span>scale <span class="token operator">*</span> event<span class="token punctuation">.</span>scale
+
+        resetTimeout <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>reset<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+        scaleElement<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'reset'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">draggable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    listeners<span class="token operator">:</span> <span class="token punctuation">{</span> move<span class="token operator">:</span> dragMoveListener <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> <span class="token function">reset</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  scaleElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>webkitTransform <span class="token operator">=</span>
+    scaleElement<span class="token punctuation">.</span>style<span class="token punctuation">.</span>transform <span class="token operator">=</span>
+    <span class="token string">'scale(1)'</span>
+
+  angleScale<span class="token punctuation">.</span>angle <span class="token operator">=</span> <span class="token number">0</span>
+  angleScale<span class="token punctuation">.</span>scale <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token punctuation">}</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><!-- enable javascript to view a demo --><div id="gesture-area"><img alt="sample image" src="/img/ijs-256.579dfa92.png" id="scale-element"></div></div></div></div><style>#scale-element {
+  display: block;
+  max-width: 100%;
+  margin: auto;
+  touch-action: none;
+}
+
+#scale-element.reset {
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Use in SVG files</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>object</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>star-demo<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>image/svg+xml<span class="token punctuation">"</span></span> <span class="token attr-name">data</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/img/star.svg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>embedded svg<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>object</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">padding</span><span class="token punctuation">:</span> 0 5%</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  The <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://github.com/taye/interact.js/blob/master/examples/star/star.svg?short_path=e1e0fe0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>star.svg<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+  file references interact.js as well as
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://github.com/taye/interact.js/blob/master/examples/star/index.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span> another script<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+  to enable and respond to drag events.
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span></code></pre><!----></div><div class="column is-inline-block live-demo__result"><object alt="embedded svg" data="/img/star.svg" id="star-demo" type="image/svg+xml"></object><p style="padding: 0 5%">The <a href="https://github.com/taye/interact.js/blob/master/examples/star/star.svg?short_path=e1e0fe0">star.svg</a> file references interact.js as well as <a href="https://github.com/taye/interact.js/blob/master/examples/star/index.js">another script</a> to enable and respond to drag events.</p></div></div></div><style>#star-demo {
+  display: block;
+  margin: auto;
+  touch-action: none;
+  max-height: 100%;
+}</style></div><div class="live-demo box--mobile"><h1 class="title is-3">Tap, doubletap and hold</h1><div><div class="tabs is-marginless"><ul><li class="is-active"><a>JS</a></li><li class=""><a>HTML</a></li><li class=""><a>CSS</a></li><li class=""><a>Demo Only</a></li></ul></div><div class="columns is-gapless live-demo__content"><div class="column is-two-thirds live-demo__code-column"><pre class="live-demo__code"><code><span class="token function">interact</span><span class="token punctuation">(</span><span class="token string">'.tap-target'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'tap'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token string">'switch-bg'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'doubletap'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token string">'large'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'rotate'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'hold'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token string">'rotate'</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'large'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre><!----><!----></div><div class="column is-inline-block live-demo__result"><div class="tap-target"><p>Tap to change color</p><p>Doubletap to change size</p><p>Hold to rotate</p></div></div></div></div><style>.tap-target {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 14em;
+  height: 16em;
+  padding: 1em;
+  margin: 10% auto;
+
+  border-radius: 100%;
+
+  font-size: 1.125em;
+  text-align: center;
+  color: #fff;
+  background-color: #29e;
+
+  cursor: pointer;
+  touch-action: none;
+
+  transition: all 0.3s;
+}
+
+.tap-target.switch-bg {
+  background-color: #f40;
+}
+
+.tap-target.large {
+  -webkit-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}</style></div></div><footer class="footer is-dark footer--margined"><div class="container"><div class="columns is-vcentered has-text-centered"><div class="column"><p class="columns is-mobile is-centered is-multiline is-size-6"><a href="/" class="column is-narrow footer--link router-link-exact-active router-link-active">interact.js Homepage </a><a href="/docs" class="column is-narrow footer--link"><img alt="Docs" src="/img/doc.1e73cd16.svg" class="icon"> Documentation </a><a href="https://github.com/taye/interact.js" class="column is-narrow footer--link"><img alt="Brackets" src="/img/code.556c2baa.svg" class="icon"> Source code on Github </a><a href="https://gitter.im/taye/interact.js" class="column is-narrow footer--link"><img alt="Communicate" src="/img/chat.1752e4d9.svg" class="icon"> Gitter chatroom </a><a href="https://twitter.com/interactjs" class="column is-narrow footer--link"><img alt="Bird" src="/img/bird.155d482f.svg" class="icon"> @interactjs on Twitter </a><a href="/privacy-policy" class="column is-narrow footer--link">Privacy Policy</a></p><br><p>By <a href="https://github.com/taye" class="footer--link">Taye Adeyemi</a> ©2012-present</p></div><div class="has-text-centered" style="max-width: 20em; margin: auto;"><div class="delay-point-5"><div><form class="box is-shadowless newsletter-form has-bg-primary-dark"><div class="has-text-light">Subscribe to our spam-free newsletter to stay up to date with new features and releases</div><br><div class="field"><label class="label is-small has-text-left has-text-light" for="name-70">First Name</label><div class="control"><input class="input is-small" id="name-70" placeholder="Name" required></div></div><div class="field"><label class="label is-small has-text-left has-text-light" for="email-70">Email address</label><div class="control"><input class="input is-small" id="email-70" placeholder="mail@example.com" required type="email"></div></div><div class="field is-grouped is-grouped-right"><div class="control"><button class="button is-primary is-small" type="submit">Subscribe</button></div></div></form><!----></div></div></div></div></div></footer><a href="#app" class="scroll-top is-hidden-desktop hidden" title="Back to top"><img alt="Back to top" src="/img/up.b206d115.svg" class="scroll-top-icon"></a></div></div><script src="https://cdn.interactjs.io/00000000.js"><!-- built files will be auto injected -->
+</div>
+
+<script>
+window.addEventListener('hashchange', function () {
+    if (location.hash === '#top') {
+        if ("replaceState" in history) {
+              history.replaceState("", document.title, location.pathname + location.search);
+        }
+        else {
+          location.hash = '';
+        }
+    }
+});
+
+if (!/yes|1/.test(navigator.doNotTrack)) {
+    (function(p,r,i,v,a,c,y){p['GoogleAnalyticsObject']=a;p[a]=p[a]||function(){
+    (p[a].q=p[a].q||[]).push(arguments)},p[a].l=1*new Date();c=r.createElement(i),
+    y=r.getElementsByTagName(i)[0];c.async=1;c.src=v;y.parentNode.insertBefore(c,y)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-44445883-3', 'interactjs.io');
+    ga('send', 'pageview');
+}</script><script src="/js/chunk-vendors.991e5c6c.js"></script><script src="/js/index.bd046239.js"></script></body></html>
